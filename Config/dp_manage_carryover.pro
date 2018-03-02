@@ -15,7 +15,7 @@ PRO dp_read_cocorrparms, sel_exp, SEL_ONLY=sel_only, PATH=path, DEF_FILE=def_fil
   IF *(dp_expcfg[sel_exp]).carryover.substance NE !NULL $
     THEN quest=DIALOG_MESSAGE('Carry-over correction found: overwrite?', /QUESTION) $
   ELSE quest='Yes'
-  IF quest='No' THEN RETURN
+  IF quest EQ 'No' THEN RETURN
   
   IF NOT KEYWORD_SET(def_file) THEN $
     file=DIALOG_PICKFILE(TITLE='Please select a Carry-Over config file.', PATH=path, FILTER='*.csv', /READ) $
