@@ -7,10 +7,10 @@
 ;-
 ;--------------------------------------------------------------------------------------------------------------------
 FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME=name, $
-                               SEARCH_TAGS=search_tags, NL=nl, S_VOL_SELECT=s_vol_select, INSTRUMENT=instrument
+                         SEARCH_TAGS=search_tags, NL=nl, S_VOL_SELECT=s_vol_select, INSTRUMENT=instrument
 
   COMMON dp_data 
-    
+
     IF NOT KEYWORD_SET(sep) THEN sep = STRING(9b)
     IF NOT KEYWORD_SET(def_offset) THEN def_offset = 0L
     IF NOT KEYWORD_SET(s_vol_select) THEN s_vol_select = 0
@@ -18,7 +18,7 @@ FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME
     IF NOT KEYWORD_SET(search_tags) THEN search_tags = ['opr','com','rv_vol','fname','nr','s_name','s_date','s_lat', $
                                                         's_lon','s_alt','s_id','s_vol','rv_ps','rv_pe','rv_dp', $
                                                         'mfc_flow','mfc_vol','Ts_cldhd','Te_cldhd','ts','te','dt','use']
-                                                        
+
     IF N_ELEMENTS(search_tags) NE 23 THEN RETURN, !NULL
 
     nl=FILE_LINES(file)
@@ -105,7 +105,6 @@ FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME
     
     n_chrom = nl[0]-def_offset-1
 
-
     FOR i=0, n_chrom-1 DO BEGIN; begin loop over all chromatograms listed in expinfo-file
       
       READF, lun, line
@@ -143,9 +142,8 @@ FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME
       IF col_ix[14] NE -1 THEN import[i].rv_dp = DOUBLE(tmp[col_ix[14]]) $
         ELSE import[i].rv_dp = DOUBLE(tmp[col_ix[13]])-DOUBLE(tmp[col_ix[12]])
 
-      IF col_ix[15] NE -1 THEN import[i].mfc_flow = DOUBLE(tmp[col_ix[15]])
-      
-      import[i].mfc_vol = DOUBLE(tmp[col_ix[16]])
+      IF col_ix[15] NE -1 THEN import[i].mfc_flow = DOUBLE(tmp[col_ix[15]])  
+      IF col_ix[16] NE -1 THEN import[i].mfc_vol = DOUBLE(tmp[col_ix[16]])
 
       IF col_ix[17] NE -1 THEN import[i].Ts_cldhd = tmp[col_ix[17]]
       IF col_ix[18] NE -1 THEN import[i].Te_cldhd = tmp[col_ix[18]]
