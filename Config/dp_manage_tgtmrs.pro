@@ -36,16 +36,18 @@ FUNCTION dp_read_tgtmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
   unc_rel   = DBLARR(count)
   scale     = STRARR(count)
   comment   = STRARR(count)
+  unit      = STRARR(count)
 
   FOR i=0, count-1 DO BEGIN
-    tmp=strsplit(STRTRIM(data[i+n_table_header]), ';', /EXTRACT)
-    tgt_name[i] = tmp[1]
+    tmp = strsplit(STRTRIM(data[i+n_table_header]), ';', /EXTRACT, /PRESERVE_NULL)
+    tgt_name[i] = tmp[1] ; tmp[0] is cylinder
     substance[i] = tmp[2]
     mr_abs[i]    = FIX(tmp[3], TYPE=5)
     unc_abs[i]   = FIX(tmp[4], TYPE=5)
     unc_rel[i]   = FIX(tmp[5], TYPE=5)
     scale[i]     = tmp[6]
     comment[i]   = tmp[7]
+    IF N_ELEMENTS(tmp) GT 8 THEN unit[i] = tmp[8]
   ENDFOR
 
   strct={ tgt_name: tgt_name, $
@@ -54,7 +56,8 @@ FUNCTION dp_read_tgtmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
           unc_abs : unc_abs, $
           unc_rel : unc_rel, $
           scale :   scale, $
-          comment : comment }
+          comment : comment, $
+          unit : unit }
 
   RETURN, strct
 
@@ -87,6 +90,7 @@ PRO dp_apply_tgtmrs, sel_exp, tgt_strct, SEL_ONLY=sel_only, PATH=path, VERBOSE=v
     *tmp_expcfg.tgt_mrs.unc_rel = tgt_strct.unc_rel
     *tmp_expcfg.tgt_mrs.scale = tgt_strct.scale
     *tmp_expcfg.tgt_mrs.comment = tgt_strct.comment
+    *tmp_expcfg.tgt_mrs.unit = tgt_strct.unit
 
     (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
   ENDFOR
@@ -139,6 +143,7 @@ PRO dp_remv_tgtmrs, sel_exp, LOUD=loud
         *tmp_expcfg.tgt_mrs.unc_rel = !NULL
         *tmp_expcfg.tgt_mrs.scale = !NULL
         *tmp_expcfg.tgt_mrs.comment = !NULL
+        *tmp_expcfg.tgt_mrs.unit = !NULL
         (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
       END
       'No':

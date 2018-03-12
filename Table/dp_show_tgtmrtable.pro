@@ -18,28 +18,33 @@ PRO dp_show_tgtmrtable, sel_exp
       UNC_REL=*((dp_expcfg[sel_exp]).tgt_mrs.UNC_REL)
       SCALE=*((dp_expcfg[sel_exp]).tgt_mrs.SCALE)
       COMMENT=*((dp_expcfg[sel_exp]).tgt_mrs.COMMENT)
+      IF (*((dp_expcfg[sel_exp]).tgt_mrs.UNIT)) NE !NULL THEN $
+        UNIT=*((dp_expcfg[sel_exp]).tgt_mrs.UNIT) $
+      ELSE UNIT=STRARR(N_ELEMENTS(COMMENT))
     ENDIF ELSE BEGIN
       msg=DIALOG_MESSAGE('No Tgt MR data found.')
       RETURN
     ENDELSE
     
-    column_labels=['Substance','MR','UNC_abs','UNC_rel','Scale','comment']
+    column_labels=['Substance','MR','UNC_abs','UNC_rel','Unit','Scale','comment']
     row_labels=TGT_NAME
   
     nl_hdr  = 0
-    width   = 6
+    width   = 7
+    format  = '(D25.5)'
     n_tgt = N_ELEMENTS(TGT_NAME)
   
     value=STRARR(width,nl_hdr+n_tgt)
 
     value[0,0:-1]= SUBSTANCE
-    value[1,0:-1]= STRCOMPRESS(FIX(MR, TYPE=7), /REMOVE_ALL)
-    value[2,0:-1]= STRCOMPRESS(FIX(UNC_abs, TYPE=7), /REMOVE_ALL)
-    value[3,0:-1]= STRCOMPRESS(FIX(UNC_REL, TYPE=7), /REMOVE_ALL)
-    value[4,0:-1]= SCALE
-    value[5,0:-1]= COMMENT
+    value[1,0:-1]= STRCOMPRESS(STRING(MR, FORMAT=format), /REMOVE_ALL)
+    value[2,0:-1]= STRCOMPRESS(STRING(UNC_abs, FORMAT=format), /REMOVE_ALL)
+    value[3,0:-1]= STRCOMPRESS(STRING(UNC_REL, FORMAT=format), /REMOVE_ALL)
+    value[4,0:-1]= UNIT
+    value[5,0:-1]= SCALE
+    value[6,0:-1]= COMMENT
      
-    column_width=[150,100,100,100,100,100,100]
+    column_width=[150,100,100,100,100,150,150]
   
     mainbase=WIDGET_BASE(title='Tgt MR Table')
     ID=WIDGET_TABLE(mainbase, VALUE=value, COLUMN_WIDTH=column_width, ALIGNMENT=0, $
