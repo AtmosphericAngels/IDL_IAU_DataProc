@@ -15,7 +15,7 @@
 ;------------------------------------------------------------------------------------------------------------------------
 FUNCTION dp_version_check, dp_chrom_list, VCHECK_VERSION=vcheck_version, VERS_TAG=vers_tag
 
-  IF NOT KEYWORD_SET(vcheck_version) THEN vcheck_version = 1.26
+  IF NOT KEYWORD_SET(vcheck_version) THEN vcheck_version = 1.27
   IF NOT KEYWORD_SET(vers_tag) THEN vers_tag = 'IAUDP_VERS'
 
   version = 0.

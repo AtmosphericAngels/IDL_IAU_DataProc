@@ -38,7 +38,9 @@ PRO dp_show_mrtable, sel_exp
   value[1,4:-1]= STRCOMPRESS(STRING(*((dp_expcfg[sel_exp]).cal_mrs.mr_ppt), FORMAT=format), /REMOVE_ALL)
   value[2,4:-1]= STRCOMPRESS(STRING(*((dp_expcfg[sel_exp]).cal_mrs.unc_ppt), FORMAT=format), /REMOVE_ALL)
   value[3,4:-1]= STRCOMPRESS(STRING(*((dp_expcfg[sel_exp]).cal_mrs.unc_rel), FORMAT=format), /REMOVE_ALL)
-  value[4,4:-1]= *((dp_expcfg[sel_exp]).cal_mrs.unit)
+  
+  IF (*((dp_expcfg[sel_exp]).cal_mrs.unit)) NE !NULL THEN $
+    value[4,4:-1]= *((dp_expcfg[sel_exp]).cal_mrs.unit)
   value[5,4:-1]= *((dp_expcfg[sel_exp]).cal_mrs.scale)
   value[6,4:-1]= *((dp_expcfg[sel_exp]).cal_mrs.comment)
   

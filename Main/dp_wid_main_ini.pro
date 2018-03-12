@@ -106,7 +106,7 @@ PRO dp_wid_main_handle, event
         RESTORE, dp_file
         RESTORE, config_file
         
-        vcheck = dp_version_check(dp_chrom, VCHECK_VERSION=1.26, VERS_TAG='IAUDP_VERS')                                      
+        vcheck = dp_version_check(dp_chrom, VCHECK_VERSION=1.27, VERS_TAG='IAUDP_VERS')                                      
         IF vcheck LE 0 THEN BEGIN ; version of restored file = old? -> redefine structures.
           dp_refr_status, MESSAGE='Old version detected...'
           dp_chrom = dp_strct2current_chrom(dp_chrom, vcheck, dp_vers)

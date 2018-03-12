@@ -49,6 +49,7 @@ END
 ;
 ; 2018-03-12 (v1.28, FO)
 ; - added unit tag to structures that contain absolute values / mixing ratios.
+; - implemented unit tag functionality in cal mr handling procedures.
 ; 
 ; 2018-02-26 (v1.27, FO)
 ; - removal of carry-over config from dp_expcfg struct: finished. Boolean "active_corr" in rres struct is also 
