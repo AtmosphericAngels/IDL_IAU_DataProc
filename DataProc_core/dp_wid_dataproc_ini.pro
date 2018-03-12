@@ -192,8 +192,8 @@ PRO dp_wid_dataproc_handle, event
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION)
           IF quest EQ 'No' THEN sel_only=0
         ENDIF
-        reset=dp_remv_treatcfg(sel_exp, SEL_ONLY=sel_only, /LOUD)
-        IF reset THEN BEGIN
+        remv=dp_remv_treatcfg(sel_exp, SEL_ONLY=sel_only, /LOUD)
+        IF remv THEN BEGIN
           dp_call_relresp_calc, 0, 0, 0, VERBOSE=verbose
           dp_wid_dataproc_upd, event
         ENDIF
@@ -202,7 +202,7 @@ PRO dp_wid_dataproc_handle, event
     'reset_co_corr' : $
       BEGIN
         remv=dp_remv_cocorr(sel_exp, /LOUD)
-        IF rmv THEN BEGIN
+        IF remv THEN BEGIN
           dp_call_relresp_calc, sel_caltreat, sel_samtreat, sel_calip, VERBOSE=verbose
           dp_wid_dataproc_upd, event
         ENDIF

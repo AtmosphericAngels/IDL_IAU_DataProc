@@ -35,15 +35,16 @@ END
 ; Changelog (newest first)
 ; 
 ; TODO
-; - carry-over correction
+; - carry-over correction (corrections in general)
 ;   - integration into db-scripting
 ;   - integration into report files
 ; - mixing ratios structures: add "unit" tag. Keep "ppt" in tag names for downward compatibility...
+;   - add unit tag to mr tables?
 ; - Config tables: multiple exps loaded -> add remove -> all exps.
-; - update of readme
+; - update readme
 ; - add correction: NL
 ;   - nl strct in dp_expcfg?
-;   avoid this issue by checking for tag name "nl_analysis" before writing or reading nl results...
+;   -> avoid this issue by checking for tag name "nl_analysis" before writing or reading nl results...
 ; - handling of "experiment type" and "experiment specification"?
 ;
 ; 2018-02-26 (v1.27, FO)

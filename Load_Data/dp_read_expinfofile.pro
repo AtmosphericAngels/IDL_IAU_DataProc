@@ -152,9 +152,8 @@ FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME
       IF col_ix[20] NE -1 THEN import[i].te = time2jultime(TIME=tmp[col_ix[20]])
       IF col_ix[21] NE -1 THEN import[i].dt = time2jultime(TIME=tmp[col_ix[21]]) $
         ELSE IF import[i].ts NE !VALUES.D_NAN AND import[i].te NE !VALUES.D_NAN THEN $
-          import[i].dt = import[i].te - import[i].ts
-        
-      
+                  import[i].dt = import[i].te - import[i].ts
+            
       IF col_ix[22] NE -1 THEN import[i].use = FIX(tmp[col_ix[22]], TYPE=2)
 
     ENDFOR ; end file lines loop (chromatograms)
