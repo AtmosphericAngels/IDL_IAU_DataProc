@@ -26,7 +26,7 @@ FUNCTION create_ref_sequence, n_measurements
                   ix_init_samblock: def_vector, $
                   ix_end_samblock:  def_vector, $    
                   sam_treat:        STRARR(10)  $ ; sample treatment options
-                    }             
+                  }             
                   
   RETURN, ref_sequence
   

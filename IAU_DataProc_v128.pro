@@ -12,11 +12,11 @@
 ;------------------------------------------------------------------------------------------------------------------------
 @dp_def_common
 ;------------------------------------------------------------------------------------------------------------------------
-PRO IAU_DataProc_v127
+PRO IAU_DataProc_v128
   
   COMMON dp_data
 
-  dp_def_common, 1.27
+  dp_def_common, 1.28
 
   path_wd = 'D:\PROGRAMMING\debugging\iau_dataproc\multi_exp'
 ;  path_wd = 'E:\KIT_DATA\MPI_GHGGC_Data_netcdf'
@@ -47,6 +47,9 @@ END
 ;   -> avoid this issue by checking for tag name "nl_analysis" before writing or reading nl results...
 ; - handling of "experiment type" and "experiment specification"?
 ;
+; 2018-03-12 (v1.28, FO)
+; - added unit tag to structures that contain absolute values / mixing ratios.
+; 
 ; 2018-02-26 (v1.27, FO)
 ; - removal of carry-over config from dp_expcfg struct: finished. Boolean "active_corr" in rres struct is also 
 ;   set to false.

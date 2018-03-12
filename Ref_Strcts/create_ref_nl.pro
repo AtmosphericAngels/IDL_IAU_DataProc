@@ -12,6 +12,7 @@ FUNCTION create_ref_nl, fct_dgr, sz_mrs
               cal_MR_err: !VALUES.D_NAN, $ ; cal MR abs. error from config table
               cal_est_MR: !VALUES.D_NAN, $ ; cal MR estimate based on tgt MRs if no cal MR specified
               cal_est_sig:  !VALUES.D_NAN, $ ; error estimate for cal MR calculated from tgt MRs
+              unit: '', $ ; either unit of tgt mr or relative number
               lin_mrs:  DBLARR(sz_mrs)*!VALUES.D_NAN, $ ; MRs calculated linearily
               lin_mrs_rsd:  DBLARR(sz_mrs)*!VALUES.D_NAN, $ ; RSDs inferred from blocks
               tgt_names:  STRARR(sz_mrs), $ ; names of target gases

@@ -6,6 +6,7 @@ FUNCTION create_ref_instrprc
                 mp_ppt:     PTR_NEW(/ALLOCATE_HEAP), $ ; instrument 'repro' from precision experiments, absolute
                 mp_rel:     PTR_NEW(/ALLOCATE_HEAP), $ ; instrument 'repro' from precision experiments, relative (0-1)
                 lod:        PTR_NEW(/ALLOCATE_HEAP), $ ; limit of detection,, absolut
+                unit:       PTR_NEW(/ALLOCATE_HEAP), $
                 comment:    PTR_NEW(/ALLOCATE_HEAP) $
                 }
 
