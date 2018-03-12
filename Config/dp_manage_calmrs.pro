@@ -37,24 +37,27 @@ FUNCTION dp_read_calmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
   unc_rel   = DBLARR(count)
   scale     = STRARR(count)
   comment   = STRARR(count)
+  unit      = STRARR(count)
 
   FOR i=0, count-1 DO BEGIN
-    tmp=strsplit(STRTRIM(data[i+n_table_header]), ';', /EXTRACT)
+    tmp=strsplit(STRTRIM(data[i+n_table_header]), ';', /EXTRACT, /PRESERVE_NULL)
     substance[i] = tmp[0]
     mr_ppt[i]    = FIX(tmp[1], TYPE=5)
     unc_ppt[i]   = FIX(tmp[2], TYPE=5)
     unc_rel[i]   = FIX(tmp[3], TYPE=5)
     scale[i]     = tmp[4]
     comment[i]   = tmp[5]
+    IF N_ELEMENTS(tmp) GT 6 THEN unit[i] = tmp[6]
   ENDFOR
   
-  strct={ canister: canister, $ 
+  strct={ canister  : canister, $ 
           substance : substance, $
-          mr_ppt : mr_ppt, $
-          unc_ppt : unc_ppt, $
-          unc_rel : unc_rel, $
-          scale :   scale, $
-          comment : comment }
+          mr_ppt    : mr_ppt, $
+          unc_ppt   : unc_ppt, $
+          unc_rel   : unc_rel, $
+          scale     :   scale, $
+          comment   : comment, $
+          unit      : unit }
   
   RETURN, strct
   
@@ -110,6 +113,7 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, VERBOSE=v
       *tmp_expcfg.cal_mrs.unc_rel = mrs_strct.unc_rel
       *tmp_expcfg.cal_mrs.scale = mrs_strct.scale
       *tmp_expcfg.cal_mrs.comment = mrs_strct.comment
+      *tmp_expcfg.cal_mrs.unit = mrs_strct.unit
       (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
     ENDFOR
     
@@ -163,6 +167,7 @@ PRO dp_remv_calmrs, sel_exp, LOUD=loud
             *tmp_expcfg.cal_mrs.unc_rel = !NULL
             *tmp_expcfg.cal_mrs.scale = !NULL
             *tmp_expcfg.cal_mrs.comment = !NULL
+            *tmp_expcfg.cal_mrs.unit = !NULL
             (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
           END
         'No':
