@@ -35,9 +35,8 @@ END
 ; Changelog (newest first)
 ; 
 ; TODO
-; - mixing ratios structures: add "unit" tag
+; - mixing ratio structures: add "unit" tag
 ;   - nl strct
-;   - report file
 ; - Config tables: multiple exps loaded -> add remove -> all exps.
 ; - update readme
 ; - add correction: NL

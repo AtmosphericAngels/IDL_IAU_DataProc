@@ -103,12 +103,15 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
           w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).cal_mrs.substance) EQ STRUPCASE(name))
           IF w[0] NE -1 THEN BEGIN
             cal_mr = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w[0]], FORMAT='(D25.3)'), /REMOVE_ALL)
+            IF (*((dp_expcfg[sel_exp]).cal_mrs.unit)) NE !NULL THEN $
+              unit = (*(dp_expcfg[sel_exp]).cal_mrs.unit)[w[0]] ELSE unit = 'NA'
             cal_scale = (*(dp_expcfg[sel_exp]).cal_mrs.scale)[w[0]]
             IF STRCOMPRESS(STRING(cal_scale), /REMOVE_ALL) EQ '-1' THEN cal_scale= 'NA'
           ENDIF
         ENDIF ELSE BEGIN
-          cal_mr= 'NaN'
-          cal_scale= 'NA'
+          cal_mr = 'NaN'
+          unit = 'NA'
+          cal_scale = 'NA'
         ENDELSE
   
         IF *(dp_expcfg[sel_exp]).instr_prc.mp_rel NE !NULL THEN BEGIN
@@ -187,8 +190,8 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
                        FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
           PRINTF, lun, 'Precision Flagging: 0 = undefined, 1 = good, -1 = bad (more than ', prc_limits[0] , $
                        ' sigma), -2 = poor (more than ', prc_limits[1] ,' sigma)' , FORMAT='(A,F7.2,A,F7.2,A)'
-          PRINTF, lun, 'Cal_MR:', sep, cal_mr, sep, 'Cal_Scale:', sep, cal_scale, sep, 'Instr_rel_MP:', $
-                       sep, cal_prc, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
+          PRINTF, lun, 'Cal_MR:', sep, cal_mr, sep, 'MR_unit', sep, unit, sep, 'Cal_Scale:', sep, cal_scale, sep, $
+                       'Instr_rel_MP:', sep, cal_prc, FORMAT='(A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)'
           PRINTF, lun, 'Cal_mintomax:', sep, cal_mintomax, sep, 'Cal_devtofit:', sep, cal_devtofit, $
                        sep, 'Cal_block_rsd:', sep, cal_block_rsd, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
           PRINTF, lun, 'Sam_mean_rsd:', sep, sam_blocks_rsd, FORMAT='(A,A,A)'            
@@ -266,12 +269,15 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).cal_mrs.substance) EQ STRUPCASE(name))
         IF w[0] NE -1 THEN BEGIN
           cal_mr = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w[0]], FORMAT='(D25.3)'), /REMOVE_ALL)
+          IF (*((dp_expcfg[sel_exp]).cal_mrs.unit)) NE !NULL THEN $
+            unit = (*(dp_expcfg[sel_exp]).cal_mrs.unit)[w[0]] ELSE unit = 'NA'
           cal_scale = (*(dp_expcfg[sel_exp]).cal_mrs.scale)[w[0]]
           IF STRCOMPRESS(STRING(cal_scale), /REMOVE_ALL) EQ '-1' THEN cal_scale= 'NA'
         ENDIF
       ENDIF ELSE BEGIN
-        cal_mr= 'NaN'
-        cal_scale= 'NA'
+        cal_mr = 'NaN'
+        unit = 'NA'
+        cal_scale = 'NA'
       ENDELSE
 
       IF *(dp_expcfg[sel_exp]).instr_prc.mp_rel NE !NULL THEN BEGIN
@@ -333,7 +339,6 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
       subst_name=(substlist[sel_exp])[sel_name]
       IF call_mr_calc THEN prelim_MRs=dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg, EVAL_MODE=eval_mode) $
         ELSE prelim_MRs=MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
-      
 
       
       OPENW, lun, fname, /GET_LUN  
@@ -352,8 +357,8 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
                      FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
         PRINTF, lun, 'Precision Flagging: 0 = undefined, 1 = good, -1 = bad (more than ', prc_limits[0] , $
                        ' sigma), -2 = poor (more than ', prc_limits[1] ,' sigma)' , FORMAT='(A,F7.2,A,F7.2,A)'
-        PRINTF, lun, 'Cal_MR:', sep, cal_mr, sep, 'Cal_Scale:', sep, cal_scale, sep, 'Instr_rel_MP:', $
-                     sep, cal_prc, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
+        PRINTF, lun, 'Cal_MR:', sep, cal_mr, sep, 'MR_unit:', sep, unit, sep, 'Cal_Scale:', sep, cal_scale, sep, $
+                     'Instr_rel_MP:', sep, cal_prc, FORMAT='(A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)'
         PRINTF, lun, 'Cal_mintomax:', sep, cal_mintomax, sep, 'Cal_devtofit:', sep, cal_devtofit, $
                      sep, 'Cal_block_rsd:', sep, cal_block_rsd, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
         PRINTF, lun, 'Sam_mean_rsd:', sep, sam_blocks_rsd, FORMAT='(A,A,A)'            
