@@ -39,6 +39,7 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
   
   cal_est_MR=STRCOMPRESS(STRING(nl_strct.cal_est_MR, FORMAT='(D25.5)'), /REMOVE_ALL)
   cal_est_sig=STRCOMPRESS(STRING(nl_strct.cal_est_sig, FORMAT='(D25.6)'), /REMOVE_ALL)
+  unit=nl_strct.unit
   max_dev_to_fit=STRCOMPRESS(STRING(nl_strct.max_dev_to_fit, FORMAT='(D25.9)'), /REMOVE_ALL)
   cal_in_tgt_range=STRCOMPRESS(STRING(nl_strct.cal_in_tgt_range, FORMAT='(I)'), /REMOVE_ALL)
   
@@ -62,7 +63,7 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
     PRINTF, lun, 'Cal_Gas spec. MR:', sep, cal_mr_spec, FORMAT='(A,A,A)'
     PRINTF, lun, 'Cal_Gas spec. abs. error:', sep, cal_mr_err, FORMAT='(A,A,A)'
     PRINTF, lun, 'Substance:', sep, subst, sep, 'm/Q:', sep, mass, sep, 'Eval_Mode:', sep, mode_string, $
-                 FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
+                 sep, 'Unit:', sep, unit, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
     PRINTF, lun, '*** NL function parameters ***', FORMAT='(A)'             
     PRINTF, lun, 'Polynomial Degree:', sep, fct_dgr_str, FORMAT='(A,A,A)'
     PRINTF, lun, 'Parameters:', sep, fct_parms_str
@@ -72,6 +73,7 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
     PRINTF, lun, 'Cal_MR est. abs. precision:', sep, cal_est_sig, FORMAT='(A,A,A)'
     PRINTF, lun, 'Max. dev. between fit and measured values:', sep, max_dev_to_fit
     PRINTF, lun, 'Cal in MR range of targets:', sep, cal_in_tgt_range
+    PRINTF, lun, 'MR_unit:', sep, unit, FORMAT='(A,A,A)'
     PRINTF, lun, '*** Results per individual measurement ***', FORMAT='(A)'
     
     colheader=['tgt_name', sep, 'tgt_mr_def', sep, 'lin_MR', sep, 'lin_MR_rsd', sep, 'delta_MR']

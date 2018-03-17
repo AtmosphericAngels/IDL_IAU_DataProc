@@ -44,7 +44,7 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
     THEN BEGIN
       IF loud THEN msg=DIALOG_MESSAGE('No Cal MRs found, switching to Cal-MR estimation.', /INFORMATION)
       estimate_cal=1
-    ENDIF ELSE estimate_cal=estimate_cal
+    ENDIF ; ELSE estimate_cal=estimate_cal
     
   ; check if sample treatment is 'individual'
   treat_arr = (dp_chrom[sel_exp]).subst.rres.sam_treat
@@ -77,6 +77,19 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
   
   w_s_cal = WHERE(cal_substs EQ subst)
   w_s_tgt = WHERE(tgt_substs EQ subst) 
+  
+  CASE estimate_cal OF
+    0: $ ; unit from cal mr table
+      BEGIN
+      IF (*((dp_expcfg[sel_exp]).cal_mrs.unit)) NE !NULL THEN $
+        unit = (*(dp_expcfg[sel_exp]).cal_mrs.unit)[w_s_cal] ELSE unit = 'NA'
+    END
+    1: $ ; unit from tgt mr table
+      BEGIN
+      IF (*((dp_expcfg[sel_exp]).tgt_mrs.unit)) NE !NULL THEN $
+        unit = (*(dp_expcfg[sel_exp]).cal_mrs.unit)[w_s_tgt] ELSE unit = 'NA'
+    END
+  ENDCASE
   
   ; check if the selected substance (dataproc widget) is also found in
   ; tgt_mrs and cal_mrs table. abort if not.
@@ -346,6 +359,7 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
           nl_strct[i].cal_MR_err = cal_MR_err
           nl_strct[i].cal_est_MR = cal_est_MR
           nl_strct[i].cal_est_sig = cal_est_sig
+          nl_strct[i].unit = unit
           nl_strct[i].lin_mrs = ((mrs[*,i])[w_fin])[sort_ix]
           nl_strct[i].lin_mrs_rsd = ((mrs_rsd[*,i])[w_fin])[sort_ix]
           nl_strct[i].tgt_names = ((s_names_arr[*,i])[w_fin])[sort_ix]
