@@ -63,7 +63,12 @@ PRO dp_read_cocorrparms, sel_exp, SEL_ONLY=sel_only, PATH=path, DEF_FILE=def_fil
     (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
   
     tmp_chrom=(dp_chrom[exps[i]])
-      tmp_chrom.subst[*].rres[*].active_corr[0] = !TRUE
+    ; check for which species carry over correction is defined
+      exp_subst = tmp_chrom[0].subst.name[0]
+      def_subst = substance
+      match_ix = arr1D_get_matchIX(exp_subst, def_subst)
+      IF match_ix[0] NE -1 THEN $
+        tmp_chrom.subst[match_ix].rres.active_corr[0] = !TRUE
     (dp_chrom[exps[i]])=TEMPORARY(tmp_chrom)
   ENDFOR
   

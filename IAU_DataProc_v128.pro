@@ -35,8 +35,6 @@ END
 ; Changelog (newest first)
 ; 
 ; TODO
-; - carry-over correction (corrections in general)
-;   - bugfixing: set correction variable only true for species that are actually affected (defined in co-corr def file)
 ; - mixing ratios structures: add "unit" tag
 ;   - prc strct
 ;   - nl strct

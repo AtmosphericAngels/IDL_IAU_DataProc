@@ -11,7 +11,7 @@
 ; - in case of no match, a NaN is put into the index array
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
-FUNCTION arr1D_get_matchIX, ref_arr, comp_arr, CASE_SENSI=case_sensi
+FUNCTION arr1D_get_matchIX, ref_arr, comp_arr, CASE_SENSI=case_sensi, NO_MATCH_IX=no_match_ix
   
   ; check input argument types
   type_ref = SIZE(ref_arr, /TYPE)
@@ -27,8 +27,8 @@ FUNCTION arr1D_get_matchIX, ref_arr, comp_arr, CASE_SENSI=case_sensi
   
   ; check for string type and case sensitive keyword
   IF type_ref EQ 7 AND NOT KEYWORD_SET(case_sensi) THEN BEGIN
-    ref_arr=STRUPCASE(ref_arr)
-    comp_arr=STRUPCASE(comp_arr)
+    ref_arr=STRUPCASE(TEMPORARY(ref_arr))
+    comp_arr=STRUPCASE(TEMPORARY(comp_arr))
   ENDIF
 
   match_ix=MAKE_ARRAY(N_ELEMENTS(ref_arr), /LONG, VALUE=-1)
@@ -38,8 +38,11 @@ FUNCTION arr1D_get_matchIX, ref_arr, comp_arr, CASE_SENSI=case_sensi
   w_m = WHERE(match_ix NE -1, n_m)
   
   IF n_m GT 0 THEN $
-    match_ix=match_ix[WHERE(match_ix NE -1)] $
-      ELSE match_ix=-1
+    match_ix=match_ix[WHERE(match_ix NE -1, COMPLEMENT=no_match_ix)] $
+  ELSE BEGIN
+    match_ix=-1
+    no_match_ix=-1
+  ENDELSE
   
   RETURN, match_ix
   
