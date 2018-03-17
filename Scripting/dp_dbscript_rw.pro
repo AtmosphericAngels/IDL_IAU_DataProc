@@ -31,6 +31,8 @@ FUNCTION dp_dbscript_read, FILE=file, PATH=path_wd
   FREE_LUN, lun
 
   n_lines_hdr = LONG(table[0])
+  
+  IF n_lines_hdr EQ nl THEN RETURN, !NULL
 
   db_strct = { $
                 active    :   -1,  $
@@ -47,7 +49,8 @@ FUNCTION dp_dbscript_read, FILE=file, PATH=path_wd
                 subst_namedef_path    :   '',  $
                 save_txtreport    :   -1,  $
                 analyse_NL    :   -1,  $   
-                proc_timestamp    :   ''  $
+                proc_timestamp    :   '',  $
+                corr_carryover    :   ''  $
               }
 
   dp_dbstrct = {header : table[0:n_lines_hdr-1], data : REPLICATE(db_strct, nl-n_lines_hdr)}
@@ -69,6 +72,7 @@ FUNCTION dp_dbscript_read, FILE=file, PATH=path_wd
     dp_dbstrct.data[i].save_txtreport = tmp[12]
     dp_dbstrct.data[i].analyse_NL = tmp[13]
     dp_dbstrct.data[i].proc_timestamp = tmp[14]
+    IF N_ELEMENTS(tmp) GT 15 THEN dp_dbstrct.data[i].corr_carryover = tmp[15]
   ENDFOR ; end loop through experiments
 
   RETURN, dp_dbstrct
@@ -101,7 +105,7 @@ FUNCTION dp_dbscript_write, dp_dbstrct, PATH=path, UTC=utc
 
   dp_dbstrct.header[-3] = jultime2timestring(SYSTIME(/JULIAN))+sep
 
-  FOR i=0, n_exp-1 DO $
+  FOR i=0, n_exp-1 DO BEGIN
     cnf_str[i] = $
     STRING(dp_dbstrct.data[i].active, FORMAT='(I)') + sep + $
     dp_dbstrct.data[i].exp_id + sep + $
@@ -118,6 +122,12 @@ FUNCTION dp_dbscript_write, dp_dbstrct, PATH=path, UTC=utc
     STRING(dp_dbstrct.data[i].save_txtreport, FORMAT='(I)') + sep + $
     STRING(dp_dbstrct.data[i].analyse_NL, FORMAT='(I)') + sep + $
     dp_dbstrct.data[i].proc_timestamp
+    
+    IF (WHERE(TAG_NAMES(dp_dbstrct.data) EQ 'CORR_CARRYOVER'))[0] NE -1 THEN $
+      cnf_str[i] += sep + dp_dbstrct.data[i].corr_carryover $
+    ELSE cnf_str[i] += sep + sep
+    
+  ENDFOR
 
   OPENW, lun, db_fname, /GET_LUN
     FOR j=0, n_lines_hdr-1 DO PRINTF, lun, dp_dbstrct.header[j]

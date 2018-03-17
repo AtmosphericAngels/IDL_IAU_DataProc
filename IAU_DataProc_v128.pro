@@ -36,10 +36,11 @@ END
 ; 
 ; TODO
 ; - carry-over correction (corrections in general)
-;   - integration into db-scripting
 ;   - integration into report files
-; - mixing ratios structures: add "unit" tag. Keep "ppt" in tag names for downward compatibility...
-;   - add unit tag to mr tables?
+; - mixing ratios structures: add "unit" tag
+;   - prc strct
+;   - nl strct
+;   - report file
 ; - Config tables: multiple exps loaded -> add remove -> all exps.
 ; - update readme
 ; - add correction: NL

@@ -132,13 +132,13 @@ FUNCTION dp_dbscript_chk, dp_dbstrct, LOUD=loud, N_TESTED=n_tested
       ENDIF ; end if: active
     ENDFOR
     
-    IF no_data EQ 0 THEN  n_passed = n_passed + 1
-    IF no_expinfo EQ 0 THEN  n_passed = n_passed + 1
-    IF no_treat EQ 0 THEN  n_passed = n_passed + 1
-    IF no_calmrs EQ 0 THEN  n_passed = n_passed + 1
-    IF no_tgtmrs EQ 0 THEN  n_passed = n_passed + 1
-    IF no_prc EQ 0 THEN  n_passed = n_passed + 1
-	IF no_namedef EQ 0 THEN  n_passed = n_passed + 1
+    IF no_data EQ 0 THEN  n_passed += 1
+    IF no_expinfo EQ 0 THEN  n_passed += 1
+    IF no_treat EQ 0 THEN  n_passed += 1
+    IF no_calmrs EQ 0 THEN  n_passed += 1
+    IF no_tgtmrs EQ 0 THEN  n_passed += 1
+    IF no_prc EQ 0 THEN  n_passed += 1
+    IF no_namedef EQ 0 THEN  n_passed += 1
 
   ENDIF
   
