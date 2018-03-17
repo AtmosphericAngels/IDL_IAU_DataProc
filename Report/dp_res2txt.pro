@@ -77,6 +77,9 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         
         eval_mode = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_select)[0]
         mode_string = (['signal_area', 'signal_height'])[eval_mode]
+        w_corr = WHERE(((dp_chrom[sel_exp])[ix].subst[sel_name].rres.active_corr[0])[0] EQ !TRUE)
+        IF w_corr[0] NE -1 THEN correction = (['carry-over'])[w_corr] $
+          ELSE correction = 'none'
         
         IF FINITE((dp_chrom[sel_exp])[ix].subst[sel_name].ires.rt) THEN $
           prefix=STRCOMPRESS(STRING((dp_chrom[sel_exp])[ix].subst[sel_name].ires.rt, FORMAT='(F12.2)'), /REMOVE_ALL)+'_'   
@@ -189,8 +192,8 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
           PRINTF, lun, 'Cal_mintomax:', sep, cal_mintomax, sep, 'Cal_devtofit:', sep, cal_devtofit, $
                        sep, 'Cal_block_rsd:', sep, cal_block_rsd, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
           PRINTF, lun, 'Sam_mean_rsd:', sep, sam_blocks_rsd, FORMAT='(A,A,A)'            
+          PRINTF, lun, 'Corrections applied:', sep, correction, FORMAT='(A,A,A)'
           PRINTF, lun, 'Separator:', sep, 'TAB', FORMAT='(A,A,A)'
-          PRINTF, lun, '*** End of Header ***', FORMAT='(A)'
     
           PRINTF, lun, colheader, FORMAT='(A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)'
          
@@ -244,6 +247,9 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
       
       eval_mode = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_select)[0]
       mode_string = (['signal_area', 'signal_height'])[eval_mode]
+      w_corr = WHERE(((dp_chrom[sel_exp])[ix].subst[sel_name].rres.active_corr[0])[0] EQ !TRUE)
+      IF w_corr[0] NE -1 THEN correction = (['carry-over'])[w_corr] $
+        ELSE correction = 'none'
     
       name=STRCOMPRESS((dp_chrom[sel_exp])[ix].subst[sel_name].name, /REMOVE_ALL)       
       IF verbose THEN print, 'exporting results for: ', name  
@@ -351,8 +357,8 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         PRINTF, lun, 'Cal_mintomax:', sep, cal_mintomax, sep, 'Cal_devtofit:', sep, cal_devtofit, $
                      sep, 'Cal_block_rsd:', sep, cal_block_rsd, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
         PRINTF, lun, 'Sam_mean_rsd:', sep, sam_blocks_rsd, FORMAT='(A,A,A)'            
+        PRINTF, lun, 'Corrections applied:', sep, correction, FORMAT='(A,A,A)'
         PRINTF, lun, 'Separator:', sep, 'TAB', FORMAT='(A,A,A)'
-        PRINTF, lun, '*** End of Header ***', FORMAT='(A)'
 
         PRINTF, lun, colheader, FORMAT='(A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)'
        
