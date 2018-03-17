@@ -36,22 +36,25 @@ FUNCTION dp_read_instrprc, sel_exp, exp_name, substlist, PATH=path, DEF_FILE=def
   mp_rel    = DBLARR(count)
   lod       = DBLARR(count)
   comment   = STRARR(count)
+  unit      = STRARR(count)
 
   FOR i=0, count-1 DO BEGIN
-    tmp=strsplit(STRTRIM(data[i+n_table_header]), ';', /EXTRACT)
+    tmp=strsplit(STRTRIM(data[i+n_table_header]), ';', /EXTRACT, /PRESERVE_NULL)
     substance[i] = tmp[0]
     mp_abs[i]    = FIX(tmp[1], TYPE=5)
     mp_rel[i]    = FIX(tmp[2], TYPE=5)
     lod[i]       = FIX(tmp[3], TYPE=5)
     comment[i]   = tmp[4]
+    IF N_ELEMENTS(tmp) GT 5 THEN unit[i] = tmp[5]
   ENDFOR
 
   strct={ instrument : instrument, $
-    substance : substance, $
-    mp_abs : mp_abs, $
-    mp_rel : mp_rel, $
-    lod : lod, $
-    comment : comment }
+          substance  : substance, $
+          mp_abs     : mp_abs, $
+          mp_rel     : mp_rel, $
+          lod        : lod, $
+          comment    : comment, $
+          unit       : unit }
 
   IF verbose THEN BEGIN
     print, '+++'
@@ -118,6 +121,7 @@ PRO dp_apply_instrprc, PRC_STRCT=prc_strct, sel_exp, SEL_ONLY=sel_only, QUIET=qu
         *tmp_expcfg.instr_prc.mp_rel = prc_strct.mp_rel
         *tmp_expcfg.instr_prc.lod = prc_strct.lod
         *tmp_expcfg.instr_prc.comment = prc_strct.comment
+        *tmp_expcfg.instr_prc.unit = prc_strct.unit
         IF verbose THEN print, 'instrument precision values: integrated.'
         
       ENDIF
@@ -205,6 +209,7 @@ PRO dp_remv_instrprc, sel_exp, LOUD=loud
         *tmp_expcfg.instr_prc.mp_rel = !NULL
         *tmp_expcfg.instr_prc.lod = !NULL
         *tmp_expcfg.instr_prc.comment = !NULL
+        *tmp_expcfg.instr_prc.unit = !NULL
 
         FOR n=0, n_subst-1 DO BEGIN
           tmp_chrom.subst[n].rres.rsp_area.sys_prc = DBLARR(n_chrom)*!VALUES.D_NAN

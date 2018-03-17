@@ -30,9 +30,9 @@ PRO dp_show_mrtable, sel_exp
   value[1,3]= 'MR'
   value[2,3]= 'UNC_abs'
   value[3,3]= 'UNC_rel'
-  value[4,3]= 'unit'
+  value[4,3]= 'Unit'
   value[5,3]= 'Scale'
-  value[6,3]= 'comment'
+  value[6,3]= 'Comment'
   
   value[0,4:-1]= *((dp_expcfg[sel_exp]).cal_mrs.substance) ; data...
   value[1,4:-1]= STRCOMPRESS(STRING(*((dp_expcfg[sel_exp]).cal_mrs.mr_ppt), FORMAT=format), /REMOVE_ALL)

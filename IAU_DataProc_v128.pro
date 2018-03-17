@@ -36,7 +36,6 @@ END
 ; 
 ; TODO
 ; - mixing ratios structures: add "unit" tag
-;   - prc strct
 ;   - nl strct
 ;   - report file
 ; - Config tables: multiple exps loaded -> add remove -> all exps.
@@ -45,6 +44,9 @@ END
 ;   - nl strct in dp_expcfg?
 ;   -> avoid this issue by checking for tag name "nl_analysis" before writing or reading nl results...
 ; - handling of "experiment type" and "experiment specification"?
+; 
+; 2018-03-17
+; CHANGELOG FROM NOW ON IN THE FORM OF GIT COMMITS!
 ;
 ; 2018-03-12 (v1.28, FO)
 ; - added unit tag to structures that contain absolute values / mixing ratios.

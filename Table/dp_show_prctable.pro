@@ -16,7 +16,7 @@ PRO dp_show_prctable, sel_exp
   ENDIF
   
   nl_hdr  = 4
-  width   = 5
+  width   = 6
   n_subst = N_ELEMENTS(*((dp_expcfg[sel_exp]).instr_prc.substance))
   
   value=STRARR(width,nl_hdr+n_subst)
@@ -29,15 +29,20 @@ PRO dp_show_prctable, sel_exp
   value[1,3]= 'MP_abs'
   value[2,3]= 'MP_rel'
   value[3,3]= 'LOD'
-  value[4,3]= 'comment'
+  value[4,3]= 'Unit'
+  value[5,3]= 'Comment'
   
   value[0,4:-1]= *((dp_expcfg[sel_exp]).instr_prc.substance) ; data...
   value[1,4:-1]= STRCOMPRESS(FIX(*((dp_expcfg[sel_exp]).instr_prc.mp_ppt), TYPE=7), /REMOVE_ALL)
   value[2,4:-1]= STRCOMPRESS(FIX(*((dp_expcfg[sel_exp]).instr_prc.mp_rel), TYPE=7), /REMOVE_ALL)
   value[3,4:-1]= STRCOMPRESS(FIX(*((dp_expcfg[sel_exp]).instr_prc.lod), TYPE=7), /REMOVE_ALL)
-  value[4,4:-1]= *((dp_expcfg[sel_exp]).instr_prc.comment)
   
-  column_width=[150,100,100,100,100]
+  IF (*((dp_expcfg[sel_exp]).instr_prc.unit)) NE !NULL THEN $
+    value[4,4:-1]= *((dp_expcfg[sel_exp]).instr_prc.unit)
+    
+  value[5,4:-1]= *((dp_expcfg[sel_exp]).instr_prc.comment)
+  
+  column_width=[150,100,100,100,100,150]
   
   mainbase=WIDGET_BASE(title='Loaded Prc Table')
   ID=WIDGET_TABLE(mainbase, VALUE=value, COLUMN_WIDTH=column_width, ALIGNMENT=0)

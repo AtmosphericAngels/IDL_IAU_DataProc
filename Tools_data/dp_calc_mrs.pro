@@ -21,7 +21,6 @@ FUNCTION dp_calc_mrs, subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, $
   mrs_array = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
   mrs=mrs_array
  
- 
   IF PTR_VALID((dp_expcfg[sel_exp]).cal_mrs.substance) THEN BEGIN
     w_subst=WHERE(*(dp_expcfg[sel_exp]).cal_mrs.substance EQ subst_name)
     IF w_subst[0] EQ -1 THEN RETURN, mrs_array
@@ -56,10 +55,10 @@ FUNCTION dp_calc_mrs, subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, $
   w_mr_fin=WHERE(FINITE(mrs) EQ 1, n_finite) 
   IF n_finite GT 0 THEN mrs_array[w_mr_fin] = mrs[w_mr_fin]
 
-   FOR i=0, n_chrom-1 DO BEGIN
-     IF FINITE(mrs_array[i]) THEN $
-       IF (mrs_array[i] LT 0.) THEN mrs_array[i] = 'NaN' 
-   END
+  FOR i=0, n_chrom-1 DO BEGIN
+    IF FINITE(mrs_array[i]) THEN $
+      IF (mrs_array[i] LT 0.) THEN mrs_array[i] = 'NaN' 
+  END
   
   RETURN, mrs_array
   

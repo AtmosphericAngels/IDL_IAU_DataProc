@@ -26,7 +26,7 @@ PRO dp_show_tgtmrtable, sel_exp
       RETURN
     ENDELSE
     
-    column_labels=['Substance','MR','UNC_abs','UNC_rel','Unit','Scale','comment']
+    column_labels=['Substance','MR','UNC_abs','UNC_rel','Unit','Scale','Comment']
     row_labels=TGT_NAME
   
     nl_hdr  = 0
