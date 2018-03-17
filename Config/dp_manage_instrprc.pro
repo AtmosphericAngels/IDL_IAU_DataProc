@@ -186,44 +186,48 @@ END
 ; PURPOSE: removes loaded cal mixing ratio values into dp_data.
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
-PRO dp_remv_instrprc, sel_exp, LOUD=loud
+PRO dp_remv_instrprc, sel_exp, SEL_ONLY=sel_only, LOUD=loud
 
   COMMON dp_data
+  
+  IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
 
-  IF *(dp_expcfg[sel_exp]).instr_prc.mp_ppt NE !NULL $
-    THEN BEGIN
-    quest='Yes'
-    IF loud THEN quest=DIALOG_MESSAGE('Remove instrument prc values: are you sure?', /QUESTION)
-    CASE quest OF
-      'Yes': $
-        BEGIN
-        n_subst=N_ELEMENTS((dp_chrom[sel_exp])[0].subst.name)
-
-        tmp_chrom=(dp_chrom[sel_exp])
-        n_chrom=N_ELEMENTS(tmp_chrom.subst[0].rres.rsp_area.block_rsd)
-
-        tmp_expcfg=(dp_expcfg[sel_exp])
-        tmp_expcfg.instr_prc.instrument = ''
-        *tmp_expcfg.instr_prc.substance = !NULL
-        *tmp_expcfg.instr_prc.mp_ppt = !NULL
-        *tmp_expcfg.instr_prc.mp_rel = !NULL
-        *tmp_expcfg.instr_prc.lod = !NULL
-        *tmp_expcfg.instr_prc.comment = !NULL
-        *tmp_expcfg.instr_prc.unit = !NULL
-
-        FOR n=0, n_subst-1 DO BEGIN
-          tmp_chrom.subst[n].rres.rsp_area.sys_prc = DBLARR(n_chrom)*!VALUES.D_NAN
-          tmp_chrom.subst[n].rres.rsp_area.prc_flag = INTARR(n_chrom)
-          tmp_chrom.subst[n].rres.rsp_height.sys_prc = DBLARR(n_chrom)*!VALUES.D_NAN
-          tmp_chrom.subst[n].rres.rsp_height.prc_flag = INTARR(n_chrom)
-        ENDFOR
-
-        (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
-        (dp_chrom[sel_exp])=TEMPORARY(tmp_chrom) ; ...move data back into list.
-      END
-      'No':
-      ELSE:
-    ENDCASE
-  ENDIF
-
+  FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
+    IF *(dp_expcfg[sel_exp]).instr_prc.mp_ppt NE !NULL $
+      THEN BEGIN
+      quest='Yes'
+      IF loud THEN quest=DIALOG_MESSAGE('Remove instrument prc values: are you sure?', /QUESTION)
+      CASE quest OF
+        'Yes': $
+          BEGIN
+          n_subst=N_ELEMENTS((dp_chrom[sel_exp])[0].subst.name)
+  
+          tmp_chrom=(dp_chrom[sel_exp])
+          n_chrom=N_ELEMENTS(tmp_chrom.subst[0].rres.rsp_area.block_rsd)
+  
+          tmp_expcfg=(dp_expcfg[sel_exp])
+          tmp_expcfg.instr_prc.instrument = ''
+          *tmp_expcfg.instr_prc.substance = !NULL
+          *tmp_expcfg.instr_prc.mp_ppt = !NULL
+          *tmp_expcfg.instr_prc.mp_rel = !NULL
+          *tmp_expcfg.instr_prc.lod = !NULL
+          *tmp_expcfg.instr_prc.comment = !NULL
+          *tmp_expcfg.instr_prc.unit = !NULL
+  
+          FOR n=0, n_subst-1 DO BEGIN
+            tmp_chrom.subst[n].rres.rsp_area.sys_prc = DBLARR(n_chrom)*!VALUES.D_NAN
+            tmp_chrom.subst[n].rres.rsp_area.prc_flag = INTARR(n_chrom)
+            tmp_chrom.subst[n].rres.rsp_height.sys_prc = DBLARR(n_chrom)*!VALUES.D_NAN
+            tmp_chrom.subst[n].rres.rsp_height.prc_flag = INTARR(n_chrom)
+          ENDFOR
+  
+          (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
+          (dp_chrom[sel_exp])=TEMPORARY(tmp_chrom) ; ...move data back into list.
+        END
+        'No':
+        ELSE:
+      ENDCASE
+    ENDIF
+  ENDFOR
+  
 END

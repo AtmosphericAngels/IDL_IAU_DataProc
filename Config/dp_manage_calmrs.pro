@@ -148,31 +148,35 @@ END
 ; PURPOSE: removes loaded cal mixing ratio values into dp_data.
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
-PRO dp_remv_calmrs, sel_exp, LOUD=loud
+PRO dp_remv_calmrs, sel_exp, SEL_ONLY=sel_only, LOUD=loud
 
   COMMON dp_data
   
-  IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt NE !NULL $
-    THEN BEGIN
-      quest='Yes'
-      IF loud THEN quest=DIALOG_MESSAGE('Remove Cal MR values: are you sure?', /QUESTION)
-      CASE quest OF
-        'Yes': $
-          BEGIN
-            tmp_expcfg=(dp_expcfg[sel_exp])
-            tmp_expcfg.cal_mrs.canister = ''
-            *tmp_expcfg.cal_mrs.substance = !NULL
-            *tmp_expcfg.cal_mrs.mr_ppt = !NULL
-            *tmp_expcfg.cal_mrs.unc_ppt = !NULL
-            *tmp_expcfg.cal_mrs.unc_rel = !NULL
-            *tmp_expcfg.cal_mrs.scale = !NULL
-            *tmp_expcfg.cal_mrs.comment = !NULL
-            *tmp_expcfg.cal_mrs.unit = !NULL
-            (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
-          END
-        'No':
-        ELSE:
-      ENDCASE
-    ENDIF 
+  IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
+  
+  FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN  
+    IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt NE !NULL $
+      THEN BEGIN
+        quest='Yes'
+        IF loud THEN quest=DIALOG_MESSAGE('Remove Cal MR values: are you sure?', /QUESTION)
+        CASE quest OF
+          'Yes': $
+            BEGIN
+              tmp_expcfg=(dp_expcfg[sel_exp])
+              tmp_expcfg.cal_mrs.canister = ''
+              *tmp_expcfg.cal_mrs.substance = !NULL
+              *tmp_expcfg.cal_mrs.mr_ppt = !NULL
+              *tmp_expcfg.cal_mrs.unc_ppt = !NULL
+              *tmp_expcfg.cal_mrs.unc_rel = !NULL
+              *tmp_expcfg.cal_mrs.scale = !NULL
+              *tmp_expcfg.cal_mrs.comment = !NULL
+              *tmp_expcfg.cal_mrs.unit = !NULL
+              (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
+            END
+          'No':
+          ELSE:
+        ENDCASE
+      ENDIF 
+  ENDFOR
   
 END

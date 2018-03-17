@@ -84,7 +84,7 @@ END
 ; PURPOSE: resets loaded treatcfg to default.
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
-FUNCTION dp_remv_treatcfg, sel_exp, SEL_ONLY=sel_only, LOUD=loud
+PRO dp_remv_treatcfg, sel_exp, SEL_ONLY=sel_only, LOUD=loud
 
   COMMON DP_DATA
     
@@ -98,7 +98,7 @@ FUNCTION dp_remv_treatcfg, sel_exp, SEL_ONLY=sel_only, LOUD=loud
       w=WHERE(finvals NE 0)
       IF w[0] NE -1 THEN BEGIN
         quest=DIALOG_MESSAGE('Results found. These will be overwritten. Continue?', /QUESTION)
-        IF quest EQ 'No' THEN RETURN, 0
+        IF quest EQ 'No' THEN RETURN
       ENDIF
     ENDFOR
   ENDIF
@@ -112,8 +112,6 @@ FUNCTION dp_remv_treatcfg, sel_exp, SEL_ONLY=sel_only, LOUD=loud
     *tmp_expcfg.treatcfg.eval_mode = !NULL
     (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
   ENDFOR
-  
-  RETURN, 1
   
 END
 ;------------------------------------------------------------------------------------------------------------------------

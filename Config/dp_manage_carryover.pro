@@ -82,41 +82,43 @@ END
 ; PURPOSE: removes carry over correction (config and correction flag in rres.active_corr[0].
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
-FUNCTION dp_remv_cocorr, sel_exp, LOUD=loud
+PRO dp_remv_cocorr, sel_exp, SEL_ONLY=sel_only, LOUD=loud
 
   COMMON dp_data
 
-  IF *(dp_expcfg[sel_exp]).carryover.substance NE !NULL $
-    THEN BEGIN
-      IF loud THEN quest=DIALOG_MESSAGE('Remove carry-over correction from selected experiment: are you sure?', /QUESTION) $
-        ELSE  quest='Yes'
-      CASE quest OF
-        'Yes': $
-          BEGIN
-            tmp_chrom = (dp_chrom[sel_exp])
-            tmp_expcfg = (dp_expcfg[sel_exp])
-            
-            empty_strct = create_ref_cocorr()
-            tmp_expcfg.carryover.substance = empty_strct.substance
-            tmp_expcfg.carryover.comment = empty_strct.comment
-            tmp_expcfg.carryover.cal_to_sam = empty_strct.cal_to_sam
-            tmp_expcfg.carryover.sam_to_sam = empty_strct.sam_to_sam
-            tmp_expcfg.carryover.sam_to_cal = empty_strct.sam_to_cal
-            
-            tmp_chrom.subst[*].rres[*].active_corr[0] = !FALSE
-                
-            (dp_expcfg[sel_exp]) = TEMPORARY(tmp_expcfg)
-            (dp_chrom[sel_exp]) = TEMPORARY(tmp_chrom)
-          END
-        'No': RETURN, 0
-        ELSE:
-      ENDCASE
-  ENDIF ELSE $
-    IF loud THEN BEGIN
-      msg=DIALOG_MESSAGE('No carry-over config found for selected experiment.', /INFORMATION)
-      RETURN, 0
-    ENDIF
-  
-  RETURN, 1
+  IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
+
+  FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
+    IF *(dp_expcfg[sel_exp]).carryover.substance NE !NULL $
+      THEN BEGIN
+        IF loud THEN quest=DIALOG_MESSAGE('Remove carry-over correction from selected experiment: are you sure?', /QUESTION) $
+          ELSE  quest='Yes'
+        CASE quest OF
+          'Yes': $
+            BEGIN
+              tmp_chrom = (dp_chrom[sel_exp])
+              tmp_expcfg = (dp_expcfg[sel_exp])
+              
+              empty_strct = create_ref_cocorr()
+              tmp_expcfg.carryover.substance = empty_strct.substance
+              tmp_expcfg.carryover.comment = empty_strct.comment
+              tmp_expcfg.carryover.cal_to_sam = empty_strct.cal_to_sam
+              tmp_expcfg.carryover.sam_to_sam = empty_strct.sam_to_sam
+              tmp_expcfg.carryover.sam_to_cal = empty_strct.sam_to_cal
+              
+              tmp_chrom.subst[*].rres[*].active_corr[0] = !FALSE
+                  
+              (dp_expcfg[sel_exp]) = TEMPORARY(tmp_expcfg)
+              (dp_chrom[sel_exp]) = TEMPORARY(tmp_chrom)
+            END
+          'No': RETURN
+          ELSE:
+        ENDCASE
+    ENDIF ELSE $
+      IF loud THEN BEGIN
+        msg=DIALOG_MESSAGE('No carry-over config found for selected experiment.', /INFORMATION)
+        RETURN
+      ENDIF
+  ENDFOR
   
 END

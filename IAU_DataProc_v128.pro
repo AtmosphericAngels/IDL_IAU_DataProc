@@ -35,9 +35,6 @@ END
 ; Changelog (newest first)
 ; 
 ; TODO
-; - mixing ratio structures: add "unit" tag
-;   - nl strct
-; - Config tables: multiple exps loaded -> add remove -> all exps.
 ; - update readme
 ; - add correction: NL
 ;   - nl strct in dp_expcfg?

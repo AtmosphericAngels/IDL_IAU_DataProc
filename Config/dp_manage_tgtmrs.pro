@@ -124,31 +124,35 @@ END
 ; PURPOSE: removes loaded tgt mixing ratio values into dp_data.
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
-PRO dp_remv_tgtmrs, sel_exp, LOUD=loud
+PRO dp_remv_tgtmrs, sel_exp, SEL_ONLY=sel_only, LOUD=loud
 
   COMMON dp_data
+  
+  IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
 
-  IF *(dp_expcfg[sel_exp]).tgt_mrs.mr_ppt NE !NULL $
-    THEN BEGIN
-    quest='Yes'
-    IF loud THEN quest=DIALOG_MESSAGE('Remove tgt MR values: are you sure?', /QUESTION)
-    CASE quest OF
-      'Yes': $
-        BEGIN
-        tmp_expcfg=(dp_expcfg[sel_exp])
-        *tmp_expcfg.tgt_mrs.tgt_name = !NULL
-        *tmp_expcfg.tgt_mrs.substance = !NULL
-        *tmp_expcfg.tgt_mrs.mr_ppt = !NULL
-        *tmp_expcfg.tgt_mrs.unc_ppt = !NULL
-        *tmp_expcfg.tgt_mrs.unc_rel = !NULL
-        *tmp_expcfg.tgt_mrs.scale = !NULL
-        *tmp_expcfg.tgt_mrs.comment = !NULL
-        *tmp_expcfg.tgt_mrs.unit = !NULL
-        (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
-      END
-      'No':
-      ELSE:
-    ENDCASE
-  ENDIF
+  FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
+    IF *(dp_expcfg[sel_exp]).tgt_mrs.mr_ppt NE !NULL $
+      THEN BEGIN
+      quest='Yes'
+      IF loud THEN quest=DIALOG_MESSAGE('Remove tgt MR values: are you sure?', /QUESTION)
+      CASE quest OF
+        'Yes': $
+          BEGIN
+          tmp_expcfg=(dp_expcfg[sel_exp])
+          *tmp_expcfg.tgt_mrs.tgt_name = !NULL
+          *tmp_expcfg.tgt_mrs.substance = !NULL
+          *tmp_expcfg.tgt_mrs.mr_ppt = !NULL
+          *tmp_expcfg.tgt_mrs.unc_ppt = !NULL
+          *tmp_expcfg.tgt_mrs.unc_rel = !NULL
+          *tmp_expcfg.tgt_mrs.scale = !NULL
+          *tmp_expcfg.tgt_mrs.comment = !NULL
+          *tmp_expcfg.tgt_mrs.unit = !NULL
+          (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
+        END
+        'No':
+        ELSE:
+      ENDCASE
+    ENDIF
+  ENDFOR
 
 END
