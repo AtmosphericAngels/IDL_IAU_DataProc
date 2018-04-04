@@ -18,8 +18,7 @@ PRO IAU_DataProc_v128
 
   dp_def_common, 1.28
 
-  path_wd = 'D:\PROGRAMMING\debugging\iau_dataproc\multi_exp'
-;  path_wd = 'E:\KIT_DATA\MPI_GHGGC_Data_netcdf'
+  path_wd = 'E:\KIT_DATA\MPI_GHGGC_Data_netcdf'
 ;  path_wd = 'D:\'
   
   error_handler_IO = 0
@@ -27,19 +26,12 @@ PRO IAU_DataProc_v128
   dp_wid_main_ini
 
 ;  Outdir = 'D:\PROGRAMMING\debugging\iau_dataproc\rt'
-;  sfile = 'D:\PROGRAMMING\IDL_WD\IAU_DataProc_1X\IAU_DataProc_v124.sav'
-;  MAKE_RT, 'IAU_DataProc_v124', Outdir, SAVEFILE=sfile, /OVERWRITE
+;  sfile = 'D:\PROGRAMMING\IDL_WD\IAU_DataProc_1X\IAU_DataProc_v128.sav'
+;  MAKE_RT, 'IAU_DataProc_v128', Outdir, SAVEFILE=sfile, /OVERWRITE
   
 END
 ;------------------------------------------------------------------------------------------------------------------------
 ; Changelog (newest first)
-; 
-; TODO
-; - update readme
-; - add correction: NL
-;   - nl strct in dp_expcfg?
-;   -> avoid this issue by checking for tag name "nl_analysis" before writing or reading nl results...
-; - handling of "experiment type" and "experiment specification"?
 ; 
 ; 2018-03-17
 ; CHANGELOG FROM NOW ON IN THE FORM OF GIT COMMITS!
