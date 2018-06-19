@@ -265,6 +265,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         
       IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt NE !NULL THEN BEGIN
         cal_mr=!VALUES.D_NAN
+        unit = 'NA'
         cal_scale= 'NA'
         w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).cal_mrs.substance) EQ STRUPCASE(name))
         IF w[0] NE -1 THEN BEGIN
