@@ -29,7 +29,7 @@ FUNCTION dp_read_calmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
   CLOSE, LUN
   FREE_LUN, LUN
 
-  canister=((strsplit(STRTRIM(data[1]), ';', /EXTRACT))[1])
+  canister=((strsplit(STRTRIM(data[1]), sep, /EXTRACT))[1])
 
   substance = STRARR(count)
   mr_ppt    = DBLARR(count)
@@ -40,7 +40,7 @@ FUNCTION dp_read_calmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
   unit      = STRARR(count)
 
   FOR i=0, count-1 DO BEGIN
-    tmp=strsplit(STRTRIM(data[i+n_table_header]), ';', /EXTRACT, /PRESERVE_NULL)
+    tmp=strsplit(STRTRIM(data[i+n_table_header]), sep, /EXTRACT, /PRESERVE_NULL)
     substance[i] = tmp[0]
     mr_ppt[i]    = FIX(tmp[1], TYPE=5)
     unc_ppt[i]   = FIX(tmp[2], TYPE=5)

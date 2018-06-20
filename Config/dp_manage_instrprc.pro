@@ -29,7 +29,7 @@ FUNCTION dp_read_instrprc, sel_exp, exp_name, substlist, PATH=path, DEF_FILE=def
   CLOSE, LUN
   FREE_LUN, LUN
 
-  instrument=((strsplit(STRTRIM(data[1]), ';', /EXTRACT))[1])
+  instrument=((strsplit(STRTRIM(data[1]), sep, /EXTRACT))[1])
 
   substance = STRARR(count)
   mp_abs    = DBLARR(count)
@@ -39,7 +39,7 @@ FUNCTION dp_read_instrprc, sel_exp, exp_name, substlist, PATH=path, DEF_FILE=def
   unit      = STRARR(count)
 
   FOR i=0, count-1 DO BEGIN
-    tmp=strsplit(STRTRIM(data[i+n_table_header]), ';', /EXTRACT, /PRESERVE_NULL)
+    tmp=strsplit(STRTRIM(data[i+n_table_header]), sep, /EXTRACT, /PRESERVE_NULL)
     substance[i] = tmp[0]
     mp_abs[i]    = FIX(tmp[1], TYPE=5)
     mp_rel[i]    = FIX(tmp[2], TYPE=5)

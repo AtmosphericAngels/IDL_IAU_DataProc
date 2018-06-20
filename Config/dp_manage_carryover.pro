@@ -44,7 +44,7 @@ PRO dp_read_cocorrparms, sel_exp, SEL_ONLY=sel_only, PATH=path, DEF_FILE=def_fil
   parms = str[n_table_header:-1]
   
   FOR i=0, n_subst-1 DO BEGIN
-    tmp=strsplit(STRTRIM(parms[i]), ';', /EXTRACT, /PRESERVE_NULL)
+    tmp=strsplit(STRTRIM(parms[i]), sep, /EXTRACT, /PRESERVE_NULL)
     substance[i] = tmp[0]
     cal_to_sam[*,i] = [FIX(tmp[1], TYPE=5), FIX(tmp[2], TYPE=5)]
     sam_to_sam[*,i] = [FIX(tmp[3], TYPE=5), FIX(tmp[4], TYPE=5)]

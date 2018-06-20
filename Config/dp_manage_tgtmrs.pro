@@ -39,7 +39,7 @@ FUNCTION dp_read_tgtmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
   unit      = STRARR(count)
 
   FOR i=0, count-1 DO BEGIN
-    tmp = strsplit(STRTRIM(data[i+n_table_header]), ';', /EXTRACT, /PRESERVE_NULL)
+    tmp = strsplit(STRTRIM(data[i+n_table_header]), sep, /EXTRACT, /PRESERVE_NULL)
     tgt_name[i] = tmp[1] ; tmp[0] is cylinder
     substance[i] = tmp[2]
     mr_abs[i]    = FIX(tmp[3], TYPE=5)
