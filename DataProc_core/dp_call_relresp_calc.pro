@@ -271,7 +271,7 @@ COMMON DP_WIDID
         IF nvd LT 1 AND verbose EQ 1 $
           THEN PRINT, ((dp_chrom[sel_exp]).subst[sel_subst].name)[0]+': No calibration points found.'
           
-        vd_sam = WHERE((use_def EQ 1) AND (i_flag GE 1) AND (id_vector EQ id_sam) OR (id_vector EQ id_tgt), nvd)
+        vd_sam = WHERE((use_def EQ 1) AND (i_flag GE 1) AND ((id_vector EQ id_sam) OR (id_vector EQ id_tgt)), nvd)
         IF nvd LT 1 AND verbose EQ 1 $
           THEN PRINT, ((dp_chrom[sel_exp]).subst[sel_subst].name)[0]+': No sample points found.'
          
