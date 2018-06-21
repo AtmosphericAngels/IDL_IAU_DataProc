@@ -388,7 +388,7 @@ PRO dp_wid_dataproc_ini
   subbase7=WIDGET_BASE(dpbase, col=3)  
     ID=WIDGET_BUTTON(subbase7, VALUE='(Re)Calculate !', UNAME='calc_individual')
     chkb2 = WIDGET_BASE(subbase7, column=1, /NONEXCLUSIVE)
-    ID=WIDGET_BUTTON(chkb2, value='overwrite use_flag', UNAME='ovwr_sel', /ALIGN_LEFT)
+    ID=WIDGET_BUTTON(chkb2, value='Apply use_flags from Expinfo', UNAME='ovwr_sel', /ALIGN_LEFT)
     WIDGET_CONTROL, ID, SET_BUTTON = 0
 
   subbase4=WIDGET_BASE(dpbase, col=1)
@@ -406,7 +406,7 @@ PRO dp_wid_dataproc_ini
     ID=WIDGET_BUTTON(subbase2, VALUE='Run Calculations !', UNAME='calc_all')
     SEP=WIDGET_LABEL(subbase2, VALUE='')
     chkb1 = WIDGET_BASE(subbase2, column=1, /NONEXCLUSIVE)
-    ID=WIDGET_BUTTON(chkb1, value='overwrite ALL use_flags', UNAME='ovwr', /ALIGN_LEFT)
+    ID=WIDGET_BUTTON(chkb1, value='Apply use_flags from Expinfo', UNAME='ovwr', /ALIGN_LEFT)
     WIDGET_CONTROL, ID, SET_BUTTON = 0
 
   dp_widid.dp_dataproc = dpbase
