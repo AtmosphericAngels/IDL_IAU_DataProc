@@ -33,8 +33,8 @@ PRO dp_def_common, version
     sam_treat_mthd = ['block_mean','individual','block_last_1','block_last_2', $
                      'block_last_3','block_last_4']
   
-    sid_name    = ['Air','Target','Calibration','Blank_Gas','Blank_Vacuum','undef','undef','undef'] ; IDs (e.g. cal = 3) are the indices in this
-                                                                            ; vector +1
+    ; IDs (e.g. cal = 3) are the indices in this vector +1:  
+    sid_name    = ['Air','Target','Calibration','Blank_Gas','Blank_Vacuum','Lab_Air','undef','undef'] 
   
     instr       = ''
 ;    inst_val=['Lab_QP/SFMS', 'GhOST_MS', 'Lab_BenchTOF', 'FASTOF', 'GhOST_ECD', 'AED', 'GHGGC_ECD/FID']
