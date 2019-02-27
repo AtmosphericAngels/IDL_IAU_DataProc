@@ -39,7 +39,7 @@ FUNCTION dp_prcexp_analyse_seq, sel_exp, dp_expcfg, sid_name, MIN_N_BLOCKS=min_n
     
     abort=0
     n_cals=seq.ix_end_calblock[0]-seq.ix_init_calblock[0]+1
-    blsz_min=2
+    blsz_min=1
     blsz_max=FLOOR(n_cals/FIX(min_n_blocks, TYPE=5))
 
     min_bl_val=LINDGEN(blsz_max-blsz_min+1)+blsz_min

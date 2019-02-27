@@ -1,10 +1,12 @@
-; ++++++ FUNCTION dp_read_calmrs ++++++ PRO dp_apply_calmrs ++++++ PRO dp_remv_calmrs
+; ++++++ FUNCTION dp_read_calmrs ++++++ PRO dp_apply_calmrs 
+; ++++++ PRO dp_remv_calmrs
 ;+
 ; FUNCTION dp_read_calmrs
 ;
 ; AUTHOR: F. Obersteiner, Sep. 2016
 ;
-; PURPOSE: reads a calibration gas mixing ratio table (.csv) into an IDL structure that is returned.
+; PURPOSE: reads a calibration gas mixing ratio table (.csv) into an 
+;   IDL structure that is returned.
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
 FUNCTION dp_read_calmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
@@ -12,7 +14,8 @@ FUNCTION dp_read_calmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
   IF NOT KEYWORD_SET(verbose) THEN verbose=0
   
   IF NOT KEYWORD_SET(def_file) THEN $
-    file=DIALOG_PICKFILE(TITLE='Please select a Mixing Ratio Table.', PATH=path, FILTER='*.csv', /READ) $
+    file=DIALOG_PICKFILE(TITLE='Please select a Mixing Ratio Table.', $
+                         PATH=path, FILTER='*.csv', /READ) $
       ELSE file=def_file
       
   IF file EQ '' THEN RETURN, !NULL
@@ -71,13 +74,15 @@ END
 ; PURPOSE: integrates loaded cal mixing ratio values into dp_data.
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
-PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, VERBOSE=verbose
+PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
+                     VERBOSE=verbose
 
   COMMON dp_data
 
   IF NOT KEYWORD_SET(verbose) THEN verbose=0
   
-  IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
+  IF KEYWORD_SET(sel_only) THEN exps = sel_exp $
+    ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
   
   id_cal = (WHERE(STRUPCASE(sid_name) EQ 'CALIBRATION'))[0] +1
 
@@ -123,7 +128,8 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, VERBOSE=v
       def_subst=substlist[sel_exp]
       w=REPLICATE(-1L, N_ELEMENTS(def_subst))
       FOR i=0L, N_ELEMENTS(def_subst)-1 DO $
-        IF (WHERE(substance EQ def_subst[i]))[0] NE -1 THEN w[i]=(WHERE(substance EQ def_subst[i]))[0]
+        IF (WHERE(substance EQ def_subst[i]))[0] NE -1 $
+          THEN w[i]=(WHERE(substance EQ def_subst[i]))[0]
       w1=WHERE(w EQ -1, nvd, NCOMPLEMENT=ncomplement)
       print, 'found n matches: ', ncomplement
       missing=STRARR(N_ELEMENTS(w1))
@@ -152,7 +158,8 @@ PRO dp_remv_calmrs, sel_exp, SEL_ONLY=sel_only, LOUD=loud
 
   COMMON dp_data
   
-  IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
+  IF KEYWORD_SET(sel_only) THEN exps = sel_exp $
+    ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
   
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN  
     IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt NE !NULL $

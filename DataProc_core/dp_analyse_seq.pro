@@ -56,7 +56,8 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
     
     CASE (miss_1st_cal-miss_last_cal) OF ; correct for missing blocks
        0:  BEGIN ; samples bracketed 
-             IF is_cal[0] EQ 1 THEN n_cbl=n_cbl+1 ; correct index shifting method error (cals)
+             IF TOTAL(is_cal) NE N_ELEMENTS(is_cal) THEN $; ONLY cals (prc experiment)
+                 IF is_cal[0] EQ 1 THEN n_cbl=n_cbl+1 ; correct index shifting method error (cals)
            END
        1:  BEGIN ; fist cal missing
              IF is_sam[0] EQ 1 THEN n_sbl=n_sbl+1 ; correct index shifting method error (samples)
