@@ -20,12 +20,39 @@ FUNCTION dp_calc_relresp, xdata, ydata, vd_sam, cal_interpol, sel_samtreat, sequ
   
   rR_all = ydata/cal_interpol
   samples_rR = DBLARR(N_ELEMENTS(rR_all))*!VALUES.D_NAN
-  samples_rR[vd_sam] = ydata[vd_sam]/cal_interpol[vd_sam]
+  
   blockmean_rR = DBLARR(N_ELEMENTS(rR_all))*!VALUES.D_NAN
   block_RSD = DBLARR(N_ELEMENTS(rR_all))*!VALUES.D_NAN
   
   ix_init = (sequence.ix_init_samblock)[WHERE(sequence.ix_init_samblock NE -1)]
   ix_end = (sequence.ix_end_samblock)[WHERE(sequence.ix_end_samblock NE -1)]
+  
+  ;cleanup for mess created by PRC analyser
+  FOR i=0, N_ELEMENTS(ix_init)-2 DO BEGIN
+    IF ix_init[i+1] LT ix_init[i] THEN BEGIN
+      ix_init = ix_init[0:i]
+      BREAK
+    ENDIF
+  ENDFOR
+  FOR i=0, N_ELEMENTS(ix_end)-2 DO BEGIN
+    IF ix_end[i+1] LT ix_end[i] THEN BEGIN
+      ix_end = ix_end[0:i]
+      BREAK
+    ENDIF
+  ENDFOR
+  ; discard samples not bracketed by cals for PRC analyser
+  ix_cal = sequence.ix_cal[WHERE(sequence.ix_cal NE -1)]
+  ix_init = ix_init[WHERE(ix_init GT ix_cal[0] AND ix_init LT ix_cal[-1])]
+  ix_end = ix_end[WHERE(ix_end GT ix_cal[0] AND ix_end LT ix_cal[-1])]  
+  ; more cleanup...
+  IF N_ELEMENTS(ix_init) NE N_ELEMENTS(ix_end) THEN BEGIN
+      IF ix_init[0] LE ix_end[0] THEN ix_init = ix_init[0:N_ELEMENTS(ix_end)-1]
+  ENDIF
+  ; PRC analyser stuff done
+  
+  vd_sam = vd_sam[WHERE(vd_sam GE ix_init[0] AND vd_sam LE ix_end[-1])]
+  samples_rR[vd_sam] = ydata[vd_sam]/cal_interpol[vd_sam]
+  
   n_perblock = ix_end-ix_init+1
   n_blocks = N_ELEMENTS(n_perblock)
 

@@ -3,7 +3,7 @@
 ;
 ; AUTHOR: F. Obersteiner, Feb-2018
 ;
-; PURPOSE: applies carry over correction to normalised response. Returns normalised corrected response.
+; PURPOSE: applies carry over correction to normalised response. Returns corrected normalised response.
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
 FUNCTION dp_calc_carryover, norm_resp, sequence, carryover_strct, subst_name

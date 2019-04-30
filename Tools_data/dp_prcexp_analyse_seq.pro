@@ -58,4 +58,5 @@ FUNCTION dp_prcexp_analyse_seq, sel_exp, dp_expcfg, sid_name, MIN_N_BLOCKS=min_n
            
   
   RETURN, strct
+  
 END

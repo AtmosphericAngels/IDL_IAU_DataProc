@@ -93,8 +93,8 @@ FUNCTION dp_prcexp_analyse_prc, sel_exp, min_blsz, max_blsz, cal_blsz, $
     
     IF verbose THEN print, 'calculating prc, blocksize: ', min_blsz+i
     
-    calsam_seq=[MAKE_ARRAY(cal_blsz, /LONG, VALUE=3), MAKE_ARRAY(min_blsz+i, /LONG, VALUE=1)]
-    base_seq=[]
+    calsam_seq = [MAKE_ARRAY(cal_blsz, /LONG, VALUE=3), MAKE_ARRAY(min_blsz+i, /LONG, VALUE=1)]
+    base_seq = []
     FOR j=0, n_cals DO base_seq=[base_seq, calsam_seq] ; create some surplus data...
     
     FOR k=0, n_substs-1 DO strct[k].samblock[i].sz_n = i
