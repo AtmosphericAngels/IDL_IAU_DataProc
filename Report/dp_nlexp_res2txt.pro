@@ -13,11 +13,11 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
   ; prompt directory if not set
   IF NOT KEYWORD_SET(dir) THEN $
     dir = DIALOG_PICKFILE(TITLE='Please select a directory to store results.', /DIRECTORY)
-  
+
   id_cal = (WHERE(STRUPCASE(sid_name) EQ 'CALIBRATION'))[0] +1 ; configure IDs
   id_sam = (WHERE(STRUPCASE(sid_name) EQ 'AIR'))[0] +1
   id_tgt = (WHERE(STRUPCASE(sid_name) EQ 'TARGET'))[0] +1
-  
+
   subst=nl_strct[0].species
   sep=STRING(9B)
   tgts=nl_strct[0].tgt_names
@@ -36,24 +36,24 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
   fct_sigma_str[ix]=STRCOMPRESS(STRING(nl_strct.fct_sigma, FORMAT='(D25.9)'), /REMOVE_ALL)
   corr_max_dev_to_zero=STRCOMPRESS(STRING(nl_strct.corr_max_dev_to_zero, FORMAT='(D25.9)'), /REMOVE_ALL)
 
-  
+
   cal_est_MR=STRCOMPRESS(STRING(nl_strct.cal_est_MR, FORMAT='(D25.5)'), /REMOVE_ALL)
   cal_est_sig=STRCOMPRESS(STRING(nl_strct.cal_est_sig, FORMAT='(D25.6)'), /REMOVE_ALL)
   unit=nl_strct.unit
   max_dev_to_fit=STRCOMPRESS(STRING(nl_strct.max_dev_to_fit, FORMAT='(D25.9)'), /REMOVE_ALL)
   cal_in_tgt_range=STRCOMPRESS(STRING(nl_strct.cal_in_tgt_range, FORMAT='(I)'), /REMOVE_ALL)
-  
+
   cal_mr_spec=STRCOMPRESS(STRING(nl_strct.cal_MR_spec, FORMAT='(D25.5)'), /REMOVE_ALL)
   cal_mr_err=STRCOMPRESS(STRING(nl_strct.cal_MR_err, FORMAT='(D25.6)'), /REMOVE_ALL)
-   
+
   prefix = 'iaudp_nl_'
   IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt EQ !NULL THEN suffix = '_cal_estimate.txt' $
     ELSE suffix = '.txt'
-    
+
   fname = dir + prefix+subst+suffix
-  
+
   IF NOT FILE_TEST(dir) THEN FILE_MKDIR, dir
-  
+
   OPENW, lun, fname, /GET_LUN
     PRINTF, lun, '*** IAU_DP_v'+dp_vers+' NL REPORT ***', FORMAT='(A)'
     PRINTF, lun, 'Experiment:', sep, FILE_BASENAME((dp_chrom[sel_exp])[0].exp_fname[0]), FORMAT='(A,A,A)'
@@ -64,7 +64,7 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
     PRINTF, lun, 'Cal_Gas spec. abs. error:', sep, cal_mr_err, FORMAT='(A,A,A)'
     PRINTF, lun, 'Substance:', sep, subst, sep, 'm/Q:', sep, mass, sep, 'Eval_Mode:', sep, mode_string, $
                  sep, 'Unit:', sep, unit, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
-    PRINTF, lun, '*** NL function parameters ***', FORMAT='(A)'             
+    PRINTF, lun, '*** NL function parameters ***', FORMAT='(A)'
     PRINTF, lun, 'Polynomial Degree:', sep, fct_dgr_str, FORMAT='(A,A,A)'
     PRINTF, lun, 'Parameters:', sep, fct_parms_str
     PRINTF, lun, 'Param. Sigma:', sep, fct_sigma_str
@@ -75,7 +75,7 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
     PRINTF, lun, 'Cal in MR range of targets:', sep, cal_in_tgt_range
     PRINTF, lun, 'MR_unit:', sep, unit, FORMAT='(A,A,A)'
     PRINTF, lun, '*** Results per individual measurement ***', FORMAT='(A)'
-    
+
     colheader=['tgt_name', sep, 'tgt_mr_def', sep, 'lin_MR', sep, 'lin_MR_rsd', sep, 'delta_MR']
     ch_format=str_get_formcode('A', N_ELEMENTS(colheader))
     PRINTF, lun, colheader, FORMAT=ch_format
@@ -88,5 +88,5 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
 
   CLOSE, lun
   FREE_LUN, lun
-  
+
 END

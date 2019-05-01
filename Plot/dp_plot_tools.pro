@@ -15,29 +15,29 @@ FUNCTION dp_create_plotobj
   rects = oInfo->GetRectangles()
   primaryIndex = oInfo->GetPrimaryMonitorIndex()
   OBJ_DESTROY, oInfo
-  
-  DEVICE,  GET_SCREEN_SIZE=screensize
-         
-  XCenter=FIX(screensize[0])
-  YCenter=FIX(screensize[1])
+
+  DEVICE, GET_SCREEN_SIZE=screensize
+
+  XCenter = FIX(screensize[0])
+  YCenter = FIX(screensize[1])
   XOff = 0.8*screensize[0]
   YOff = 0.01*screensize[1]
-  xsize=0.25*screensize[0]
-  position=[0.1,0.1,0.8,0.5]         
-  margin=[0.1,0.1,0.1,0.1]
-  dimensions=[0.6*screensize[0],0.6*screensize[1]]
-  ticklen=0.01
- 
-  date=label_date(date_format='%H:%I')
-  xtickformat='LABEL_DATE'
-  
-  tickfont_size=14
-  thick=1
-  filled=1
-  errorbar_capsize=1.
-  errorbar_thick=2
-  
-  p1 = errorplot([!Values.D_NAN],[!Values.D_NAN],$
+  xsize = 0.25*screensize[0]
+  position = [0.1,0.1,0.8,0.5]
+  margin = [0.1,0.1,0.1,0.1]
+  dimensions = [0.6*screensize[0],0.6*screensize[1]]
+  ticklen = 0.01
+
+  date = label_date(date_format='%H:%I')
+  xtickformat = 'LABEL_DATE'
+
+  tickfont_size = 14
+  thick = 1
+  filled = 1
+  errorbar_capsize = 1.
+  errorbar_thick = 2
+
+  p1 = errorplot([!Values.D_NAN], [!Values.D_NAN], $
                   margin=margin, $
                   ;location=[xoff, yoff],$
                   dimensions=dimensions, $
@@ -48,7 +48,7 @@ FUNCTION dp_create_plotobj
                   location=[rects[0, numMons-1] + 10, rects[1, numMons-1] + 220], $
                   title=' ', $
                   window_title='IAU_DP: Plot',$
-                  name="Calibration ",$                            
+                  name="Calibration ",$
                   symbol="circle",$
                   linestyle=0,$
                   sym_size=2,$
@@ -58,33 +58,33 @@ FUNCTION dp_create_plotobj
                   errorbar_capsize=errorbar_capsize,$
                   errorbar_thick=errorbar_thick)
 
- 
+
   x_low = axis('X', location=[1,0], TICKUNITS=xtickunits, TICKFORMAT=xtickformat, TICKLEN=ticklen, $
                TICKFONT_SIZE=tickfont_size, TITLE='Time of Measurement')
   x_hgh = axis('X',location=[1,1],showtext=0, tickdir=1, ticklen=ticklen)
   y_lft = axis('Y',tickdir=0, textpos=0, location=[0,0], ticklen=ticklen, tickfont_size=14, $
                text_color='red', title='Normalised Detector Response (Cal Gas)')
-  
- 
+
+
   p2 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='b', /OVERPLOT, THICK=1, LINESTYLE=0, name="Sample",$
                   errorbar_capsize=errorbar_capsize,$
-                  errorbar_thick=errorbar_thick)  
+                  errorbar_thick=errorbar_thick)
   p2.symbol="circle"
   p2.sym_size=2
   p2.sym_filled=1
   p2.sym_color='blue'
   p2.linestyle=" "
 
-  
-  p3 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='r', /OVERPLOT, THICK=1, LINESTYLE=0, name="Cal")  
+
+  p3 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='r', /OVERPLOT, THICK=1, LINESTYLE=0, name="Cal")
   p3.symbol="circle"
   p3.linestyle=" "
   p3.sym_size=2
   p3.sym_thick=2
   p3.sym_filled=1
   p3.sym_color='red'
-  
-  
+
+
   p4 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='purple', /OVERPLOT, THICK=1, LINESTYLE=0, name="Target",$
                   errorbar_capsize=errorbar_capsize,$
                   errorbar_thick=errorbar_thick)
@@ -94,31 +94,31 @@ FUNCTION dp_create_plotobj
   p4.sym_thick=2
   p4.sym_filled=1
   p4.sym_color='purple'
-  
-    
-  p5 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='g', /OVERPLOT, THICK=1, LINESTYLE=0, name="Lin.Fit") 
+
+
+  p5 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='g', /OVERPLOT, THICK=1, LINESTYLE=0, name="Lin.Fit")
   p5.symbol="circle"
   p5.linestyle=2
   p5.thick=thick
   p5.sym_filled=filled
   p5.color='orange'
-  
-  
-  p6 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='b', /OVERPLOT, THICK=1, LINESTYLE=0, name="Run.Mean") 
+
+
+  p6 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='b', /OVERPLOT, THICK=1, LINESTYLE=0, name="Run.Mean")
   p6.symbol="circle"
   p6.linestyle=2
   p6.thick=thick
   p6.sym_filled=filled
   p6.color='blue'
 
-      
-  p7 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='c', /OVERPLOT, THICK=1, LINESTYLE=0, name="Cal.Interpolation")     
+
+  p7 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='c', /OVERPLOT, THICK=1, LINESTYLE=0, name="Cal.Interpolation")
   p7.symbol="circle"
   p7.linestyle=2
   p7.thick=thick
   p7.sym_filled=filled
   p7.color='green'
-      
+
 
   p8 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='r', /OVERPLOT, THICK=1, LINESTYLE=0, name="Cal.Mean")
   p8.symbol="circle"
@@ -129,25 +129,25 @@ FUNCTION dp_create_plotobj
   p8.color='magenta'
 
 
-        
-  txt = OBJARR(1) 
+
+  txt = OBJARR(1)
 
   FOR i=0, N_ELEMENTS(txt)-1 DO txt[i]=text([0],[0],"",/DATA)
- 
-  leg = legend(TARGET=p, /NORMAL, /AUTO_TEXT_COLOR, POSITION=[0.9825,0.95], SHADOW=0, $ 
+
+  leg = legend(TARGET=p, /NORMAL, /AUTO_TEXT_COLOR, POSITION=[0.9825,0.95], SHADOW=0, $
                HORIZONTAL_Spacing=0.05, VERTICAL_SPACING=0.02)
 
   y_rgt = axis('Y',tickdir=1, textpos=1, location=[1,0], ticklen=ticklen )
-  
+
   y_rgt.tickfont_size=14
   y_rgt.text_color='blue'
-  y_rgt.title='Normalised Detector Response (Sample Gas)' 
-  
+  y_rgt.title='Normalised Detector Response (Sample Gas)'
+
   pltstrct = {p1:p1,p2:p2,p3:p3,p4:p4,p5:p5,p6:p6,p7:p7,p8:p8, $
               x_low:x_low, x_hgh:x_hgh, y_lft:y_lft,y_rgt:y_rgt, $
               txt:txt,leg:leg}
-              
-  p1.select             
+
+  p1.select
 
   RETURN, pltstrct
 
@@ -160,15 +160,15 @@ FUNCTION dp_modify_plot, p=p, x1=x1, y1=y1, yerr1=yerr1, x2=x2, y2=y2, yerr2=yer
                               x7=x7, y7=y7, yerr7=yerr7, x8=x8, y8=y8, yerr8=yerr8
 
   COMMON dp_data
-  
+
   p_vd = OBJ_VALID(p)
   IF (p_vd EQ !NULL) THEN p=dp_create_plotobj() ELSE IF SIZE(p, /TYPE) NE 8 THEN p=dp_create_plotobj()
-  
+
   IF KEYWORD_SET(x1) THEN BEGIN
     IF NOT KEYWORD_SET(yerr1) THEN yerr1=REPLICATE(!VALUES.D_NAN, N_ELEMENTS(x1))
     p.p1.setdata, x1, y1, yerr1
   ENDIF
-  
+
   IF KEYWORD_SET(x2) THEN BEGIN
     IF NOT KEYWORD_SET(yerr2) THEN yerr2=REPLICATE(!VALUES.D_NAN, N_ELEMENTS(x2))
     p.p2.setdata, x2, y2, yerr2
@@ -203,23 +203,23 @@ FUNCTION dp_modify_plot, p=p, x1=x1, y1=y1, yerr1=yerr1, x2=x2, y2=y2, yerr2=yer
     IF NOT KEYWORD_SET(yerr8) THEN yerr8=REPLICATE(!VALUES.D_NAN, N_ELEMENTS(x8))
     p.p8.setdata, x8, y8, yerr8
   ENDIF
-  
-  
+
+
   p.p1.getdata,x1,y1,yerr1
   p.p2.getdata,x2,y2,yerr2
   p.p3.getdata,x3,y3,yerr3
   p.p4.getdata,x4,y4,yerr4
-  
+
   IF x1[0] EQ 0. THEN x1=!VALUES.D_NAN
   IF x2[0] EQ 0. THEN x2=!VALUES.D_NAN
   IF x3[0] EQ 0. THEN x3=!VALUES.D_NAN
   IF x4[0] EQ 0. THEN x4=!VALUES.D_NAN
-  
+
   min_x=min([min(x1),min(x2),min(x3),min(x4)],/NaN)
-  max_x=max([max(x1),max(x2),max(x3),max(x4)],/NaN) 
+  max_x=max([max(x1),max(x2),max(x3),max(x4)],/NaN)
   min_y=min([min(y1,/NaN),min(y2,/NaN),min(y3,/NaN),min(y4,/NaN)], /NaN)
   max_y=max([max(y1,/NaN),max(y2,/NaN),max(y3,/NaN),max(y4,/NaN)],/NaN)
-  
+
   IF FINITE(min_y) THEN BEGIN
     p.p1.xrange=[min_x-0.03*(max_x-min_x),max_x+0.03*(max_x-min_x)]
     p.p1.yrange=[min_y-0.07*(max_y-min_y), max_y+0.07*(max_y-min_y)]
@@ -227,14 +227,14 @@ FUNCTION dp_modify_plot, p=p, x1=x1, y1=y1, yerr1=yerr1, x2=x2, y2=y2, yerr2=yer
     p.p1.xrange=[0.,1.]
     p.p1.yrange=[0.,1.]
   ENDELSE
-  
+
   tmp=p.leg
   tmp.delete
   p.leg = legend(TARGET=[p.p1,p.p2,p.p3,p.p4,p.p5,p.p6,p.p7,p.p8], /NORMAL, /AUTO_TEXT_COLOR, POSITION=[0.9825,0.95], $
                  SAMPLE_WIDTH=0.0005, SHADOW=0, HORIZONTAL_Spacing=0.05, VERTICAL_SPACING=0.02)
-  
+
   RETURN, p
-  
+
 END
 
 ;########################################################################################################################
@@ -246,7 +246,7 @@ FUNCTION dp_create_plotobj2_multi, ytitle1=ytitle1, ytitle2=ytitle2, ytitle3=yti
   IF KEYWORD_SET(ytitle3) EQ 0 THEN ytitle3= ""
 
 
- 
+
   oInfo = OBJ_NEW('IDLsysMonitorInfo')
   numMons = oinfo->GetNumberOfMonitors()
   names = oinfo->GetMonitorNames()
@@ -347,7 +347,7 @@ END
 ;########################################################################################################################
 
 FUNCTION dp_modify_plot2_multi, p2=p2, x1=x1, y1=y1, yerr1=yerr1, x2=x2, y2=y2, yerr2=yerr2, x3=x3, y3=y3, yerr3=yerr3, ytitle1=ytitle1, ytitle2=ytitle2, ytitle3=ytitle3
-   
+
   IF NOT KEYWORD_SET(ytitle1)  THEN ytitle1= "normalised RT"
   IF NOT KEYWORD_SET(ytitle2)  THEN ytitle2= "normalised H/A"
   IF NOT KEYWORD_SET(ytitle3)  THEN ytitle3= "S/N"
@@ -356,7 +356,7 @@ FUNCTION dp_modify_plot2_multi, p2=p2, x1=x1, y1=y1, yerr1=yerr1, x2=x2, y2=y2, 
 
   p_vd = OBJ_VALID(p2)
   IF (p_vd EQ !NULL) THEN BEGIN
-    p2=dp_create_plotobj2_multi(ytitle1=ytitle1, ytitle2=ytitle2, ytitle3=ytitle3) 
+    p2=dp_create_plotobj2_multi(ytitle1=ytitle1, ytitle2=ytitle2, ytitle3=ytitle3)
   ENDIF ELSE BEGIN
    IF size(p2, /type) NE 8 THEN p2=dp_create_plotobj2_multi(ytitle1=ytitle1, ytitle2=ytitle2, ytitle3=ytitle3)
   ENDELSE
@@ -366,7 +366,7 @@ FUNCTION dp_modify_plot2_multi, p2=p2, x1=x1, y1=y1, yerr1=yerr1, x2=x2, y2=y2, 
     IF NOT KEYWORD_SET(yerr1) THEN yerr1=REPLICATE(!VALUES.D_NAN, N_ELEMENTS(x1))
     p2.p1.setdata, x1, y1, yerr1
   ENDIF
-  
+
   IF KEYWORD_SET(x2) THEN BEGIN
     IF NOT KEYWORD_SET(yerr2) THEN yerr2=REPLICATE(!VALUES.D_NAN, N_ELEMENTS(x2))
     p2.p2.setdata, x2, y2, yerr2

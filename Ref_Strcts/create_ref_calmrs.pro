@@ -14,7 +14,7 @@ FUNCTION create_ref_calmrs
               scale:      PTR_NEW(/ALLOCATE_HEAP), $  ; primary calibration scale
               comment:    PTR_NEW(/ALLOCATE_HEAP) $
               }
-              
+
   RETURN, ref_calmrs
-  
+
 END

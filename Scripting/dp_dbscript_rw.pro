@@ -5,7 +5,7 @@
 ;
 ; PURPOSE
 ; FUNCTION dp_dbscript_read reads iau_dataproc database reference table and returns collected data.
-; FUNCTION dp_dbscript_write writes iau_dataproc database reference table with specific filename 
+; FUNCTION dp_dbscript_write writes iau_dataproc database reference table with specific filename
 ; generated from date and time.
 ;
 ;-
@@ -15,7 +15,7 @@ FUNCTION dp_dbscript_read, FILE=file, PATH=path_wd
 
   sep = ';'
   dp_dbstrct = !NULL
-  
+
   IF NOT KEYWORD_SET(file) THEN $
     file = DIALOG_PICKFILE(TITLE='Please chose a database reference table (.csv)', FILTER='*.csv', $
                            PATH=path_wd)
@@ -31,7 +31,7 @@ FUNCTION dp_dbscript_read, FILE=file, PATH=path_wd
   FREE_LUN, lun
 
   n_lines_hdr = LONG(table[0])
-  
+
   IF n_lines_hdr EQ nl THEN RETURN, !NULL
 
   db_strct = { $
@@ -40,7 +40,7 @@ FUNCTION dp_dbscript_read, FILE=file, PATH=path_wd
                 exp_descr    :   '', $
                 chromdata_path    :   '', $
                 expinfo_path    :   '', $
-                expinfo_import_fct    :   '', $ 
+                expinfo_import_fct    :   '', $
                 dp_savefile_path    :   '', $
                 dp_treatcfg_path    :   '',  $
                 dp_calmrs_path    :   '',  $
@@ -48,7 +48,7 @@ FUNCTION dp_dbscript_read, FILE=file, PATH=path_wd
                 dp_instr_prc_path    :   '',  $
                 subst_namedef_path    :   '',  $
                 save_txtreport    :   -1,  $
-                analyse_NL    :   -1,  $   
+                analyse_NL    :   -1,  $
                 proc_timestamp    :   '',  $
                 corr_carryover    :   ''  $
               }
@@ -76,7 +76,7 @@ FUNCTION dp_dbscript_read, FILE=file, PATH=path_wd
   ENDFOR ; end loop through experiments
 
   RETURN, dp_dbstrct
-  
+
 END
 
 ;------------------------------------------------------------------------------------------------------------------------
@@ -122,11 +122,11 @@ FUNCTION dp_dbscript_write, dp_dbstrct, PATH=path, UTC=utc
     STRING(dp_dbstrct.data[i].save_txtreport, FORMAT='(I)') + sep + $
     STRING(dp_dbstrct.data[i].analyse_NL, FORMAT='(I)') + sep + $
     dp_dbstrct.data[i].proc_timestamp
-    
+
     IF (WHERE(TAG_NAMES(dp_dbstrct.data) EQ 'CORR_CARRYOVER'))[0] NE -1 THEN $
       cnf_str[i] += sep + dp_dbstrct.data[i].corr_carryover $
     ELSE cnf_str[i] += sep + sep
-    
+
   ENDFOR
 
   OPENW, lun, db_fname, /GET_LUN
@@ -136,5 +136,5 @@ FUNCTION dp_dbscript_write, dp_dbstrct, PATH=path, UTC=utc
   FREE_LUN, lun
 
   RETURN, 1
-  
+
 END

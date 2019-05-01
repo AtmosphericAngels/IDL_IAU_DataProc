@@ -24,12 +24,12 @@ FUNCTION strreplace_iter, Strings, Find1, Replacement1, N_ITER=n_iter, NO_CASE=n
   Find        = STRING(Find1)
   Replacement = STRING(Replacement1)
   Flen        = STRLEN(Find)
-  
+
   FOR iter=0L, n_iter-1 DO BEGIN ; loop iterations
     IF KEYWORD_SET(no_case) THEN pos = STRPOS(STRUPCASE(Strings), STRUPCASE(Find)) $
       ELSE pos = STRPOS(Strings, Find)
     here      = WHERE(pos ne -1, nreplace)
-  
+
     IF (nreplace EQ 0) THEN BREAK
 
     FOR i=0, nreplace-1 DO BEGIN ; loop in case Strings is an array of strings

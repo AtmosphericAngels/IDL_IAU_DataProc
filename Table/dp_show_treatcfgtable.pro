@@ -9,12 +9,12 @@
 PRO dp_show_treatcfgtable, sel_exp
 
   COMMON DP_DATA
-  
+
   IF NOT PTR_VALID((dp_expcfg[sel_exp]).treatcfg.substance) THEN BEGIN
     msg=DIALOG_MESSAGE('No loaded treatment config found.')
-    RETURN    
+    RETURN
   ENDIF
-  
+
   IF (*(dp_expcfg[sel_exp]).treatcfg.substance) EQ !NULL THEN BEGIN
     msg=DIALOG_MESSAGE('No loaded treatment config found.')
     RETURN
@@ -25,7 +25,7 @@ PRO dp_show_treatcfgtable, sel_exp
   n_subst = N_ELEMENTS(*(dp_expcfg[sel_exp]).treatcfg.substance)
 
   hdr = ['Substance','Cal_Treat','Sam_Treat','Cal_Interpol']
-  
+
   value = STRARR(width, n_subst)
 
 
@@ -40,7 +40,7 @@ PRO dp_show_treatcfgtable, sel_exp
   ID=WIDGET_TABLE(mainbase, VALUE=value, COLUMN_WIDTH=column_width, COLUMN_LABELS=hdr, ALIGNMENT=0)
 
   WIDGET_CONTROL, ID, /REALIZE
-  
+
   dp_refr_status, MESSAGE='Created treat. config table.'
 
 END

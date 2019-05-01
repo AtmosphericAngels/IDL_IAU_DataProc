@@ -1,6 +1,6 @@
 FUNCTION create_ref_ITS ; instrument, exp type, exp specification
 
-  ref_its = {$
+  ref_its = { $
             instrument: '', $
             type: '', $
             spec: '' $

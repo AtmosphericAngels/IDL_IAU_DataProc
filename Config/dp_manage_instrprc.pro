@@ -97,24 +97,24 @@ PRO dp_apply_instrprc, PRC_STRCT=prc_strct, sel_exp, SEL_ONLY=sel_only, QUIET=qu
   bad = prc_limits[1]
 
   IF NOT KEYWORD_SET(verbose) THEN verbose=0
-  
+
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
 
   FOR n=0, N_ELEMENTS(exps)-1 DO BEGIN
     tmp_chrom=(dp_chrom[exps[n]]) ; move data out of list...
     tmp_expcfg=(dp_expcfg[exps[n]])
-  
+
     IF KEYWORD_SET(prc_strct) THEN BEGIN ; if variable supplied, update values in expcfg struct
-  
+
       quest='Yes'
-  
+
       IF NOT KEYWORD_SET(quiet) THEN BEGIN
         IF STRUPCASE(instr) NE STRUPCASE(prc_strct.instrument) THEN $
           quest=DIALOG_MESSAGE('Instrument specification does not match. Continue?', /QUESTION, /DEFAULT_CANCEL)
       ENDIF
-  
+
       IF quest EQ 'Yes' THEN BEGIN
-        
+
         tmp_expcfg.instr_prc.instrument = prc_strct.instrument
         *tmp_expcfg.instr_prc.substance = prc_strct.substance
         *tmp_expcfg.instr_prc.mp_ppt = prc_strct.mp_abs
@@ -123,16 +123,16 @@ PRO dp_apply_instrprc, PRC_STRCT=prc_strct, sel_exp, SEL_ONLY=sel_only, QUIET=qu
         *tmp_expcfg.instr_prc.comment = prc_strct.comment
         *tmp_expcfg.instr_prc.unit = prc_strct.unit
         IF verbose THEN print, 'instrument precision values: integrated.'
-        
+
       ENDIF
-  
+
     ENDIF
-  
+
     def_subst=tmp_chrom[0].subst.name ; begin to apply...
     n_subst=N_ELEMENTS(def_subst)
     n_chrom=N_ELEMENTS(tmp_chrom.subst[0].rres.rsp_area.block_rsd)
     tmp_prc_flag=LONARR(n_chrom)
-  
+
     FOR i=0, n_subst-1 DO BEGIN ; check values for each substance
       eval_mode = (tmp_chrom.subst[i].rres.rsp_select)[0]
       w=(WHERE(*tmp_expcfg.instr_prc.substance EQ def_subst[i]))[0]
@@ -168,11 +168,11 @@ PRO dp_apply_instrprc, PRC_STRCT=prc_strct, sel_exp, SEL_ONLY=sel_only, QUIET=qu
         ENDCASE
       ENDIF
     ENDFOR
-  
+
     (dp_expcfg[exps[n]])=TEMPORARY(tmp_expcfg)
     (dp_chrom[exps[n]])=TEMPORARY(tmp_chrom) ; ...move data back into list.
   ENDFOR
-  
+
   IF verbose THEN print, 'Instrument precision values: applied.'
   dp_refr_status, MESSAGE='Instrument precision values: applied.'
 
@@ -189,7 +189,7 @@ END
 PRO dp_remv_instrprc, sel_exp, SEL_ONLY=sel_only, LOUD=loud
 
   COMMON dp_data
-  
+
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
 
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
@@ -201,10 +201,10 @@ PRO dp_remv_instrprc, sel_exp, SEL_ONLY=sel_only, LOUD=loud
         'Yes': $
           BEGIN
           n_subst=N_ELEMENTS((dp_chrom[sel_exp])[0].subst.name)
-  
+
           tmp_chrom=(dp_chrom[sel_exp])
           n_chrom=N_ELEMENTS(tmp_chrom.subst[0].rres.rsp_area.block_rsd)
-  
+
           tmp_expcfg=(dp_expcfg[sel_exp])
           tmp_expcfg.instr_prc.instrument = ''
           *tmp_expcfg.instr_prc.substance = !NULL
@@ -213,14 +213,14 @@ PRO dp_remv_instrprc, sel_exp, SEL_ONLY=sel_only, LOUD=loud
           *tmp_expcfg.instr_prc.lod = !NULL
           *tmp_expcfg.instr_prc.comment = !NULL
           *tmp_expcfg.instr_prc.unit = !NULL
-  
+
           FOR n=0, n_subst-1 DO BEGIN
             tmp_chrom.subst[n].rres.rsp_area.sys_prc = DBLARR(n_chrom)*!VALUES.D_NAN
             tmp_chrom.subst[n].rres.rsp_area.prc_flag = INTARR(n_chrom)
             tmp_chrom.subst[n].rres.rsp_height.sys_prc = DBLARR(n_chrom)*!VALUES.D_NAN
             tmp_chrom.subst[n].rres.rsp_height.prc_flag = INTARR(n_chrom)
           ENDFOR
-  
+
           (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
           (dp_chrom[sel_exp])=TEMPORARY(tmp_chrom) ; ...move data back into list.
         END
@@ -229,5 +229,5 @@ PRO dp_remv_instrprc, sel_exp, SEL_ONLY=sel_only, LOUD=loud
       ENDCASE
     ENDIF
   ENDFOR
-  
+
 END

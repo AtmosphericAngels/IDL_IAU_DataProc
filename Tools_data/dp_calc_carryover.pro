@@ -9,7 +9,7 @@
 FUNCTION dp_calc_carryover, norm_resp, sequence, carryover_strct, subst_name
 
   corr_norm_resp = DBLARR(N_ELEMENTS(norm_resp))+!VALUES.D_NAN
-  
+
   w_subst = WHERE(*carryover_strct.substance EQ subst_name, n_match)
   IF n_match EQ 0 THEN RETURN, corr_norm_resp $
     ELSE BEGIN
@@ -22,7 +22,7 @@ FUNCTION dp_calc_carryover, norm_resp, sequence, carryover_strct, subst_name
         sect_id = (sequence.id)[n-1:n]
         sect_rsp = norm_resp[n-1:n]
         IF (WHERE(FINITE(sect_rsp) EQ 0))[0] NE -1 THEN CONTINUE ; skip iteration if NaN in response vector
-        
+
         CASE 1 OF ; select correction factor
           sect_id[0] EQ 3 AND sect_id[1] LE 2: $ ; cal->sam
             BEGIN
@@ -48,8 +48,8 @@ FUNCTION dp_calc_carryover, norm_resp, sequence, carryover_strct, subst_name
         corr_norm_resp[n] = norm_resp[n] + (norm_resp[n] - norm_resp[n-1])*f_corr
 
       ENDFOR
-    ENDELSE 
-  
+    ENDELSE
+
   RETURN, corr_norm_resp
-  
+
 END

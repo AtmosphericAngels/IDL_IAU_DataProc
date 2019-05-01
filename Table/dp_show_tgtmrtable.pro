@@ -8,7 +8,7 @@
 PRO dp_show_tgtmrtable, sel_exp
 
   COMMON DP_DATA
-    
+
   IF PTR_VALID((dp_expcfg[sel_exp]).tgt_mrs.tgt_name) THEN BEGIN
     IF *((dp_expcfg[sel_exp]).tgt_mrs.tgt_name) NE !NULL THEN BEGIN
       TGT_NAME=*((dp_expcfg[sel_exp]).tgt_mrs.tgt_name)
@@ -25,15 +25,15 @@ PRO dp_show_tgtmrtable, sel_exp
       msg=DIALOG_MESSAGE('No Tgt MR data found.')
       RETURN
     ENDELSE
-    
+
     column_labels=['Substance','MR','UNC_abs','UNC_rel','Unit','Scale','Comment']
     row_labels=TGT_NAME
-  
+
     nl_hdr  = 0
     width   = 7
     format  = '(D25.5)'
     n_tgt = N_ELEMENTS(TGT_NAME)
-  
+
     value=STRARR(width,nl_hdr+n_tgt)
 
     value[0,0:-1]= SUBSTANCE
@@ -43,18 +43,18 @@ PRO dp_show_tgtmrtable, sel_exp
     value[4,0:-1]= UNIT
     value[5,0:-1]= SCALE
     value[6,0:-1]= COMMENT
-     
+
     column_width=[150,100,100,100,100,150,150]
-  
+
     mainbase=WIDGET_BASE(title='Tgt MR Table')
     ID=WIDGET_TABLE(mainbase, VALUE=value, COLUMN_WIDTH=column_width, ALIGNMENT=0, $
                     COLUMN_LABELS=column_labels, ROW_LABELS=row_labels)
-  
+
     WIDGET_CONTROL, ID, /REALIZE
-  
+
     dp_refr_status, MESSAGE='Created Tgt MR table.'
-    
+
   ENDIF ELSE $; end if: pointer valid and tgts loaded.
     msg=DIALOG_MESSAGE('No target MR data found.')
-  
+
 END

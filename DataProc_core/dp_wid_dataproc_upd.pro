@@ -17,28 +17,11 @@ COMMON dp_data
   sel_eval_mode = WIDGET_INFO(ID_eval_mode, /DROPLIST_SELECT)
 
   uname_sel=WIDGET_INFO(event.id, /uname); check caller
-  
+
   CASE 1 OF
-    (uname_sel EQ 'exp_dl') OR (uname_sel EQ 'chg_substnames') : $ 
+    (uname_sel EQ 'exp_dl') OR (uname_sel EQ 'chg_substnames') : $
       BEGIN ; selected experiment changed, update droplists: cal treat, sam treat, substances
-        IF ((dp_chrom[sel_exp]).subst[sel_subst].rres.cal_treat)[0] NE '' THEN BEGIN        
-          cal_ip=(dp_chrom[sel_exp]).subst[sel_subst].rres.cal_ip_mthd
-          caltreat=(dp_chrom[sel_exp]).subst[sel_subst].rres.cal_treat
-          samtreat=(dp_chrom[sel_exp]).subst[sel_subst].rres.sam_treat
-          new_sel_calip=(WHERE(cal_ip_mthd EQ cal_ip))[0]
-          new_sel_caltreat=(WHERE(cal_treat_mthd EQ caltreat))[0]
-          new_sel_samtreat=(WHERE(sam_treat_mthd EQ samtreat))[0]
-          WIDGET_CONTROL, ID_calip, SET_DROPLIST_SELECT=new_sel_calip
-          WIDGET_CONTROL, ID_caltreat, SET_DROPLIST_SELECT=new_sel_caltreat
-          WIDGET_CONTROL, ID_samtreat, SET_DROPLIST_SELECT=new_sel_samtreat          
-        ENDIF
-        WIDGET_CONTROL, ID_substance, SET_VALUE=substlist[sel_exp]
-        WIDGET_CONTROL, ID_eval_mode, SET_DROPLIST_SELECT=((dp_chrom[sel_exp]).subst[sel_subst].rres.rsp_select)[0]
-      END
-      
-    ELSE: $
-      BEGIN
-        IF ((dp_chrom[sel_exp]).subst[sel_subst].rres.cal_treat)[0] NE '' THEN BEGIN        
+        IF ((dp_chrom[sel_exp]).subst[sel_subst].rres.cal_treat)[0] NE '' THEN BEGIN
           cal_ip=(dp_chrom[sel_exp]).subst[sel_subst].rres.cal_ip_mthd
           caltreat=(dp_chrom[sel_exp]).subst[sel_subst].rres.cal_treat
           samtreat=(dp_chrom[sel_exp]).subst[sel_subst].rres.sam_treat
@@ -48,9 +31,26 @@ COMMON dp_data
           WIDGET_CONTROL, ID_calip, SET_DROPLIST_SELECT=new_sel_calip
           WIDGET_CONTROL, ID_caltreat, SET_DROPLIST_SELECT=new_sel_caltreat
           WIDGET_CONTROL, ID_samtreat, SET_DROPLIST_SELECT=new_sel_samtreat
-          WIDGET_CONTROL, ID_eval_mode, SET_DROPLIST_SELECT=((dp_chrom[sel_exp]).subst[sel_subst].rres.rsp_select)[0]          
         ENDIF
-      END    
+        WIDGET_CONTROL, ID_substance, SET_VALUE=substlist[sel_exp]
+        WIDGET_CONTROL, ID_eval_mode, SET_DROPLIST_SELECT=((dp_chrom[sel_exp]).subst[sel_subst].rres.rsp_select)[0]
+      END
+
+    ELSE: $
+      BEGIN
+        IF ((dp_chrom[sel_exp]).subst[sel_subst].rres.cal_treat)[0] NE '' THEN BEGIN
+          cal_ip=(dp_chrom[sel_exp]).subst[sel_subst].rres.cal_ip_mthd
+          caltreat=(dp_chrom[sel_exp]).subst[sel_subst].rres.cal_treat
+          samtreat=(dp_chrom[sel_exp]).subst[sel_subst].rres.sam_treat
+          new_sel_calip=(WHERE(cal_ip_mthd EQ cal_ip))[0]
+          new_sel_caltreat=(WHERE(cal_treat_mthd EQ caltreat))[0]
+          new_sel_samtreat=(WHERE(sam_treat_mthd EQ samtreat))[0]
+          WIDGET_CONTROL, ID_calip, SET_DROPLIST_SELECT=new_sel_calip
+          WIDGET_CONTROL, ID_caltreat, SET_DROPLIST_SELECT=new_sel_caltreat
+          WIDGET_CONTROL, ID_samtreat, SET_DROPLIST_SELECT=new_sel_samtreat
+          WIDGET_CONTROL, ID_eval_mode, SET_DROPLIST_SELECT=((dp_chrom[sel_exp]).subst[sel_subst].rres.rsp_select)[0]
+        ENDIF
+      END
   ENDCASE
-  
+
 END

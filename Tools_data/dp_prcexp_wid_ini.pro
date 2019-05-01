@@ -22,10 +22,10 @@ PRO dp_prcexp_wid_handle, event
       RETURN
     ENDIF
   END
-  
+
   ID_exp = WIDGET_INFO(dp_widid.dp_dataproc, find_by_uname='exp_dl')
   sel_exp = WIDGET_INFO(ID_exp, /DROPLIST_SELECT)
-  
+
   ID_espec      = WIDGET_INFO(dp_widid.dp_mainwid, find_by_uname='expspec_dl')
   sel_espec     = WIDGET_INFO(ID_espec, /DROPLIST_SELECT)
   ID_experiment = WIDGET_INFO(dp_widid.dp_dataproc, FIND_BY_UNAME='exp_dl')
@@ -43,7 +43,7 @@ PRO dp_prcexp_wid_handle, event
   uname = WIDGET_INFO(event.id, /UNAME)
 
 ;  verbose=1
-  
+
   CASE uname OF
     ;******************************************************************************************
     'set_min_blsz' : $
@@ -63,7 +63,7 @@ PRO dp_prcexp_wid_handle, event
     'run_ana' : $
       BEGIN
         dp_refr_status, MESSAGE='Called PRC analyser.'
-        prc_res = dp_prcexp_analyse_prc(sel_exp, min_blsz, max_blsz, cal_blsz, VERBOSE=verbose)     
+        prc_res = dp_prcexp_analyse_prc(sel_exp, min_blsz, max_blsz, cal_blsz, VERBOSE=verbose)
         dp_prcexp_res2txt, prc_res, sel_exp
       END
     ;******************************************************************************************
@@ -94,7 +94,7 @@ PRO dp_prcexp_wid_ini,  prcexp_cfg
     SEP=WIDGET_LABEL(lable_base, VALUE='***', /ALIGN_CENTER)
 
   ;++++++++++++ DROPLISTS & BUTTONS
-  subbase1=WIDGET_BASE(mpbase, col=3)   
+  subbase1=WIDGET_BASE(mpbase, col=3)
     LBL=WIDGET_LABEL(subbase1, VALUE='Set min. Blocksz:      ', /ALIGN_LEFT)
     CBX=WIDGET_COMBOBOX(subbase1, VALUE=prcexp_cfg.min_bl_str, UNAME='set_min_blsz', /DYNAMIC_RESIZE, /ALIGN_LEFT)
     LBL=WIDGET_LABEL(subbase1, VALUE='Set max. Blocksz:      ', /ALIGN_LEFT)
@@ -102,10 +102,10 @@ PRO dp_prcexp_wid_ini,  prcexp_cfg
     WIDGET_CONTROL, CBX, SET_COMBOBOX_SELECT=N_ELEMENTS(prcexp_cfg.max_bl_str)-1
     LBL=WIDGET_LABEL(subbase1, VALUE='Set Cal Blocksz:      ', /ALIGN_LEFT)
     CBX=WIDGET_COMBOBOX(subbase1, VALUE=['1','2','3'], UNAME='set_cal_blsz', /DYNAMIC_RESIZE, /ALIGN_LEFT)
-    
+
   subbase2=WIDGET_BASE(mpbase, col=1)
        BTN=WIDGET_BUTTON(subbase2, VALUE='Analyse!', UNAME='run_ana')
-  
+
 
   dp_widid.dp_prcexp = mpbase
   WIDGET_CONTROL, mpbase, /REALIZE

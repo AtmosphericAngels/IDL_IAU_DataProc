@@ -1,26 +1,26 @@
-; ++++++ FUNCTION dp_read_calmrs ++++++ PRO dp_apply_calmrs 
+; ++++++ FUNCTION dp_read_calmrs ++++++ PRO dp_apply_calmrs
 ; ++++++ PRO dp_remv_calmrs
 ;+
 ; FUNCTION dp_read_calmrs
 ;
 ; AUTHOR: F. Obersteiner, Sep. 2016
 ;
-; PURPOSE: reads a calibration gas mixing ratio table (.csv) into an 
+; PURPOSE: reads a calibration gas mixing ratio table (.csv) into an
 ;   IDL structure that is returned.
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
 FUNCTION dp_read_calmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
-  
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
+
   IF NOT KEYWORD_SET(def_file) THEN $
-    file=DIALOG_PICKFILE(TITLE='Please select a Mixing Ratio Table.', $
-                         PATH=path, FILTER='*.csv', /READ) $
-      ELSE file=def_file
-      
+    file = DIALOG_PICKFILE(TITLE='Please select a Mixing Ratio Table.', $
+                           PATH=path, FILTER='*.csv', /READ) $
+      ELSE file = def_file
+
   IF file EQ '' THEN RETURN, !NULL
   IF FILE_TEST(file) EQ 0 THEN RETURN, !NULL
-  
+
   sep = ';'
   n_table_header = 7
   nl = FILE_LINES(file)
@@ -52,8 +52,8 @@ FUNCTION dp_read_calmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
     comment[i]   = tmp[5]
     IF N_ELEMENTS(tmp) GT 6 THEN unit[i] = tmp[6]
   ENDFOR
-  
-  strct={ canister  : canister, $ 
+
+  strct={ canister  : canister, $
           substance : substance, $
           mr_ppt    : mr_ppt, $
           unc_ppt   : unc_ppt, $
@@ -61,9 +61,9 @@ FUNCTION dp_read_calmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
           scale     :   scale, $
           comment   : comment, $
           unit      : unit }
-  
+
   RETURN, strct
-  
+
 END
 ;------------------------------------------------------------------------------------------------------------------------
 ;+
@@ -80,10 +80,10 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
   COMMON dp_data
 
   IF NOT KEYWORD_SET(verbose) THEN verbose=0
-  
+
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp $
     ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
-  
+
   id_cal = (WHERE(STRUPCASE(sid_name) EQ 'CALIBRATION'))[0] +1
 
   cal_names=[]
@@ -99,7 +99,7 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
     !NULL=DIALOG_MESSAGE(msg, /ERROR)
     RETURN
   ENDIF
-  
+
   canister=(mrs_strct.canister)[0]
   quest='Yes'
   IF cal_names[0] NE canister THEN $
@@ -107,7 +107,7 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
                           'and specification in MR Table ('+canister+') do not match. Continue?', /QUESTION, /DEFAULT_NO)
   IF quest EQ 'No' THEN $
     IF verbose THEN PRINT, 'aborted: calibration gas MRs integration.'
-    
+
   IF quest EQ 'Yes' THEN BEGIN
     FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
       tmp_expcfg=(dp_expcfg[exps[i]])
@@ -121,7 +121,7 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
       *tmp_expcfg.cal_mrs.unit = mrs_strct.unit
       (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
     ENDFOR
-    
+
     IF verbose THEN BEGIN
       print, '+++'
       print, 'imported cal mixing ratios.'
@@ -139,11 +139,11 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
       print, '+++'
       print, 'Calibration gas MRs integrated.'
     ENDIF
-    
+
     dp_refr_status, MESSAGE='Calibration gas MRs integrated.'
-    
+
   ENDIF
-      
+
 END
 ;------------------------------------------------------------------------------------------------------------------------
 ;+
@@ -157,11 +157,11 @@ END
 PRO dp_remv_calmrs, sel_exp, SEL_ONLY=sel_only, LOUD=loud
 
   COMMON dp_data
-  
+
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp $
     ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
-  
-  FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN  
+
+  FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
     IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt NE !NULL $
       THEN BEGIN
         quest='Yes'
@@ -183,7 +183,7 @@ PRO dp_remv_calmrs, sel_exp, SEL_ONLY=sel_only, LOUD=loud
           'No':
           ELSE:
         ENDCASE
-      ENDIF 
+      ENDIF
   ENDFOR
-  
+
 END

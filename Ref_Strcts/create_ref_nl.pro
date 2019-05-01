@@ -21,5 +21,5 @@ FUNCTION create_ref_nl, fct_dgr, sz_mrs
               }
 
   RETURN, nl_ref
-  
+
 END
