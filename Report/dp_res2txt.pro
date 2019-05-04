@@ -113,10 +113,10 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
           unit = 'NA'
           cal_scale = 'NA'
         ENDELSE
-
-        cal_prc= 'NaN'
+        
+        cal_prc = 'NaN'
         IF *(dp_expcfg[sel_exp]).instr_prc.mp_rel NE !NULL THEN BEGIN
-          w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
+          w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
           IF w[0] NE -1 THEN $
             cal_prc = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).instr_prc.mp_rel)[w[0]], FORMAT='(D25.6)'), /REMOVE_ALL)
         ENDIF
@@ -281,10 +281,10 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         unit = 'NA'
         cal_scale = 'NA'
       ENDELSE
-
-      cal_prc= 'NaN'
+      
+      cal_prc = 'NaN'
       IF *(dp_expcfg[sel_exp]).instr_prc.mp_rel NE !NULL THEN BEGIN
-        w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
+        w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
         IF w[0] NE -1 THEN $
           cal_prc = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).instr_prc.mp_rel)[w[0]], FORMAT='(D25.6)'), /REMOVE_ALL)
       ENDIF
