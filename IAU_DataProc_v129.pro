@@ -18,7 +18,7 @@ PRO IAU_DataProc_v129
 
   dp_def_common, 1.29
 
-  path_wd = 'E:\KIT_DATA\MPI_GHGGC_Data_netcdf'
+  path_wd = 'E:\KIT_DATA\MPI_GHGGC_Data_netcdf\IDL_processing'
 ;  path_wd = 'D:\'
 
   error_handler_IO = 0

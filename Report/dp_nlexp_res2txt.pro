@@ -62,8 +62,7 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
     PRINTF, lun, 'Cal_Gas:', sep, cal, FORMAT='(A,A,A)'
     PRINTF, lun, 'Cal_Gas spec. MR:', sep, cal_mr_spec, FORMAT='(A,A,A)'
     PRINTF, lun, 'Cal_Gas spec. abs. error:', sep, cal_mr_err, FORMAT='(A,A,A)'
-    PRINTF, lun, 'Substance:', sep, subst, sep, 'm/Q:', sep, mass, sep, 'Eval_Mode:', sep, mode_string, $
-                 sep, 'Unit:', sep, unit, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
+    PRINTF, lun, 'Substance:', sep, subst, sep, 'm/Q:', sep, mass, sep, 'Eval_Mode:', sep, mode_string, FORMAT='(A,A,A,A,A,A,A,A,A,A,A)'
     PRINTF, lun, '*** NL function parameters ***', FORMAT='(A)'
     PRINTF, lun, 'Polynomial Degree:', sep, fct_dgr_str, FORMAT='(A,A,A)'
     PRINTF, lun, 'Parameters:', sep, fct_parms_str

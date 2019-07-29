@@ -87,7 +87,7 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
     1: $ ; unit from tgt mr table
       BEGIN
       IF (*((dp_expcfg[sel_exp]).tgt_mrs.unit)) NE !NULL THEN $
-        unit = (*(dp_expcfg[sel_exp]).cal_mrs.unit)[w_s_tgt] ELSE unit = 'NA'
+        unit = (*(dp_expcfg[sel_exp]).tgt_mrs.unit)[w_s_tgt] ELSE unit = 'NA'
     END
   ENDCASE
 
