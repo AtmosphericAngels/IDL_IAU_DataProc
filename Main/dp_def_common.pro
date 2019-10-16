@@ -5,7 +5,7 @@
 ;
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
-PRO dp_def_common, version
+PRO dp_def_common, v
 
 
 ; +++ data
@@ -24,7 +24,7 @@ PRO dp_def_common, version
     expinflist  = !NULL ; array of loaded experiment-info files
     substlist   = !NULL ; list of substance name arrays found in chrom files (LIST type variable)
 
-    dp_vers     = STRCOMPRESS(STRING(version, FORMAT='(F5.2)'), /REMOVE_ALL)
+    dp_vers     = v
 
     cal_ip_mthd = ['p2p','calsmean','linear_fit','polyfit_dg2']
 
