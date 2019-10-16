@@ -306,7 +306,7 @@ The "**Block PRC Plot**" function calls a plot that shows the relative standard 
 
 If calibration gas mixing ratios have been loaded (see sect. 3.3), a plot that shows sample mixing ratios can be called with the "**MRs Plot**" function.
 
-![19](https://raw.githubusercontent.com/MrFuppes/IDL_IAU_DataProc/master/doc/img/img19_wid_dataproc_report.PNG)
+![19](https://raw.githubusercontent.com/MrFuppes/IDL_IAU_DataProc/master/doc/img/img19_wid_dataproc_report.PNG | width="3.937007874015748in" height="3.7679943132108487in")
 
 Fig. 19 - Data processing widget, 'report' tab.
 
