@@ -339,3 +339,22 @@ From the report tab of the processing dialog, you can create different report fi
   [3.3 Load specific configurations 11]: #load-specific-configurations
   [3.4 Tools: Precision and Non-Linearity experiment 13]: #tools-precision-and-non-linearity-experiment
   [3.5 Diagnostics and report 17]: #diagnostics-and-report
+  [1]: media/image1.png {width="7.124577865266842in" height="8.224792213473316in"}
+  [2]: media/image2.png {width="3.2610859580052494in" height="2.7559055118110236in"}
+  [3]: media/image3.png {width="3.1496062992125986in" height="2.627309711286089in"}
+  [4]: media/image4.png {width="3.1496062992125986in" height="2.644555993000875in"}
+  [5]: media/image5.png {width="3.1496062992125986in" height="2.4575579615048118in"}
+  [6]: media/image6.png {width="3.9370067804024496in" height="3.768844050743657in"}
+  [7]: media/image7.png {width="4.797544838145232in" height="3.052509842519685in"}
+  [8]: media/image8.png {width="3.937007874015748in" height="3.7688451443569555in"}
+  [9]: media/image9.png {width="3.937007874015748in" height="3.7196576990376204in"}
+  [10]: media/image10.png {width="3.937007874015748in" height="3.7773326771653544in"}
+  [11]: media/image11.png {width="3.937007874015748in" height="3.7575995188101485in"}
+  [12]: media/image12.png {width="3.4635673665791775in" height="1.7031375765529309in"}
+  [13]: media/image13.png {width="2.8437707786526683in" height="2.35418416447944in"}
+  [14]: media/image14.png {width="5.887112860892389in" height="4.05in"}
+  [15]: media/image15.png {width="6.3in" height="4.334027777777778in"}
+  [16]: media/image16.png {width="6.3in" height="3.3472222222222223in"}
+  [17]: media/image17.png {width="6.3in" height="3.422222222222222in"}
+  [18]: media/image18.png {width="3.937007874015748in" height="3.797113954505687in"}
+  [19]: media/image19.png {width="3.937007874015748in" height="3.7679943132108487in"}
