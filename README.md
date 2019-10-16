@@ -357,4 +357,4 @@ From the report tab of the processing dialog, you can create different report fi
   [16]: media/image16.png {width="6.3in" height="3.3472222222222223in"}
   [17]: media/image17.png {width="6.3in" height="3.422222222222222in"}
   [18]: media/image18.png {width="3.937007874015748in" height="3.797113954505687in"}
-  [19]: media/image19.png {width="3.937007874015748in" height="3.7679943132108487in"}
+  [19]: https://raw.githubusercontent.com/MrFuppes/IDL_IAU_DataProc/master/doc/img/img19_wid_dataproc_report.PNG {width="3.937007874015748in" height="3.7679943132108487in"}
