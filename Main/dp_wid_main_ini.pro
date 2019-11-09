@@ -50,8 +50,8 @@ PRO dp_wid_main_handle, event
           IF quest EQ 'No' THEN RETURN
         ENDIF
 
-        dp_chrom=dp_restore_chrom(dp_chrom, dp_vers, PATH=path_wd, VERBOSE=verbose)
-        dp_chrom=dp_correct_time(dp_chrom, VERBOSE=verbose) ; correct for "jumps" in Chemstation cdf timestamps
+        dp_chrom = dp_restore_chrom(dp_chrom, dp_vers, PATH=path_wd, VERBOSE=verbose)
+        dp_chrom = dp_correct_time(dp_chrom, VERBOSE=verbose, /LOUD) ; correct for "jumps" in Chemstation cdf timestamps
         dp_expcfg = !NULL
 
         IF dp_widid.dp_dataproc NE -1 THEN BEGIN
