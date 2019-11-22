@@ -187,6 +187,12 @@ FUNCTION dp_interpol_cal, xdata, ydata, vd_cal, sel_calip, sel_caltreat, sequenc
         ENDIF $
           ELSE vout=DBLARR(N_ELEMENTS(xdata))*!Values.D_NAN
       END
+      
+      'running_mean_p2p': $ ;edit T.W. 20191006
+        BEGIN
+        V = ts_smooth(V, 3)
+        vout=interpol(V, X, XOUT, /NAN);, /QUADRATIC)
+      END
   ENDCASE
 
 

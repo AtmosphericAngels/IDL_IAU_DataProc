@@ -26,7 +26,7 @@ PRO dp_def_common, v
 
     dp_vers     = v
 
-    cal_ip_mthd = ['p2p','calsmean','linear_fit','polyfit_dg2']
+    cal_ip_mthd = ['p2p','calsmean','linear_fit','polyfit_dg2','running_mean_p2p'] ;edit T.W. 20191006
 
     cal_treat_mthd = ['bracketing','block_mean','preceding']
 
