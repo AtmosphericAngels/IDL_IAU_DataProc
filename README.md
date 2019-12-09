@@ -3,11 +3,11 @@
 *Content*
 =========
 
-1 - **[Workflow]**
+1 - **[Workflow](#workflow)**
 
-2 - **[Getting started]**
+2 - **[Getting started](#Getting started)**
 
-*2.1* - [Technical Notes]
+*2.1* - [Technical Notes](#Technical Notes)
 
 *2.2* - [Main widget: "File" tab]
 
