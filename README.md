@@ -3,39 +3,29 @@
 *Content*
 =========
 
-[1 Workflow 1]
+1 - **[Workflow]**
 
-[2 Getting started 3]
+2 - **[Getting started]**
 
-[2.1 Technical Notes 3]
+*2.1* - [Technical Notes]
 
-[2.2 Main widget: "File" tab 4]
+*2.2* - [Main widget: "File" tab]
 
-[2.3 Main widget: "Advanced" tab 5]
+*2.3* - [Main widget: "Advanced" tab]
 
-[2.4 Main widget: Config droplists and 'Process Data!' button 6]
+*2.4* - [Main widget: Config droplists and 'Process Data!' button]
 
-[3 Data Processing 7]
+3 - **[Data Processing]**
 
-[3.1 Treatment configuration 8]
+*3.1* - [Treatment configuration]
 
-[Treatment of calibration measurements 8]
+*3.2* - [Run calculations]
 
-[Interpolation of calibration points 8]
+*3.3* - [Load specific configurations]
 
-[Treatment of sample measurements 9]
+*3.4* - [Tools: Precision and Non-Linearity experiment]
 
-[Eval Mode 9]
-
-[Use Flag 9]
-
-[3.2 Run calculations 10]
-
-[3.3 Load specific configurations 11]
-
-[3.4 Tools: Precision and Non-Linearity experiment 13]
-
-[3.5 Diagnostics and report 17]
+*3.5* - [Diagnostics and report]
 
 Workflow
 ========
