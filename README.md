@@ -5,28 +5,29 @@
 
 1 - **[Workflow](#workflow)**
 
-2 - **[Getting started](#Getting started)**
+2 - **[Getting started](#start)**
 
-*2.1* - [Technical Notes](#Technical Notes)
+*2.1* - [Technical Notes](#technotes)
 
-*2.2* - [Main widget: "File" tab]
+*2.2* - [Main widget: "File" tab](#mainwidfile)
 
-*2.3* - [Main widget: "Advanced" tab]
+*2.3* - [Main widget: "Advanced" tab](#mainwidadv)
 
-*2.4* - [Main widget: Config droplists and 'Process Data!' button]
+*2.4* - [Main widget: Config droplists and 'Process Data!' button](#mainwidproc)
 
-3 - **[Data Processing]**
+3 - **[Data Processing](#dataproc)**
 
-*3.1* - [Treatment configuration]
+*3.1* - [Treatment configuration](#treatcfg)
 
-*3.2* - [Run calculations]
+*3.2* - [Run calculations](#runcalc)
 
-*3.3* - [Load specific configurations]
+*3.3* - [Load specific configurations](#loadcfg)
 
-*3.4* - [Tools: Precision and Non-Linearity experiment]
+*3.4* - [Tools: Precision and Non-Linearity experiment](#tools)
 
-*3.5* - [Diagnostics and report]
+*3.5* - [Diagnostics and report](#diagrep)
 
+<a name="workflow"/>
 Workflow
 ========
 
@@ -50,9 +51,11 @@ The core features of IAU\_DataProc can be scripted: Settings for the evaluation 
 
 Fig. 1 -- Interaction of IAU\_Chrom and IAU\_DataProc. Right side of the schematic: processing step, left side: software implementation
 
+<a name="start"/>
 Getting started
 ===============
 
+<a name="technotes"/>
 Technical Notes 
 ----------------
 
@@ -79,6 +82,7 @@ Fig. 2 - Main widget.
 
 All further widgets (plots, tools) appear as soon as called/required.
 
+<a name="mainwidfile"/>
 Main widget: "File" tab
 -----------------------
 
@@ -98,6 +102,7 @@ Fig. 3 - File tab on main widget.
 
 'File' '**Exit'**: Exit the program and close all widgets. Plot and table widgets may stay open and have to be closed manually.
 
+<a name="mainwidadv"/>
 Main widget: "Advanced" tab
 ---------------------------
 
@@ -111,6 +116,7 @@ Fig. 4 -- Advanced tab on main widget.
 
 Find a detailed explanation how to configure the database script in the header of the example script table header.
 
+<a name="mainwidproc"/>
 Main widget: Config droplists and 'Process Data!' button
 --------------------------------------------------------
 
@@ -128,6 +134,7 @@ After experiment(s) and experiment info file(s) have been loaded (or a save file
 
 Press the "**Process Data!**" button (Fig. 5, lower part) to call the data processing widget (Fig. 6, next section).
 
+<a name="dataproc"/>
 Data Processing
 ===============
 
@@ -137,6 +144,7 @@ Fig. 6 -- data processing widget. Droplist selectsion in the "edit..." section r
 
 Fig. 6 shows the processing widget (dialog). There are different ways how to proceed with analysing the data. In principle, each species found in the IAU\_Chrom experiment(s) can be evaluated with a specific treatment configuration, i.e. treatment of calibration measurements, interpolation of the calibration points and treatment of the sample measurements (Fig. 6, "Edit..." section in the centre).
 
+<a name="treatcfg"/>
 Treatment configuration
 -----------------------
 
@@ -177,6 +185,7 @@ Treatment configuration
 
 Fig. 7 -- "edit use\_flag" table. Changes to other columns than the use\_flag column have no effect.
 
+<a name="runcalc"/>
 Run calculations
 ----------------
 
@@ -192,6 +201,7 @@ All loaded data: **"Run Calculations !"** button. Calculate results for all spec
 
 All loaded data: "**overwrite ALL use\_flags**" checkbox. If activated, the use\_flag is reset to the default value (specified in experiment info file) for all measurements. This change is only applied if the "Run Calculations !" button is pressed.
 
+<a name="loadcfg"/>
 Load specific configurations
 ----------------------------
 
@@ -217,6 +227,7 @@ To see if and which configuration has been loaded, use the functions from the sh
 
 Fig. 10 - data processing widget, 'show' tab.
 
+<a name="tools"/>
 Tools: Precision and Non-Linearity experiment
 ---------------------------------------------
 
@@ -273,6 +284,7 @@ Fig. 15 -- NL analyser tool mode 1, non-linearity correction function. X-axis: m
 
 Note that you can only execute calculations for the species currently selected on the processing dialog (Fig. 6).
 
+<a name="diagrep"/>
 Diagnostics and report
 ----------------------
 
