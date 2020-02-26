@@ -313,7 +313,7 @@ COMMON DP_WIDID
 ;++++++++++++ (c)
     dp_credits = WIDGET_BASE(dp_subbase1, uname='dp_credits', column=1)
       SEP = WIDGET_LABEL(dp_credits, VALUE='--', /ALIGN_LEFT)
-      TXT = WIDGET_LABEL(dp_credits, VALUE='(c) 2019 Univ. Frankfurt / IAU / Group A. Engel', /ALIGN_LEFT)
+      TXT = WIDGET_LABEL(dp_credits, VALUE='(c) 2020 Univ. Frankfurt / IAU / Group A. Engel', /ALIGN_LEFT)
 
 ;++++++++++++ REALIZE!
   dp_widid.dp_mainwid = mainbase
