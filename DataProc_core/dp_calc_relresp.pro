@@ -40,6 +40,7 @@ FUNCTION dp_calc_relresp, xdata, ydata, vd_sam, cal_interpol, sel_samtreat, sequ
       BREAK
     ENDIF
   ENDFOR
+  
   ; discard samples not bracketed by cals for PRC analyser
   ix_cal = sequence.ix_cal[WHERE(sequence.ix_cal NE -1)]
   ix_init = ix_init[WHERE(ix_init GT ix_cal[0] AND ix_init LT ix_cal[-1])]
@@ -116,7 +117,7 @@ FUNCTION dp_calc_relresp, xdata, ydata, vd_sam, cal_interpol, sel_samtreat, sequ
 
   strct={ $
           sam_rrsp: samples_rR, $
-          block_rrsp: blockmean_rR ,$
+          block_rrsp: blockmean_rR, $
           block_rsd: block_RSD $
         }
 
