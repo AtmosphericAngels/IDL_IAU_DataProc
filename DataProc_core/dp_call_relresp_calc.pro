@@ -19,10 +19,10 @@ COMMON DP_DATA
 COMMON DP_WIDID
 
 
-  IF NOT KEYWORD_SET(overwrite) THEN overwrite=0
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
-  IF NOT KEYWORD_SET(current) THEN current=0 ; 0: try using treatcfg / 1: use settings on the widget
-  IF NOT KEYWORD_SET(eval_mode) THEN eval_mode=0 ; default: area
+  IF NOT KEYWORD_SET(overwrite) THEN overwrit = 0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
+  IF NOT KEYWORD_SET(current) THEN current = 0 ; 0: try using treatcfg / 1: use settings on the widget
+  IF NOT KEYWORD_SET(eval_mode) THEN eval_mode = 0 ; default: area
     vd_evm = [0,1] ; valid eval modes
 
   IF verbose THEN print, 'Initialized calculation of relative responses...'
@@ -35,22 +35,22 @@ COMMON DP_WIDID
     ID_caltreat = WIDGET_INFO(dp_widid.dp_dataproc, FIND_BY_UNAME='caltreat_dl'); get valid treat options from droplists
     WIDGET_CONTROL, ID_caltreat, GET_VALUE = vd_caltreat
     w_ne0=WHERE(STRLEN(vd_caltreat) NE 0)
-    IF w_ne0[0] NE -1 THEN vd_caltreat=vd_caltreat[w_ne0]
-  ENDIF ELSE vd_caltreat=caltreats
+    IF w_ne0[0] NE -1 THEN vd_caltreat = vd_caltreat[w_ne0]
+  ENDIF ELSE vd_caltreat = caltreats
 
   IF NOT KEYWORD_SET(samtreats) THEN BEGIN
     ID_samtreat = WIDGET_INFO(dp_widid.dp_dataproc, FIND_BY_UNAME='samtreat_dl')
     WIDGET_CONTROL, ID_samtreat, GET_VALUE = vd_samtreat
-    w_ne0=WHERE(STRLEN(vd_samtreat) NE 0)
-    IF w_ne0[0] NE -1 THEN vd_samtreat=vd_samtreat[w_ne0]
-  ENDIF ELSE vd_samtreat=samtreats
+    w_ne0 = WHERE(STRLEN(vd_samtreat) NE 0)
+    IF w_ne0[0] NE -1 THEN vd_samtreat = vd_samtreat[w_ne0]
+  ENDIF ELSE vd_samtreat = samtreats
 
   IF NOT KEYWORD_SET(calipmthds) THEN BEGIN
     ID_calip = WIDGET_INFO(dp_widid.dp_dataproc, FIND_BY_UNAME='calip_dl')
     WIDGET_CONTROL, ID_calip, GET_VALUE = vd_calip
-    w_ne0=WHERE(STRLEN(vd_calip) NE 0)
-    IF w_ne0[0] NE -1 THEN vd_calip=vd_calip[w_ne0]
-  ENDIF ELSE vd_calip=calipmthds
+    w_ne0 = WHERE(STRLEN(vd_calip) NE 0)
+    IF w_ne0[0] NE -1 THEN vd_calip = vd_calip[w_ne0]
+  ENDIF ELSE vd_calip = calipmthds
 
   IF KEYWORD_SET(sel_exp_subst) $
 ;+++++++++
@@ -60,11 +60,11 @@ COMMON DP_WIDID
 
     IF SIZE(sel_exp_subst, /TYPE) NE 3 THEN RETURN ; variable not specified correctly (vector of 2 long integers)
 
-    exp_nbr=sel_exp_subst[0]
-    subst_nbr=sel_exp_subst[1]
+    exp_nbr = sel_exp_subst[0]
+    subst_nbr = sel_exp_subst[1]
 
-    tmp_chrom=(dp_chrom[exp_nbr]) ; move dataset out of LIST
-    tmp_expcfg=(dp_expcfg[exp_nbr])
+    tmp_chrom = (dp_chrom[exp_nbr]) ; move dataset out of LIST
+    tmp_expcfg = (dp_expcfg[exp_nbr])
 
     time = (dp_chrom[exp_nbr]).jdate ; gather experiment-specific info
     sequence = (dp_expcfg[exp_nbr]).sequence
@@ -84,10 +84,10 @@ COMMON DP_WIDID
     IF NOT KEYWORD_SET(auto_samtreat) THEN $
       tmp_chrom.subst[subst_nbr].rres.sam_treat = sam_treat_mthd[sel_samtreat] $
     ELSE BEGIN
-      name_vector=(dp_expcfg[exp_nbr]).expinfo.s_name
-      smpls=name_vector[WHERE(sequence.id EQ id_sam OR sequence.id EQ id_tgt)]
-      count=1 ; there is at least one sample...
-      FOR s=0, N_ELEMENTS(smpls)-2 DO IF smpls[s+1] NE smpls[s] THEN count=count+1
+      name_vector = (dp_expcfg[exp_nbr]).expinfo.s_name
+      smpls = name_vector[WHERE(sequence.id EQ id_sam OR sequence.id EQ id_tgt)]
+      count = 1 ; there is at least one sample...
+      FOR s=0, N_ELEMENTS(smpls)-2 DO IF smpls[s+1] NE smpls[s] THEN count = count+1
       IF count GT sequence.n_sam_blocks THEN $
         tmp_chrom.subst[subst_nbr].rres.sam_treat = sam_treat_mthd[1] $
       ELSE tmp_chrom.subst[subst_nbr].rres.sam_treat = sam_treat_mthd[sel_samtreat]
@@ -105,12 +105,12 @@ COMMON DP_WIDID
     IF overwrite THEN BEGIN
       use_def = (dp_expcfg[exp_nbr]).expinfo.use          ; overwrite, use defaults from expinfo
       tmp_chrom.subst[subst_nbr].rres.use_flag = use_def  ; overwrite use_flag in rres strct
-      ds=MAKE_ARRAY(N_ELEMENTS(tmp_chrom.subst[subst_nbr].rres.data_select), /STRING, VALUE='auto')
-      (tmp_chrom.subst[subst_nbr].rres.data_select)=ds
+      ds = MAKE_ARRAY(N_ELEMENTS(tmp_chrom.subst[subst_nbr].rres.data_select), /STRING, VALUE='auto')
+      (tmp_chrom.subst[subst_nbr].rres.data_select) = ds
     ENDIF ELSE BEGIN
       use_def = tmp_chrom.subst[subst_nbr].rres.use_flag           ; no overwrite, use eval_flag from rres strct
-      ds=MAKE_ARRAY(N_ELEMENTS(tmp_chrom.subst[subst_nbr].rres.data_select), /STRING, VALUE='manual')
-      (tmp_chrom.subst[subst_nbr].rres.data_select)=ds
+      ds = MAKE_ARRAY(N_ELEMENTS(tmp_chrom.subst[subst_nbr].rres.data_select), /STRING, VALUE='manual')
+      (tmp_chrom.subst[subst_nbr].rres.data_select) = ds
     ENDELSE
 
     vd_cal = WHERE((use_def EQ 1) AND (i_flag EQ 1) AND (id_vector EQ id_cal), nvd)
@@ -170,7 +170,7 @@ COMMON DP_WIDID
 
     tmp_chrom.subst[subst_nbr].rres.rsp_select = eval_mode
 
-    (dp_chrom[exp_nbr])=tmp_chrom ; put dataset back into LIST
+    (dp_chrom[exp_nbr]) = tmp_chrom ; put dataset back into LIST
     IF ((dp_expcfg[exp_nbr]).instr_prc.instrument) NE '' THEN $
       dp_apply_instrprc, exp_nbr, VERBOSE=verbose
 
@@ -181,11 +181,11 @@ COMMON DP_WIDID
 
     n_exp = N_ELEMENTS(dp_chrom)
     n_subst = LONARR(n_exp)
-    FOR i=0, n_exp-1 DO n_subst[i]=N_ELEMENTS(((dp_chrom[i])[0].subst.name))
+    FOR i=0, n_exp-1 DO n_subst[i] = N_ELEMENTS(((dp_chrom[i])[0].subst.name))
   ;++++++++++++
     FOR sel_exp=0, n_exp-1 DO BEGIN ; loop over all loaded experiments
-      tmp_chrom=(dp_chrom[sel_exp]) ; move dataset out of LIST
-      tmp_expcfg=(dp_expcfg[sel_exp])
+      tmp_chrom = (dp_chrom[sel_exp]) ; move dataset out of LIST
+      tmp_expcfg = (dp_expcfg[sel_exp])
 
       time = (dp_chrom[sel_exp]).jdate ; gather experiment-specific info
       sequence = (dp_expcfg[sel_exp]).sequence
@@ -201,31 +201,31 @@ COMMON DP_WIDID
         tmp_chrom.subst[sel_subst].rres.sam_treat = sam_treat_mthd[sel_samtreat]
 
         IF NOT current THEN BEGIN ; try to find settings for the selected substance in dp_expcfg.treatcfg
-          pvd=PTR_VALID((tmp_expcfg.treatcfg.substance)) ; check pointer...
+          pvd = PTR_VALID((tmp_expcfg.treatcfg.substance)) ; check pointer...
           IF *(tmp_expcfg.treatcfg.substance) EQ !NULL THEN p_filled = 0 ELSE p_filled = 1
           IF pvd AND p_filled THEN BEGIN
-            w=WHERE(STRUPCASE(*(tmp_expcfg.treatcfg.substance)) EQ STRUPCASE((substlist[sel_exp])[sel_subst]))
+            w = WHERE(STRUPCASE(*(tmp_expcfg.treatcfg.substance)) EQ STRUPCASE((substlist[sel_exp])[sel_subst]))
 
             IF w[0] NE -1 THEN BEGIN
-              ix_cal_ip=WHERE(vd_calip EQ ((*(tmp_expcfg.treatcfg.cal_ip))[w])[0])
+              ix_cal_ip = WHERE(vd_calip EQ ((*(tmp_expcfg.treatcfg.cal_ip))[w])[0])
               IF ix_cal_ip[0] NE -1 THEN BEGIN
                 tmp_chrom.subst[sel_subst].rres.cal_ip_mthd = vd_calip[ix_cal_ip[0]]
                 sel_calip = ix_cal_ip[0]
               ENDIF
 
-              ix_cal_treat=WHERE(vd_caltreat EQ ((*(tmp_expcfg.treatcfg.cal_treat))[w])[0])
+              ix_cal_treat = WHERE(vd_caltreat EQ ((*(tmp_expcfg.treatcfg.cal_treat))[w])[0])
               IF ix_cal_treat[0] NE -1 THEN BEGIN
                 tmp_chrom.subst[sel_subst].rres.cal_treat = vd_caltreat[ix_cal_treat[0]]
                 sel_caltreat = ix_cal_treat[0]
               ENDIF
 
-              ix_sam_treat=WHERE(vd_samtreat EQ ((*(tmp_expcfg.treatcfg.sam_treat))[w])[0])
+              ix_sam_treat = WHERE(vd_samtreat EQ ((*(tmp_expcfg.treatcfg.sam_treat))[w])[0])
               IF ix_sam_treat[0] NE -1 THEN BEGIN
                 tmp_chrom.subst[sel_subst].rres.sam_treat = vd_samtreat[ix_sam_treat[0]]
                 sel_samtreat = ix_sam_treat[0]
               ENDIF
 
-              ix_evm=WHERE(vd_evm EQ ((*(tmp_expcfg.treatcfg.eval_mode))[w])[0])
+              ix_evm = WHERE(vd_evm EQ ((*(tmp_expcfg.treatcfg.eval_mode))[w])[0])
               IF ix_sam_treat[0] NE -1 THEN $
                 eval_mode = ((*(tmp_expcfg.treatcfg.eval_mode))[w])[0]
 
@@ -235,11 +235,11 @@ COMMON DP_WIDID
 
 
         IF KEYWORD_SET(auto_samtreat) THEN BEGIN
-          name_vector=(dp_expcfg[sel_exp]).expinfo.s_name
-          smpls=name_vector[WHERE(sequence.id EQ id_sam OR sequence.id EQ id_tgt)]
-          vd_smpls=smpls[WHERE((dp_expcfg[sel_exp]).expinfo.use EQ 1)]
-          count=1 ; there is at least one sample...
-          FOR s=0, N_ELEMENTS(vd_smpls)-2 DO IF vd_smpls[s+1] NE vd_smpls[s] THEN count=count+1
+          name_vector = (dp_expcfg[sel_exp]).expinfo.s_name
+          smpls = name_vector[WHERE(sequence.id EQ id_sam OR sequence.id EQ id_tgt)]
+          vd_smpls = smpls[WHERE((dp_expcfg[sel_exp]).expinfo.use EQ 1)]
+          count = 1 ; there is at least one sample...
+          FOR s=0, N_ELEMENTS(vd_smpls)-2 DO IF vd_smpls[s+1] NE vd_smpls[s] THEN count = count+1
           IF count GT sequence.n_sam_blocks THEN BEGIN
             sel_samtreat = 1
             tmp_chrom.subst[sel_subst].rres.sam_treat = vd_samtreat[sel_samtreat]
@@ -260,11 +260,11 @@ COMMON DP_WIDID
           use_def = (dp_expcfg[sel_exp]).expinfo.use          ; overwrite, use defaults from expinfo
           tmp_chrom.subst[sel_subst].rres.use_flag = use_def  ; overwrite use_flag in rres strct
           ds=MAKE_ARRAY(N_ELEMENTS(tmp_chrom.subst[sel_subst].rres.data_select), /STRING, VALUE='auto')
-          (tmp_chrom.subst[sel_subst].rres.data_select)=ds ; lable data as 'autoselect'
+          (tmp_chrom.subst[sel_subst].rres.data_select) = ds ; lable data as 'autoselect'
         ENDIF ELSE BEGIN
           use_def = tmp_chrom.subst[sel_subst].rres.use_flag           ; no overwrite, use eval_flag from rres strct
-          ds=MAKE_ARRAY(N_ELEMENTS(tmp_chrom.subst[sel_subst].rres.data_select), /STRING, VALUE='manual')
-          (tmp_chrom.subst[sel_subst].rres.data_select)=ds
+          ds = MAKE_ARRAY(N_ELEMENTS(tmp_chrom.subst[sel_subst].rres.data_select), /STRING, VALUE='manual')
+          (tmp_chrom.subst[sel_subst].rres.data_select) = ds
         ENDELSE
 
         vd_cal = WHERE((use_def EQ 1) AND (i_flag GE 1) AND (id_vector EQ id_cal), nvd)
@@ -326,7 +326,7 @@ COMMON DP_WIDID
 
       ENDFOR ; end loop: substances in loaded experiments
   ;+++++++++
-      (dp_chrom[sel_exp])=tmp_chrom ; put dataset back into LIST
+      (dp_chrom[sel_exp]) = tmp_chrom ; put dataset back into LIST
       IF ((dp_expcfg[sel_exp]).instr_prc.instrument) NE '' THEN $
         dp_apply_instrprc, sel_exp, VERBOSE=verbose
 

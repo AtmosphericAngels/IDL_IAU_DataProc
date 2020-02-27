@@ -39,13 +39,11 @@ FUNCTION dp_create_plotobj
 
   p1 = errorplot([!Values.D_NAN], [!Values.D_NAN], $
                   margin=margin, $
-                  ;location=[xoff, yoff],$
                   dimensions=dimensions, $
-                  ;xstyle=3, ystyle=3, $
                   color='r',$
                   axis_style=0, $
                   font_size=20,$
-                  location=[rects[0, numMons-1] + 10, rects[1, numMons-1] + 220], $
+                  location=[rects[2, primaryIndex]*0.15, rects[3, primaryIndex]*0.15], $
                   title=' ', $
                   window_title='IAU_DP: Plot',$
                   name="Calibration ",$
@@ -277,7 +275,7 @@ FUNCTION dp_create_plotobj2_multi, ytitle1=ytitle1, ytitle2=ytitle2, ytitle3=yti
   p1 = errorplot([!Values.D_NAN],[!Values.D_NAN],$
                   margin=[0.15,0,0.05,0.1], $
                   dimensions=dimensions, $
-                  location=[rects[0, numMons-1] + 1400, rects[1, numMons-1] + 220], $
+                  location=[rects[2, primaryIndex]*0.17, rects[3, primaryIndex]*0.17], $
                   name="retention_time",$
                   layout=[1,3,1],$
                   linestyle=0,$

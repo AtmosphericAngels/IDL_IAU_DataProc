@@ -244,6 +244,8 @@ PRO dp_wid_dataproc_handle, event
     ;*****************************
     'show_prcplot' : dp_plot_mrs_prc, sel_exp, sel_subst, /SHOW_PRC
     ;*****************************
+    'show_calprcplot' : dp_plot_mrs_prc, sel_exp, sel_subst, /SHOW_PRC, /SHOW_CAL_PRC
+    ;*****************************
     'show_mrsplot' : dp_plot_mrs_prc, sel_exp, sel_subst, /SHOW_MRs
     ;*****************************
     ;**********************************### MENU: Show ###**************************************
@@ -341,7 +343,8 @@ PRO dp_wid_dataproc_ini
     ID=WIDGET_BUTTON(diaID, VALUE='Results Table (detailed)', UNAME='show_restable')
     ID=WIDGET_BUTTON(diaID, VALUE='PreCon. Diagnostics Plot', UNAME='show_diaplot2', /SEPARATOR)
     ID=WIDGET_BUTTON(diaID, VALUE='Chrom. Diagnostics Plot', UNAME='show_diaplot', /SEPARATOR)
-    ID=WIDGET_BUTTON(diaID, VALUE='Block PRC Plot', UNAME='show_prcplot')
+    ID=WIDGET_BUTTON(diaID, VALUE='Smpl Block PRC Plot', UNAME='show_prcplot')
+    ID=WIDGET_BUTTON(diaID, VALUE='Cal Block PRC Plot', UNAME='show_calprcplot')
     ID=WIDGET_BUTTON(diaID, VALUE='MRs Plot', UNAME='show_mrsplot')
 
   repID=WIDGET_BUTTON(dp_men, VALUE='Report', /MENU)

@@ -16,7 +16,7 @@ PRO IAU_DataProc
 
   COMMON dp_data
 
-  dp_def_common, '1.29' ; string == version
+  dp_def_common, '1.30' ; string == version
 
   path_wd = 'D:\'
 
