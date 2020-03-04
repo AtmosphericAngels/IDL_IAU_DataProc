@@ -37,6 +37,11 @@ FUNCTION dp_interpol_cal, xdata, ydata, vd_cal, sel_calip, sel_caltreat, sequenc
               ix_bracks = ix_bracks_all[uniq(ix_bracks_all)] ; remove double indices if only one cal point between samples
       
               ix_vd_cals = ix_bracks
+              
+              ; FO 2020-02-29:
+              ; bracketing cal scheme might be greatly simplified -
+              ; => simply use all cal indices
+              ix_vd_cals = (sequence.ix_cal)[WHERE(sequence.ix_cal NE -1)]
       
               IF sequence.miss_1stcal EQ 1 THEN BEGIN
                   ix_bracks = [ix_bracks[0], ix_bracks] ; missing 1st cal: use cal after first sample
@@ -62,7 +67,7 @@ FUNCTION dp_interpol_cal, xdata, ydata, vd_cal, sel_calip, sel_caltreat, sequenc
                       x[i] = !VALUES.D_NAN
                   ENDELSE
               ENDFOR
-    
+                
           END
   
       'block_mean': $ ; v and x have to be calculated here
@@ -191,7 +196,10 @@ FUNCTION dp_interpol_cal, xdata, ydata, vd_cal, sel_calip, sel_caltreat, sequenc
       'running_mean_p2p': $ ;edit T.W. 20191006
         BEGIN
             V = ts_smooth(V, 3)
-            vout = interpol(V, X, XOUT, /NAN);, /QUADRATIC)
+;            V = smooth(V, 9)
+;            sg_filter = savgol(5, 5, 0, 4, /DOUBLE)
+;            V = CONVOL(V, sg_filter, /EDGE_WRAP)
+            vout = interpol(V, X, XOUT, /NAN)
         END
   ENDCASE
 

@@ -21,29 +21,23 @@ FUNCTION find_fnumber, fname, SEP_EXT=sep_ext, SEP_NBR=sep_nbr, REST_STR=rest_st
   fnumber = LONARR(N_ELEMENTS(fname))
   rest_str = STRARR(N_ELEMENTS(fname))
 
-
   FOR i=0L, N_ELEMENTS(fname)-1 DO BEGIN
 
-    n_chars=STRLEN(fname[i])
-    ix_sep_ext=STRPOS(fname[i], sep_ext, /REVERSE_SEARCH)
-    ix_sep_nbr=STRPOS(fname[i], sep_nbr, /REVERSE_SEARCH)
+    n_chars = STRLEN(fname[i])
+    ix_sep_ext = STRPOS(fname[i], sep_ext, /REVERSE_SEARCH)
+    ix_sep_nbr = STRPOS(fname[i], sep_nbr, /REVERSE_SEARCH)
 
 
     IF ix_sep_ext EQ -1 OR ix_sep_nbr EQ -1 THEN BEGIN
-
       fnumber[i] = -1
       rest_str[i] = fname[i]
-
     ENDIF ELSE BEGIN
-
-      nbr_str=STRMID(fname[i], ix_sep_nbr+1, ix_sep_ext-ix_sep_nbr-1)
-      fnumber[i]=FIX(nbr_str, TYPE=3)
-      rest_str[i]=STRMID(fname[i], 0, ix_sep_nbr)
-
+      nbr_str = STRMID(fname[i], ix_sep_nbr+1, ix_sep_ext-ix_sep_nbr-1)
+      fnumber[i] = FIX(nbr_str, TYPE=3)
+      rest_str[i] = STRMID(fname[i], 0, ix_sep_nbr)
     ENDELSE
 
   ENDFOR
-
 
   RETURN, fnumber
 

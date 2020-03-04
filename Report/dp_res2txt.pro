@@ -178,7 +178,10 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         OPENW, lun, fname, /GET_LUN
 
           PRINTF, lun, '*** IAU_DP_v'+dp_vers+' REPORT ***', FORMAT='(A)'
-          PRINTF, lun, 'Experiment:', sep, FILE_BASENAME((dp_chrom[sel_exp])[0].exp_fname[0]), FORMAT='(A,A,A)'
+          
+          ; FO 2020-03-03 add chrom date:
+          PRINTF, lun, 'Experiment/Date:', sep, FILE_BASENAME((dp_chrom[sel_exp])[0].exp_fname[0]), sep, $
+                       jultime2timestring(mean(dp_chrom[sel_exp].jdate)), FORMAT='(A,A,A,A,A)'
           PRINTF, lun, 'Processing_Timestamp:', sep, exp_ts, FORMAT='(A,A,A)'
           PRINTF, lun, 'Instrument:', sep, instr, FORMAT='(A,A,A)'
           PRINTF, lun, 'Cal_Gas:', sep, cal, FORMAT='(A,A,A)'

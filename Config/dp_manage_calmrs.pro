@@ -103,8 +103,8 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
   canister=(mrs_strct.canister)[0]
   quest='Yes'
   IF cal_names[0] NE canister THEN $
-    quest=DIALOG_MESSAGE('Calibration gas specification found in experiment-info file ('+cal_names[0]+') '+$
-                          'and specification in MR Table ('+canister+') do not match. Continue?', /QUESTION, /DEFAULT_NO)
+    quest=DIALOG_MESSAGE('Calibration gas specification found in experiment-info file (' + cal_names[0] + ') ' + $
+                         'and specification in MR Table (' + canister + ') do not match. Continue?', /QUESTION, /DEFAULT_NO)
   IF quest EQ 'No' THEN $
     IF verbose THEN PRINT, 'aborted: calibration gas MRs integration.'
 

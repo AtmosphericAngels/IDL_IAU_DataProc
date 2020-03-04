@@ -19,7 +19,7 @@ FUNCTION dp_read_tgtmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
   IF FILE_TEST(file) EQ 0 THEN RETURN, !NULL
 
   sep = ';'
-  n_table_header=7
+  n_table_header = 7
   nl = FILE_LINES(file)
   count = nl-n_table_header
   data = STRARR(nl)
