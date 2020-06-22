@@ -102,7 +102,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
           cal_scale= 'NA'
           w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).cal_mrs.substance) EQ STRUPCASE(name))
           IF w[0] NE -1 THEN BEGIN
-            cal_mr = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w[0]], FORMAT='(D25.3)'), /REMOVE_ALL)
+            cal_mr = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w[0]], FORMAT='(D25.6)'), /REMOVE_ALL)
             IF (*((dp_expcfg[sel_exp]).cal_mrs.unit)) NE !NULL THEN $
               unit = (*(dp_expcfg[sel_exp]).cal_mrs.unit)[w[0]] ELSE unit = 'NA'
             cal_scale = (*(dp_expcfg[sel_exp]).cal_mrs.scale)[w[0]]
@@ -273,7 +273,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         cal_scale= 'NA'
         w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).cal_mrs.substance) EQ STRUPCASE(name))
         IF w[0] NE -1 THEN BEGIN
-          cal_mr = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w[0]], FORMAT='(D25.3)'), /REMOVE_ALL)
+          cal_mr = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w[0]], FORMAT='(D25.6)'), /REMOVE_ALL)
           IF (*((dp_expcfg[sel_exp]).cal_mrs.unit)) NE !NULL THEN $
             unit = (*(dp_expcfg[sel_exp]).cal_mrs.unit)[w[0]] ELSE unit = 'NA'
           cal_scale = (*(dp_expcfg[sel_exp]).cal_mrs.scale)[w[0]]

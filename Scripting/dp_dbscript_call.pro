@@ -173,10 +173,10 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
           FOR subst=0, N_ELEMENTS((dp_chrom[0].subst)[*,0])-1 DO BEGIN
             fct_dgr = db_info.data[vd_exp[n]].analyse_NL
             saveplot = 'E:\temp\'+db_info.data[vd_exp[n]].exp_id
-            saveplot = 0
-            show_plots = 0
+            pic_filetype = '.png'
+            show_plots = 1
             nl_strct = dp_nlexp_analyse(fct_dgr, 0, subst, $
-                                        SAVEPLOT=saveplot, SHOW_PLOTS=show_plots)
+                                        SAVEPLOT=saveplot, PIC_FILETYPE=pic_filetype, SHOW_PLOTS=show_plots)
             IF nl_strct NE !NULL THEN dp_nlexp_res2txt, nl_strct, 0, subst, DIR=savepath+'\dp_nl_report\'
           ENDFOR
         ENDIF

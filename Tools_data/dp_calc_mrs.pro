@@ -16,13 +16,13 @@ FUNCTION dp_calc_mrs, subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, $
 
   IF NOT KEYWORD_SET(eval_mode) THEN $
     eval_mode = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_select)[0] $
-      ELSE eval_mode=0 ; default area
+      ELSE eval_mode = 0 ; default area
 
   mrs_array = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
-  mrs=mrs_array
+  mrs = mrs_array
 
   IF PTR_VALID((dp_expcfg[sel_exp]).cal_mrs.substance) THEN BEGIN
-    w_subst=WHERE(*(dp_expcfg[sel_exp]).cal_mrs.substance EQ subst_name)
+    w_subst = WHERE(*(dp_expcfg[sel_exp]).cal_mrs.substance EQ subst_name)
     IF w_subst[0] EQ -1 THEN RETURN, mrs_array
   ENDIF ELSE RETURN, mrs_array
 
@@ -33,7 +33,7 @@ FUNCTION dp_calc_mrs, subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, $
           IF sam_treat EQ 'individual' THEN $
             mrs = (dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.sam_rrsp  * (*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w_subst[0]] $
           ELSE BEGIN
-            w_bl_fin=WHERE(FINITE((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rrsp) EQ 1, n_bl_fin)
+            w_bl_fin = WHERE(FINITE((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rrsp) EQ 1, n_bl_fin)
             IF n_bl_fin GT 0 THEN $ ; prefer block rresp; use individual sample responses if no block values
               mrs = (dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rrsp * (*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w_subst[0]]
           ENDELSE
@@ -44,7 +44,7 @@ FUNCTION dp_calc_mrs, subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, $
           IF sam_treat EQ 'individual' THEN $
             mrs = (dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.sam_rrsp  * (*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w_subst[0]] $
           ELSE BEGIN
-            w_bl_fin=WHERE(FINITE((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rrsp) EQ 1, n_bl_fin)
+            w_bl_fin = WHERE(FINITE((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rrsp) EQ 1, n_bl_fin)
             IF n_bl_fin GT 0 THEN $
               mrs = (dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rrsp * (*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w_subst[0]]
           ENDELSE
@@ -52,7 +52,7 @@ FUNCTION dp_calc_mrs, subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, $
   ENDCASE
 
 
-  w_mr_fin=WHERE(FINITE(mrs) EQ 1, n_finite)
+  w_mr_fin = WHERE(FINITE(mrs) EQ 1, n_finite)
   IF n_finite GT 0 THEN mrs_array[w_mr_fin] = mrs[w_mr_fin]
 
   FOR i=0, n_chrom-1 DO BEGIN
