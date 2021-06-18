@@ -174,7 +174,9 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
           pltSaveDst = "K:\KIT_DATA\GHGGC_ReEval\IDL_processing\non_linearity\NL_plots\IDL\"
           saveplot = pltSaveDst + db_info.data[vd_exp[n]].exp_id
           pic_filetype = '.png'
+          
           show_plots = 0
+          saveplot = 0 ; remove if plots should be saved to pltSaveDst 
           
           FOR subst=0, N_ELEMENTS((dp_chrom[0].subst)[*,0])-1 DO BEGIN
             fct_dgr = db_info.data[vd_exp[n]].analyse_NL
