@@ -23,17 +23,17 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
   tgts = nl_strct[0].tgt_names
   eval_mode = ((dp_chrom[sel_exp]).subst[sel_subst].rres.rsp_select)[0]
   mode_string = (['area', 'height'])[eval_mode]
-  
+
   ; FO 2020-03-01: use cal name from MR table if loaded
   IF ((dp_expcfg[sel_exp]).cal_mrs.canister) EQ '' THEN $
       cal = ((dp_expcfg[sel_exp]).expinfo.s_name)[(WHERE((dp_expcfg[sel_exp]).expinfo.s_id EQ id_cal))[0]] $
   ELSE $
       cal = ((dp_expcfg[sel_exp]).cal_mrs.canister)
-      
+
   ; FO 2020-03-02: included scale info
   w = WHERE(*((dp_expcfg[sel_exp]).tgt_mrs.SUBSTANCE) EQ subst)
   scale = (*((dp_expcfg[sel_exp]).tgt_mrs.SCALE))[w[-1]]
-    
+
   mass = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_subst].mass[(dp_chrom[sel_exp]).subst[sel_subst].quant])[0], $
                           FORMAT='(D25.3)'), /REMOVE_ALL)
   fct_dgr_str = STRCOMPRESS(STRING(nl_strct.fct_dgr, FORMAT='(I)'), /REMOVE_ALL)
@@ -66,7 +66,7 @@ PRO dp_nlexp_res2txt, nl_strct, sel_exp, sel_subst, DIR=dir
 
   OPENW, lun, fname, /GET_LUN
   PRINTF, lun, '*** IAU_DP_v'+dp_vers+' NL REPORT ***', FORMAT='(A)'
-  
+
   ; FO 2020-03-01 add chrom date:
   PRINTF, lun, 'Experiment/Date:', sep, FILE_BASENAME((dp_chrom[sel_exp])[0].exp_fname[0]), sep, $
                jultime2timestring(mean(dp_chrom[sel_exp].jdate)), FORMAT='(A,A,A,A,A)'
