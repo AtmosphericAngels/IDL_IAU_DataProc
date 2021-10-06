@@ -57,7 +57,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
   cal = ((dp_expcfg[sel_exp]).expinfo.s_name)[(WHERE((dp_expcfg[sel_exp]).expinfo.s_id EQ id_cal))[0]]
 
-  IF ((dp_expcfg[sel_exp]).cal_mrs.canister) EQ '' THEN call_mr_calc = 0 ELSE call_mr_calc=1
+  IF ((dp_expcfg[sel_exp]).cal_mrs.canister) EQ '' THEN call_mr_calc = 0 ELSE call_mr_calc = 1
 
   nvd = 1
   IF brief THEN sel_chroms = $
@@ -172,7 +172,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
 
         subst_name = (substlist[sel_exp])[sel_name]
-        IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, eval_mode) $
+        IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg) $
           ELSE prelim_MRs = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
 
         OPENW, lun, fname, /GET_LUN
@@ -343,7 +343,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
 
       subst_name = (substlist[sel_exp])[sel_name]
-      IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg, eval_mode) $
+      IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg) $
         ELSE prelim_MRs = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
 
 

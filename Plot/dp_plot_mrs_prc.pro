@@ -107,7 +107,7 @@ PRO dp_plot_mrs_prc, sel_exp, sel_subst, SHOW_PRC=show_prc, SHOW_CAL_PRC=show_ca
         !NULL=DIALOG_MESSAGE('Please load calibration MRs first.', /INFORMATION)
         rETUrN
       ENDIF ELSE BEGIN
-        prelim_MRs = dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg, eval_mode)
+        prelim_MRs = dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg)
         sel_MRs = prelim_MRs[w_sam_end]
         w_fin=WHERE(FINITE(sel_MRs) EQ 1, n_fin)
         IF n_fin GT 0 THEN BEGIN

@@ -119,8 +119,8 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
         sel_name = WHERE((dp_chrom[sel_exp])[0].subst.name EQ match_substs[i]) ; substance name
 
         IF NOT estimate_cal THEN BEGIN
-          mrs[*,i]=dp_calc_mrs(match_substs[i], sel_name, sel_exp, dp_chrom, dp_expcfg, eval_mode)
-          w_subst=WHERE(*(dp_expcfg[sel_exp]).cal_mrs.substance EQ match_substs[i], n_match_mr)
+          mrs[*,i] = dp_calc_mrs(match_substs[i], sel_name, sel_exp, dp_chrom, dp_expcfg)
+          w_subst = WHERE(*(dp_expcfg[sel_exp]).cal_mrs.substance EQ match_substs[i], n_match_mr)
           cal_MR_spec = (*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w_subst[0]]
           cal_MR_err = (*(dp_expcfg[sel_exp]).cal_mrs.unc_ppt)[w_subst[0]]
         ENDIF ELSE BEGIN

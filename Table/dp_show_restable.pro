@@ -18,8 +18,8 @@ PRO dp_show_restable, sel_exp, sel_subst, BRIEF=brief
   mode_string = (['AREA', 'HEIGHT'])[eval_mode]
 
   IF ((dp_expcfg[sel_exp]).cal_mrs.canister) NE '' THEN $
-    prelim_MRs=dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg, eval_mode) $
-      ELSE prelim_MRs=MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
+    prelim_MRs = dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg) $
+      ELSE prelim_MRs = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
 
   IF brief THEN BEGIN ;++++++++++++++++++++++++++++++++++++++++BRIEF+++
 
@@ -280,7 +280,7 @@ PRO dp_show_restable, sel_exp, sel_subst, BRIEF=brief
   ENDELSE
 
 
-  mainbase = WIDGET_BASE(title='Results for: '+((dp_chrom[sel_exp]).subst[sel_subst].name)[0])
+  mainbase = WIDGET_BASE(title = 'Results for: '+((dp_chrom[sel_exp]).subst[sel_subst].name)[0])
 
   ID=WIDGET_TABLE(mainbase, VALUE=tblval, COLUMN_LABELS=col_labels, SCR_XSIZE=scr_xsize, SCR_YSIZE=scr_ysize, $
                   XSIZE=N_ELEMENTS(column_width), COLUMN_WIDTH=column_width, units=2, /ROW_MAJOR, /SCROLL, $

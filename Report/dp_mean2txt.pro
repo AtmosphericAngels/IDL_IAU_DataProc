@@ -13,7 +13,6 @@ PRO dp_mean2txt, sel_exp,  PATH=path
 
   COMMON DP_DATA
 
-
   tmp_data = (dp_chrom[sel_exp])
   n_chrom = N_ELEMENTS(tmp_data)
   sel_chrom = FLOOR(n_chrom/2.)
@@ -137,7 +136,7 @@ PRO dp_mean2txt, sel_exp,  PATH=path
 
     subst_name = (substlist[sel_exp])[i]
 
-    IF call_mr_calc THEN prelim_MRs=dp_calc_mrs(name, i, sel_exp, dp_chrom, dp_expcfg, eval_mode) $
+    IF call_mr_calc THEN prelim_MRs=dp_calc_mrs(name, i, sel_exp, dp_chrom, dp_expcfg) $
       ELSE prelim_MRs=MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
 
     IF n_tgt GT 0 THEN BEGIN
