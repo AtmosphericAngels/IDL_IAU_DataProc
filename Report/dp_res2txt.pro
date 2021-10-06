@@ -378,34 +378,34 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         FOR i=0, N_ELEMENTS(sel_chroms)-1 DO BEGIN
 
             Chromatogram = FILE_BASENAME(((dp_chrom[sel_exp]).fname)[sel_chroms[i]])
-            Date=jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /ONLYDATE)
-            Time=jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /HMSONLY)
+            Date = jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /ONLYDATE)
+            Time = jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /HMSONLY)
             Sample_Name = ((dp_expcfg[sel_exp]).expinfo.s_name)[sel_chroms[i]]
 
             CASE eval_mode OF
               0: $
                 BEGIN
-                  rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  rR = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
                   IF rR EQ '-NaN' THEN rR = 'NaN'
-                  Block_rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  Block_rR = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
                   IF Block_rR EQ '-NaN' THEN Block_rR = 'NaN'
-                  Block_RSD=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  Block_RSD = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
                   IF Block_RSD EQ '-NaN' THEN Block_RSD = 'NaN'
-                  prc_flag=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
+                  prc_flag = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
                 END
               1: $
                 BEGIN
-                  rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  rR = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
                   IF rR EQ '-NaN' THEN rR = 'NaN'
-                  Block_rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  Block_rR = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
                   IF Block_rR EQ '-NaN' THEN Block_rR = 'NaN'
-                  Block_RSD=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  Block_RSD = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
                   IF Block_RSD EQ '-NaN' THEN Block_RSD = 'NaN'
-                  prc_flag=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
+                  prc_flag = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
                 END
             ENDCASE
 
-            prelim_MR=STRCOMPRESS(STRING(prelim_MRs[sel_chroms[i]]), /REMOVE_ALL)
+            prelim_MR = STRCOMPRESS(STRING(prelim_MRs[sel_chroms[i]]), /REMOVE_ALL)
 
             PRINTF, lun, Chromatogram, sep, Date, sep, Time, sep, Sample_Name, sep, rR, sep, $
                          Block_rR, sep, Block_RSD, sep, prc_flag, sep, prelim_MR, FORMAT='(A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)'
