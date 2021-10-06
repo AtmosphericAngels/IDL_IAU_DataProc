@@ -11,7 +11,7 @@ PRO dp_show_carryover_def, sel_exp
   COMMON DP_DATA
 
   IF *(dp_expcfg[sel_exp]).carryover.substance EQ !NULL THEN BEGIN
-    msg=DIALOG_MESSAGE('No carry-over config found for selected experiment.')
+    msg = DIALOG_MESSAGE('No carry-over config found for selected experiment.')
     RETURN
   ENDIF
 
@@ -50,7 +50,7 @@ PRO dp_show_carryover_def, sel_exp
 
   column_width = [160,100,100,100,100,100,100]
 
-  mainbase = WIDGET_BASE(title='Carry-Over Table')
+  mainbase = WIDGET_BASE(title = 'Carry-Over Table')
   ID = WIDGET_TABLE(mainbase, VALUE=value, COLUMN_WIDTH=column_width, ALIGNMENT=0)
 
   WIDGET_CONTROL, ID, /REALIZE

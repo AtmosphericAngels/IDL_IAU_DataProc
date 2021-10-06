@@ -31,7 +31,7 @@ PRO dp_report_list, sel_exp, PATH=path, VERBOSE=verbose
     IF verbose THEN print, 'writing:', exp_list
 
     fname = DIALOG_PICKFILE(PATH=path, /WRITE, FILE=instr+'_dp_list_mxr.txt')
-    sep=STRING(9B)
+    sep = STRING(9B)
 
     exp_header = STRARR(3*N_ELEMENTS(exp_list))
 
@@ -43,9 +43,9 @@ PRO dp_report_list, sel_exp, PATH=path, VERBOSE=verbose
 
     colheader=make_array(n_elements(exp_header)+3, /STRING)
 
-    colheader[0]='sample_date'
-    colheader[1]='meas_date'
-    colheader[2]='sample_name'
+    colheader[0] = 'sample_date'
+    colheader[1] = 'meas_date'
+    colheader[2] = 'sample_name'
 
     FOR i=0, N_ELEMENTS(exp_header)-1 DO BEGIN
       colheader[i+3] = exp_header[i]
@@ -55,11 +55,11 @@ PRO dp_report_list, sel_exp, PATH=path, VERBOSE=verbose
     exp_ts = jultime2timestring(((dp_chrom[sel_exp]).subst.rres.dp_timestamp)[0])
 
     id_cal = (WHERE(STRUPCASE(sid_name) EQ 'CALIBRATION'))[0] +1 ; configure IDs
-    cal=((dp_expcfg[sel_exp]).expinfo.s_name)[(WHERE((dp_expcfg[sel_exp]).expinfo.s_id EQ id_cal))[0]]
+    cal = ((dp_expcfg[sel_exp]).expinfo.s_name)[(WHERE((dp_expcfg[sel_exp]).expinfo.s_id EQ id_cal))[0]]
 
     id_sam = (WHERE(STRUPCASE(sid_name) EQ 'AIR'))[0] +1 ; configure IDs
     id_tgt = (WHERE(STRUPCASE(sid_name) EQ 'TARGET'))[0] +1 ; configure IDs
-    sam_tgt=((dp_expcfg[sel_exp]).expinfo.s_name)[WHERE((dp_expcfg[sel_exp]).expinfo.s_id EQ id_sam  OR (dp_expcfg[sel_exp]).expinfo.s_id EQ id_tgt)]
+    sam_tgt = ((dp_expcfg[sel_exp]).expinfo.s_name)[WHERE((dp_expcfg[sel_exp]).expinfo.s_id EQ id_sam  OR (dp_expcfg[sel_exp]).expinfo.s_id EQ id_tgt)]
 
     samples = uniq(sam_tgt)
     nofsamples = n_elements(samples)
@@ -86,13 +86,13 @@ PRO dp_report_list, sel_exp, PATH=path, VERBOSE=verbose
 
 
     FOR i=0, N_ELEMENTS(exp_list)-1 DO BEGIN
-         name=exp_list[i]
+         name = exp_list[i]
 
  ; !
  ; missing check if .instr_prc structure pointer is defined and valid ("filled").
  ; !
-         w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
-         w2=WHERE(STRUPCASE(dp_chrom[sel_exp].subst.name) EQ STRUPCASE(name))
+         w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
+         w2 = WHERE(STRUPCASE(dp_chrom[sel_exp].subst.name) EQ STRUPCASE(name))
 
         IF w[0] NE -1 THEN BEGIN
           cal_prc = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).instr_prc.mp_rel)[w[0]], FORMAT='(D25.6)'), /REMOVE_ALL)
@@ -135,15 +135,15 @@ PRO dp_report_list, sel_exp, PATH=path, VERBOSE=verbose
       printf, lun, 'YYYYDDMM', sep, m_date, FORMAT='(A,A,A,$)'
       printf, lun, sep, sample_name , FORMAT='(A,A,$)'
 
-      w=WHERE((dp_expcfg[sel_exp]).expinfo.s_name EQ sample_name)
-      w=w[(n_elements(w)-1)]
+      w = WHERE((dp_expcfg[sel_exp]).expinfo.s_name EQ sample_name)
+      w = w[(n_elements(w)-1)]
 
       FOR j=0, N_ELEMENTS(exp_list)-1 DO BEGIN;write  mixing ratio, rsd and prc flag
-        name=exp_list[j]
-        w2=WHERE(STRUPCASE(dp_chrom[sel_exp].subst.name) EQ STRUPCASE(name))
+        name = exp_list[j]
+        w2 = WHERE(STRUPCASE(dp_chrom[sel_exp].subst.name) EQ STRUPCASE(name))
 
-        w3=WHERE(*(dp_expcfg[sel_exp]).cal_mrs.substance EQ name)
-        w4=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
+        w3 = WHERE(*(dp_expcfg[sel_exp]).cal_mrs.substance EQ name)
+        w4 = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
 
         IF w2[0] NE -1 THEN BEGIN
           rsd_num= ((dp_chrom[sel_exp]).subst[w2[0]].rres.rsp_area.block_rsd)[w]
@@ -156,8 +156,8 @@ PRO dp_report_list, sel_exp, PATH=path, VERBOSE=verbose
             mxr_num =   ((dp_chrom[sel_exp]).subst[w2[0]].rres.rsp_area.block_rrsp)[w] * (*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w3[0]]
 
             IF(mxr_num LT 0) THEN BEGIN
-              delta='NaN'
-              mxr='NaN'
+              delta = 'NaN'
+              mxr = 'NaN'
             ENDIF ELSE BEGIN
 
               IF flag_num EQ 0 THEN  delta_num = mxr_num * cal_prc_num

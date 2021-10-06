@@ -11,7 +11,7 @@
 ;------------------------------------------------------------------------------------------------------------------------
 FUNCTION dp_dbscript_chk, dp_dbstrct, LOUD=loud, N_TESTED=n_tested
 
-  ; file approved if n_tested=n_passed
+  ; file approved if n_tested = n_passed
   n_tested = 0
   n_passed = 0
 
@@ -48,8 +48,8 @@ FUNCTION dp_dbscript_chk, dp_dbstrct, LOUD=loud, N_TESTED=n_tested
   IF NOT no_exp THEN BEGIN
     ; exp_id unique?
     n_tested = n_tested + 1
-    str=dp_dbstrct.data.exp_id
-    str[uniq(str)]='-unique-'
+    str = dp_dbstrct.data.exp_id
+    str[uniq(str)] = '-unique-'
     w_not_uniq=WHERE(str NE '-unique-', nvd)
     IF nvd GT 0 THEN BEGIN
       msg = [msg, '- found double experiment id(s):']
@@ -58,7 +58,7 @@ FUNCTION dp_dbscript_chk, dp_dbstrct, LOUD=loud, N_TESTED=n_tested
 
     ; data_import_fct is allowed?
     n_tested = n_tested + 1
-    str=dp_dbstrct.data.EXPINFO_IMPORT_FCT
+    str = dp_dbstrct.data.EXPINFO_IMPORT_FCT
     def_fct=['Lab_BenchTOF','Lab_QP/SFMS','FASTOF','GhOST_MS','GhOST_ECD','AED','GHGGC_ECD/FID']
     str_match = LONARR(N_ELEMENTS(str))
     FOR i=0, N_ELEMENTS(str)-1 DO BEGIN

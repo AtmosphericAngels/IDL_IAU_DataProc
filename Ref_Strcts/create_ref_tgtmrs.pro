@@ -1,6 +1,6 @@
 FUNCTION create_ref_tgtmrs
 
-  ref_tgtmrs={ $
+  ref_tgtmrs = { $
               tgt_name:   PTR_NEW(/ALLOCATE_HEAP), $
               substance:  PTR_NEW(/ALLOCATE_HEAP), $
               mr_ppt:     PTR_NEW(/ALLOCATE_HEAP), $  ; mixing ratio, absolut

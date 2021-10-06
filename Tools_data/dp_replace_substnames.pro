@@ -19,14 +19,14 @@ PRO dp_replace_substnames, PATH=path, DEF_FILE=def_file
 
   import=read_csv(file, N_TABLE_HEADER=5, TABLE_HEADER=TableHeader, COUNT=count)
 
-  n_exp=N_ELEMENTS(dp_chrom)
+  n_exp = N_ELEMENTS(dp_chrom)
 
   FOR i=0, n_exp-1 DO BEGIN ; begin loop: search & replace strings
-    tmp_chrom=(dp_chrom)[i]
-    tmp_subst=(substlist)[i]
+    tmp_chrom = (dp_chrom)[i]
+    tmp_subst = (substlist)[i]
     tmp_subst=strreplace_iter(tmp_subst, ',', '', n_iter=5) ; remove nasty stuff from msinfo...
-    n_subst=N_ELEMENTS(tmp_subst)
-    n_chrom=N_ELEMENTS(tmp_chrom)
+    n_subst = N_ELEMENTS(tmp_subst)
+    n_chrom = N_ELEMENTS(tmp_chrom)
 
     FOR j=0, count-1 DO BEGIN ; begin loop: experiments
       tmp=strsplit(STRTRIM(import.field1[j]), ';', /EXTRACT)
@@ -40,9 +40,9 @@ PRO dp_replace_substnames, PATH=path, DEF_FILE=def_file
     new_subst=STRARR(n_subst, n_chrom) ; generate names matrix; n_subst x n_chrom
     FOR k=0, n_chrom-1 DO new_subst[*,k]=tmp_subst
 
-    (tmp_chrom.subst.name)=new_subst
-    (substlist)[i]=tmp_subst
-    (dp_chrom)[i]=tmp_chrom
+    (tmp_chrom.subst.name) = new_subst
+    (substlist)[i] = tmp_subst
+    (dp_chrom)[i] = tmp_chrom
   ENDFOR ; end loop: experiments
 
   dp_refr_status, MESSAGE='Updated substance names.

@@ -14,9 +14,9 @@ PRO dp_plot_rres_diag, sel_exp, sel_subst, DIAGNOSTIC=diagnostic, RRES=rres, SAV
 ; diagnostic = 0 (none), 1 (normalised ret. time, height/area and S/N), 2 (delta t enrich, enriched Volume)
 
 
-  IF NOT KEYWORD_SET(rres) THEN rres=0
-  IF NOT KEYWORD_SET(diagnostic) THEN diagnostic=0
-  IF NOT KEYWORD_SET(pic_filetype) THEN pic_filetype='.ps'
+  IF NOT KEYWORD_SET(rres) THEN rres = 0
+  IF NOT KEYWORD_SET(diagnostic) THEN diagnostic = 0
+  IF NOT KEYWORD_SET(pic_filetype) THEN pic_filetype = '.ps'
 
   COMMON dp_data
 
@@ -35,7 +35,7 @@ PRO dp_plot_rres_diag, sel_exp, sel_subst, DIAGNOSTIC=diagnostic, RRES=rres, SAV
   id_tgt = (WHERE(STRUPCASE(sid_name) EQ 'TARGET'))[0] +1
 
   vd_data= WHERE(i_flag GE 1 AND r_flag EQ 1)
-  vd_sam = WHERE(s_id EQ id_sam[0] AND i_flag GE 1 AND r_flag NE 0) ; r_flag=0 -> not evaluated
+  vd_sam = WHERE(s_id EQ id_sam[0] AND i_flag GE 1 AND r_flag NE 0) ; r_flag = 0 -> not evaluated
   vd_tgt = WHERE(s_id EQ id_tgt[0] AND i_flag GE 1 AND r_flag NE 0)
   vd_cal = WHERE(s_id EQ id_cal[0] AND i_flag GE 1 AND r_flag NE 0)
 
@@ -60,7 +60,7 @@ PRO dp_plot_rres_diag, sel_exp, sel_subst, DIAGNOSTIC=diagnostic, RRES=rres, SAV
   mp = REPLICATE(!VALUES.D_NAN, N_ELEMENTS(time))
   IF ((dp_expcfg[sel_exp]).instr_prc.instrument) NE '' AND *(dp_expcfg[sel_exp]).instr_prc.substance NE !NULL $
     THEN BEGIN
-      w=WHERE(*(dp_expcfg[sel_exp]).instr_prc.substance EQ name)
+      w = WHERE(*(dp_expcfg[sel_exp]).instr_prc.substance EQ name)
       IF w[0] NE -1 THEN $
         mp[*]=(*(dp_expcfg[sel_exp]).instr_prc.mp_rel)[w]
     ENDIF
@@ -80,41 +80,41 @@ PRO dp_plot_rres_diag, sel_exp, sel_subst, DIAGNOSTIC=diagnostic, RRES=rres, SAV
   IF rres THEN BEGIN
 
     IF vd_data[0] NE -1 THEN BEGIN
-      p = dp_modify_plot(p=p)
-      p.p1.title=title
-      skip_save=0
+      p = dp_modify_plot(p = p)
+      p.p1.title = title
+      skip_save = 0
     ENDIF ELSE BEGIN
 ;      msg=DIALOG_MESSAGE(exp_name+': Please run calculations first.', /INFORMATION)
-      skip_save=1
+      skip_save = 1
     ENDELSE
 
     ; Cal-Messungen, welche zur Auswertung verwendet werden
     IF vd_cal[0] NE -1 THEN BEGIN
-      x1=time[vd_cal]
+      x1 = time[vd_cal]
       y1=signal[vd_cal];/mean(signal[vd_cal], /nan)
       p = dp_modify_plot(p=p, x1=x1, y1=y1)
     ENDIF
 
     ; Sample - Messungen, welche ausgewertet werden
     IF vd_sam[0] NE -1 THEN BEGIN
-      x2=time[vd_sam]
+      x2 = time[vd_sam]
       y2=signal[vd_sam];/mean(signal[vd_cal],/nan)
-      yerr2=mp[vd_sam]
+      yerr2 = mp[vd_sam]
       p = dp_modify_plot(p=p, x2=x2, y2=y2, yerr2=yerr2)
     ENDIF
 
     ; Target-Messungen
     IF vd_tgt[0] NE -1 THEN BEGIN
-      x4=time[vd_tgt]
+      x4 = time[vd_tgt]
       y4=signal[vd_tgt];/mean(signal[vd_cal],/nan)
-      yerr4=mp[vd_tgt]
+      yerr4 = mp[vd_tgt]
       p = dp_modify_plot(p=p, x4=x4, y4=y4, yerr4=yerr4)
     ENDIF
 
     ; cal interpolation
     IF vd_data[0] NE -1 THEN BEGIN
-      x7=time[vd_data]
-      y7=cal_interpol
+      x7 = time[vd_data]
+      y7 = cal_interpol
       p = dp_modify_plot(p=p, x7=x7, y7=y7)
     ENDIF
 
@@ -132,27 +132,27 @@ PRO dp_plot_rres_diag, sel_exp, sel_subst, DIAGNOSTIC=diagnostic, RRES=rres, SAV
     IF SIZE(p2,/type) EQ 8 THEN p2.p1.refresh,/disable
 
     ; Retentionszeit plotten
-    x1=INDGEN(N_ELEMENTS(time))+1
-    y1=DBLARR(N_ELEMENTS(time))*!Values.D_NAN
+    x1 = INDGEN(N_ELEMENTS(time))+1
+    y1 = DBLARR(N_ELEMENTS(time))*!Values.D_NAN
     y1[vd_data] = (t_ret[vd_data]/mean(t_ret[vd_data],/NAN))
 
     p2=dp_modify_plot2_multi(p2=p2, x1=x1,y1=y1 )
-    p2.p1.title="Diagnostic plot for: " + title
+    p2.p1.title = "Diagnostic plot for: " + title
 
 
     ; Height vs. Area plotten
-    x2=x1
-    y2=DBLARR(N_ELEMENTS(time))*!Values.D_NAN
-    y2[vd_data]=(n_hv/n_av)[vd_data]
+    x2 = x1
+    y2 = DBLARR(N_ELEMENTS(time))*!Values.D_NAN
+    y2[vd_data] = (n_hv/n_av)[vd_data]
 
     p2.p2.select
     p2=dp_modify_plot2_multi(p2=p2,x2=x2,y2=y2)
 
 
     ; S/N plotten
-    x3=x1
-    y3=DBLARR(N_ELEMENTS(time))*!Values.D_NAN
-    y3[vd_data]=s_n[vd_data]
+    x3 = x1
+    y3 = DBLARR(N_ELEMENTS(time))*!Values.D_NAN
+    y3[vd_data] = s_n[vd_data]
 
     p2.p3.select
     p2=dp_modify_plot2_multi(p2=p2,x3=x3,y3=y3)
@@ -171,27 +171,27 @@ PRO dp_plot_rres_diag, sel_exp, sel_subst, DIAGNOSTIC=diagnostic, RRES=rres, SAV
 
 
     ; Retentionszeit plotten
-    x1=INDGEN(N_ELEMENTS(time))+1
-    y1=DBLARR(N_ELEMENTS(time))*!Values.D_NAN
+    x1 = INDGEN(N_ELEMENTS(time))+1
+    y1 = DBLARR(N_ELEMENTS(time))*!Values.D_NAN
     y1[vd_data] = delta_t[vd_data]
 
     p2=dp_modify_plot2_multi(p2=p2, x1=x1,y1=y1 )
-    p2.p1.title="Diagnostic info from: " + dp_expcfg[sel_exp].expinfo[0].expinfo_fname
+    p2.p1.title = "Diagnostic info from: " + dp_expcfg[sel_exp].expinfo[0].expinfo_fname
 
 
     ; delta t enrich plotten
-    x2=x1
-    y2=DBLARR(N_ELEMENTS(time))*!Values.D_NAN
-    y2[vd_data]=vol[vd_data]
+    x2 = x1
+    y2 = DBLARR(N_ELEMENTS(time))*!Values.D_NAN
+    y2[vd_data] = vol[vd_data]
 
     p2.p2.select
     p2=dp_modify_plot2_multi(p2=p2,x2=x2,y2=y2)
 
 
     ; enrich volume (p difference) plotten
-    x3=x1
-    y3=DBLARR(N_ELEMENTS(time))*!Values.D_NAN
-    y3[vd_data]=mfc_vol[vd_data]
+    x3 = x1
+    y3 = DBLARR(N_ELEMENTS(time))*!Values.D_NAN
+    y3[vd_data] = mfc_vol[vd_data]
 
     p2.p3.select
     p2=dp_modify_plot2_multi(p2=p2,x3=x3,y3=y3)

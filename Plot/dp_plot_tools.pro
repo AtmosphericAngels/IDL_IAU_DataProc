@@ -28,7 +28,7 @@ FUNCTION dp_create_plotobj
   dimensions = [0.6*screensize[0],0.6*screensize[1]]
   ticklen = 0.01
 
-  date = label_date(date_format='%H:%I')
+  date = label_date(date_format = '%H:%I')
   xtickformat = 'LABEL_DATE'
 
   tickfont_size = 14
@@ -67,64 +67,64 @@ FUNCTION dp_create_plotobj
   p2 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='b', /OVERPLOT, THICK=1, LINESTYLE=0, name="Sample",$
                   errorbar_capsize=errorbar_capsize,$
                   errorbar_thick=errorbar_thick)
-  p2.symbol="circle"
-  p2.sym_size=2
-  p2.sym_filled=1
-  p2.sym_color='blue'
-  p2.linestyle=" "
+  p2.symbol = "circle"
+  p2.sym_size = 2
+  p2.sym_filled = 1
+  p2.sym_color = 'blue'
+  p2.linestyle = " "
 
 
   p3 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='r', /OVERPLOT, THICK=1, LINESTYLE=0, name="Cal")
-  p3.symbol="circle"
-  p3.linestyle=" "
-  p3.sym_size=2
-  p3.sym_thick=2
-  p3.sym_filled=1
-  p3.sym_color='red'
+  p3.symbol = "circle"
+  p3.linestyle = " "
+  p3.sym_size = 2
+  p3.sym_thick = 2
+  p3.sym_filled = 1
+  p3.sym_color = 'red'
 
 
   p4 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='purple', /OVERPLOT, THICK=1, LINESTYLE=0, name="Target",$
                   errorbar_capsize=errorbar_capsize,$
                   errorbar_thick=errorbar_thick)
-  p4.symbol="circle"
-  p4.linestyle=" "
-  p4.sym_size=2
-  p4.sym_thick=2
-  p4.sym_filled=1
-  p4.sym_color='purple'
+  p4.symbol = "circle"
+  p4.linestyle = " "
+  p4.sym_size = 2
+  p4.sym_thick = 2
+  p4.sym_filled = 1
+  p4.sym_color = 'purple'
 
 
   p5 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='g', /OVERPLOT, THICK=1, LINESTYLE=0, name="Lin.Fit")
-  p5.symbol="circle"
-  p5.linestyle=2
-  p5.thick=thick
-  p5.sym_filled=filled
-  p5.color='orange'
+  p5.symbol = "circle"
+  p5.linestyle = 2
+  p5.thick = thick
+  p5.sym_filled = filled
+  p5.color = 'orange'
 
 
   p6 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='b', /OVERPLOT, THICK=1, LINESTYLE=0, name="Run.Mean")
-  p6.symbol="circle"
-  p6.linestyle=2
-  p6.thick=thick
-  p6.sym_filled=filled
-  p6.color='blue'
+  p6.symbol = "circle"
+  p6.linestyle = 2
+  p6.thick = thick
+  p6.sym_filled = filled
+  p6.color = 'blue'
 
 
   p7 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='c', /OVERPLOT, THICK=1, LINESTYLE=0, name="Cal.Interpolation")
-  p7.symbol="circle"
-  p7.linestyle=2
-  p7.thick=thick
-  p7.sym_filled=filled
-  p7.color='green'
+  p7.symbol = "circle"
+  p7.linestyle = 2
+  p7.thick = thick
+  p7.sym_filled = filled
+  p7.color = 'green'
 
 
   p8 = errorplot([!Values.D_NAN],[!Values.D_NAN],color='r', /OVERPLOT, THICK=1, LINESTYLE=0, name="Cal.Mean")
-  p8.symbol="circle"
-  p8.sym_size=1
-  p8.sym_filled=filled
-  p8.linestyle=2
-  p8.thick=thick
-  p8.color='magenta'
+  p8.symbol = "circle"
+  p8.sym_size = 1
+  p8.sym_filled = filled
+  p8.linestyle = 2
+  p8.thick = thick
+  p8.color = 'magenta'
 
 
 
@@ -137,9 +137,9 @@ FUNCTION dp_create_plotobj
 
   y_rgt = axis('Y',tickdir=1, textpos=1, location=[1,0], ticklen=ticklen )
 
-  y_rgt.tickfont_size=14
-  y_rgt.text_color='blue'
-  y_rgt.title='Normalised Detector Response (Sample Gas)'
+  y_rgt.tickfont_size = 14
+  y_rgt.text_color = 'blue'
+  y_rgt.title = 'Normalised Detector Response (Sample Gas)'
 
   pltstrct = {p1:p1,p2:p2,p3:p3,p4:p4,p5:p5,p6:p6,p7:p7,p8:p8, $
               x_low:x_low, x_hgh:x_hgh, y_lft:y_lft,y_rgt:y_rgt, $
@@ -208,10 +208,10 @@ FUNCTION dp_modify_plot, p=p, x1=x1, y1=y1, yerr1=yerr1, x2=x2, y2=y2, yerr2=yer
   p.p3.getdata,x3,y3,yerr3
   p.p4.getdata,x4,y4,yerr4
 
-  IF x1[0] EQ 0. THEN x1=!VALUES.D_NAN
-  IF x2[0] EQ 0. THEN x2=!VALUES.D_NAN
-  IF x3[0] EQ 0. THEN x3=!VALUES.D_NAN
-  IF x4[0] EQ 0. THEN x4=!VALUES.D_NAN
+  IF x1[0] EQ 0. THEN x1 = !VALUES.D_NAN
+  IF x2[0] EQ 0. THEN x2 = !VALUES.D_NAN
+  IF x3[0] EQ 0. THEN x3 = !VALUES.D_NAN
+  IF x4[0] EQ 0. THEN x4 = !VALUES.D_NAN
 
   min_x=min([min(x1),min(x2),min(x3),min(x4)],/NaN)
   max_x=max([max(x1),max(x2),max(x3),max(x4)],/NaN)
@@ -226,7 +226,7 @@ FUNCTION dp_modify_plot, p=p, x1=x1, y1=y1, yerr1=yerr1, x2=x2, y2=y2, yerr2=yer
     p.p1.yrange=[0.,1.]
   ENDELSE
 
-  tmp=p.leg
+  tmp = p.leg
   tmp.delete
   p.leg = legend(TARGET=[p.p1,p.p2,p.p3,p.p4,p.p5,p.p6,p.p7,p.p8], /NORMAL, /AUTO_TEXT_COLOR, POSITION=[0.9825,0.95], $
                  SAMPLE_WIDTH=0.0005, SHADOW=0, HORIZONTAL_Spacing=0.05, VERTICAL_SPACING=0.02)
@@ -255,22 +255,22 @@ FUNCTION dp_create_plotobj2_multi, ytitle1=ytitle1, ytitle2=ytitle2, ytitle3=yti
 
   Device,  Get_Screen_Size=screenSize
 
-  XCenter=FIX(ScreenSize[0])
-  YCenter=FIX(ScreenSize[1])
+  XCenter = FIX(ScreenSize[0])
+  YCenter = FIX(ScreenSize[1])
   XOff = 0.8*screenSize[0]
   YOff = 0.6*screenSize[1]
-  xsize=0.25*screensize[0]
+  xsize = 0.25*screensize[0]
   position=[0.1,0.1,0.8,0.5]
   margin=[0.125,0.1,0.125,0.1]
   dimensions=[(0.35*screensize[0]),0.6*screensize[1]]
-  ticklen=0.01
+  ticklen = 0.01
 
-  date=label_date(DATE_FORMAT='%H:%I')
-  xtickformat='LABEL_DATE'
+  date = label_date(DATE_FORMAT='%H:%I')
+  xtickformat = 'LABEL_DATE'
 
-  tickfont_size=14
-  thick=1
-  filled=1
+  tickfont_size = 14
+  thick = 1
+  filled = 1
 
   p1 = errorplot([!Values.D_NAN],[!Values.D_NAN],$
                   margin=[0.15,0,0.05,0.1], $

@@ -1,6 +1,6 @@
 FUNCTION create_ref_instrprc
 
-  ref_instrprc={ $
+  ref_instrprc = { $
                 instrument: '', $
                 substance:  PTR_NEW(/ALLOCATE_HEAP), $
                 mp_ppt:     PTR_NEW(/ALLOCATE_HEAP), $ ; instrument 'repro' from precision experiments, absolute

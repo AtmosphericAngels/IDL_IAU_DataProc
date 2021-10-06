@@ -45,7 +45,7 @@ FUNCTION txtfile_to_strct, file, txtsep, nl_tbl_hdr
   FOR i=0L, nl-nl_tbl_hdr-1 DO $
     data[*,i]=strsplit(input[i+1], txtsep, /EXTRACT, /PRESERVE_NULL)
 
-  strct={}
+  strct = {}
   FOR i=0, n_parm-1 DO BEGIN
     valid = valid_num(data[i,0])
     IF valid THEN col_type = 5 ELSE col_type = 7

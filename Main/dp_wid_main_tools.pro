@@ -26,13 +26,13 @@ COMMON dp_data
     'restore_chrom' : $
       BEGIN
         IF SIZE(dp_chrom, /TYPE) EQ 11 THEN BEGIN
-          chromlist=[]
+          chromlist = []
           FOR i=0, N_ELEMENTS(dp_chrom)-1 DO BEGIN
             chromlist=[chromlist, ((dp_chrom[i]).exp_fname)[0]]
             IF i EQ 0 THEN substlist=LIST(((dp_chrom[0]).subst.name)[*,0]) $
               ELSE substlist.add, ((dp_chrom[i]).subst.name)[*,0]
           ENDFOR
-        ENDIF ELSE chromlist=''
+        ENDIF ELSE chromlist = ''
 
         WIDGET_CONTROL, ID_chroms_dl, set_VALUE=chromlist
         WIDGET_CONTROL, ID_expinfo_dl, set_VALUE=''
@@ -45,7 +45,7 @@ COMMON dp_data
         ;     0:not defined, 1:QPMS or SFMS, 2:ALMSCO_TOFMS, 3:TW_TOFMS, 4:GhostECD, 5:AED, 6:GHGGC_FID or _ECD
 
         IF SIZE(dp_chrom, /TYPE) EQ 11 THEN BEGIN
-          instr_type=((dp_chrom[0]).instr_type)[0]
+          instr_type = ((dp_chrom[0]).instr_type)[0]
 
           CASE 1 OF
             (instr_type LE 1): $
@@ -63,7 +63,7 @@ COMMON dp_data
 
     'load_expinfo' : $
       BEGIN
-        expinflist=[]
+        expinflist = []
         IF SIZE(dp_expcfg, /TYPE) EQ 11 THEN $
           FOR i=0, N_ELEMENTS(dp_chrom)-1 DO expinflist=[expinflist, ((dp_expcfg[i]).expinfo.expinfo_fname)[0]]
 
@@ -77,16 +77,16 @@ COMMON dp_data
         espec=espec_vals[WIDGET_INFO(ID_espec, /DROPLIST_SELECT)]
         FOR n=0, N_ELEMENTS(dp_expcfg)-1 DO BEGIN
           ITS = {instrument: instr, type: etype, spec: espec}
-          tmp_strct=(dp_expcfg)[n]  ; move structure out of list
-          tmp_strct.setup=ITS
-          (dp_expcfg)[n]=TEMPORARY(tmp_strct)  ; put strct with loaded values back into list
+          tmp_strct = (dp_expcfg)[n]  ; move structure out of list
+          tmp_strct.setup = ITS
+          (dp_expcfg)[n] = TEMPORARY(tmp_strct)  ; put strct with loaded values back into list
         ENDFOR
       END
 
     'restore_dp' : $
       BEGIN
-        chromlist=[]
-        expinflist=[]
+        chromlist = []
+        expinflist = []
         FOR i=0, N_ELEMENTS(dp_chrom)-1 DO BEGIN
           chromlist=[chromlist, ((dp_chrom[i]).exp_fname)[0]]
           expinflist=[expinflist, ((dp_expcfg[i]).expinfo.expinfo_fname)[0]]
@@ -97,7 +97,7 @@ COMMON dp_data
 
         WIDGET_CONTROL, ID_expinfo_dl, set_VALUE=expinflist
 
-        setup=((dp_expcfg[0]).setup)
+        setup = ((dp_expcfg[0]).setup)
 
         WIDGET_CONTROL, ID_instr, GET_VALUE=instr_vals
         WIDGET_CONTROL, ID_instr, SET_DROPLIST_SELECT=(WHERE(instr_vals EQ setup.instrument))[0]
@@ -114,7 +114,7 @@ COMMON dp_data
       BEGIN
         WIDGET_CONTROL, ID_expinfo_dl, SET_DROPLIST_SELECT=sel_exp ; adjust selection of expinfo droplist
 
-        setup=((dp_expcfg[sel_exp]).setup)
+        setup = ((dp_expcfg[sel_exp]).setup)
 
         WIDGET_CONTROL, ID_instr, GET_VALUE=instr_vals
         WIDGET_CONTROL, ID_instr, SET_DROPLIST_SELECT=(WHERE(instr_vals EQ setup.instrument))[0]
@@ -130,7 +130,7 @@ COMMON dp_data
       BEGIN
         WIDGET_CONTROL, ID_chroms_dl, SET_DROPLIST_SELECT=sel_expinfo ; adjust selection of chroms droplist
 
-        setup=((dp_expcfg[sel_expinfo]).setup)
+        setup = ((dp_expcfg[sel_expinfo]).setup)
 
         WIDGET_CONTROL, ID_instr, GET_VALUE=instr_vals
         WIDGET_CONTROL, ID_instr, SET_DROPLIST_SELECT=(WHERE(instr_vals EQ setup.instrument))[0]
@@ -147,9 +147,9 @@ COMMON dp_data
         WIDGET_CONTROL, ID_instr, GET_VALUE=instr_val
         instr=instr_val[WIDGET_INFO(ID_instr, /DROPLIST_SELECT)]
         IF SIZE(dp_expcfg, /TYPE) EQ 11 THEN BEGIN ; dp_expcfg was created, write new selection to dp_expcfg
-          tmp_strct=(dp_expcfg)[sel_exp]
-          tmp_strct.setup.instrument=instr
-          (dp_expcfg)[sel_exp]=tmp_strct
+          tmp_strct = (dp_expcfg)[sel_exp]
+          tmp_strct.setup.instrument = instr
+          (dp_expcfg)[sel_exp] = tmp_strct
         ENDIF ELSE BEGIN
 ;          msg=DIALOG_MESSAGE('Please load Experiment Info File(s) first.', /ERROR)
 ;          WIDGET_CONTROL, ID_instr, SET_DROPLIST_SELECT=0
@@ -161,9 +161,9 @@ COMMON dp_data
         WIDGET_CONTROL, ID_etype, GET_VALUE=type_val
         type=type_val[WIDGET_INFO(ID_etype, /DROPLIST_SELECT)]
         IF SIZE(dp_expcfg, /TYPE) EQ 11 THEN BEGIN
-          tmp_strct=(dp_expcfg)[sel_exp]
-          tmp_strct.setup.type=type
-          (dp_expcfg)[sel_exp]=tmp_strct
+          tmp_strct = (dp_expcfg)[sel_exp]
+          tmp_strct.setup.type = type
+          (dp_expcfg)[sel_exp] = tmp_strct
         ENDIF ELSE BEGIN
 ;          msg=DIALOG_MESSAGE('Please load Experiment Info File(s) first.', /ERROR)
 ;          WIDGET_CONTROL, ID_etype, SET_DROPLIST_SELECT=0
@@ -175,9 +175,9 @@ COMMON dp_data
         WIDGET_CONTROL, ID_espec, GET_VALUE=spec_val
         spec=spec_val[WIDGET_INFO(ID_espec, /DROPLIST_SELECT)]
         IF SIZE(dp_expcfg, /TYPE) EQ 11 THEN BEGIN
-          tmp_strct=(dp_expcfg)[sel_exp]
-          tmp_strct.setup.spec=spec
-          (dp_expcfg)[sel_exp]=tmp_strct
+          tmp_strct = (dp_expcfg)[sel_exp]
+          tmp_strct.setup.spec = spec
+          (dp_expcfg)[sel_exp] = tmp_strct
         ENDIF ELSE BEGIN
 ;          msg=DIALOG_MESSAGE('Please load Experiment Info File(s) first.', /ERROR)
 ;          WIDGET_CONTROL, ID_espec, SET_DROPLIST_SELECT=0

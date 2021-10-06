@@ -9,7 +9,7 @@
 ;------------------------------------------------------------------------------------------------------------------------
 FUNCTION dp_read_tgtmrs, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
 
   IF NOT KEYWORD_SET(def_file) THEN $
     file=DIALOG_PICKFILE(TITLE='Please select a Mixing Ratio Table.', PATH=path, FILTER='*.csv', /READ) $
@@ -75,13 +75,13 @@ PRO dp_apply_tgtmrs, sel_exp, tgt_strct, SEL_ONLY=sel_only, PATH=path, VERBOSE=v
 
   COMMON dp_data
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
 
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp $
     ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
 
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
-    tmp_expcfg=(dp_expcfg[exps[i]])
+    tmp_expcfg = (dp_expcfg[exps[i]])
 
     *tmp_expcfg.tgt_mrs.tgt_name = tgt_strct.tgt_name
     *tmp_expcfg.tgt_mrs.substance = tgt_strct.substance
@@ -92,20 +92,20 @@ PRO dp_apply_tgtmrs, sel_exp, tgt_strct, SEL_ONLY=sel_only, PATH=path, VERBOSE=v
     *tmp_expcfg.tgt_mrs.comment = tgt_strct.comment
     *tmp_expcfg.tgt_mrs.unit = tgt_strct.unit
 
-    (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
+    (dp_expcfg[exps[i]]) = TEMPORARY(tmp_expcfg)
   ENDFOR
 
   IF verbose THEN BEGIN
     print, '+++'
     print, 'imported tgt mixing ratios.'
-    def_subst=substlist[sel_exp]
+    def_subst = substlist[sel_exp]
     w=REPLICATE(-1L, N_ELEMENTS(def_subst))
     FOR i=0L, N_ELEMENTS(def_subst)-1 DO $
       IF (WHERE(substance EQ def_subst[i]))[0] NE -1 THEN w[i]=(WHERE(substance EQ def_subst[i]))[0]
     w1=WHERE(w EQ -1, nvd, NCOMPLEMENT=ncomplement)
     print, 'found n matches: ', ncomplement
-    missing=STRARR(N_ELEMENTS(w1))
-    missing=def_subst[w1]
+    missing = STRARR(N_ELEMENTS(w1))
+    missing = def_subst[w1]
     print, 'missing: '
     print, missing
     print, '+++'
@@ -133,12 +133,12 @@ PRO dp_remv_tgtmrs, sel_exp, SEL_ONLY=sel_only, LOUD=loud
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
     IF *(dp_expcfg[sel_exp]).tgt_mrs.mr_ppt NE !NULL $
       THEN BEGIN
-      quest='Yes'
+      quest = 'Yes'
       IF loud THEN quest=DIALOG_MESSAGE('Remove tgt MR values: are you sure?', /QUESTION)
       CASE quest OF
         'Yes': $
           BEGIN
-          tmp_expcfg=(dp_expcfg[sel_exp])
+          tmp_expcfg = (dp_expcfg[sel_exp])
           *tmp_expcfg.tgt_mrs.tgt_name = !NULL
           *tmp_expcfg.tgt_mrs.substance = !NULL
           *tmp_expcfg.tgt_mrs.mr_ppt = !NULL
@@ -147,7 +147,7 @@ PRO dp_remv_tgtmrs, sel_exp, SEL_ONLY=sel_only, LOUD=loud
           *tmp_expcfg.tgt_mrs.scale = !NULL
           *tmp_expcfg.tgt_mrs.comment = !NULL
           *tmp_expcfg.tgt_mrs.unit = !NULL
-          (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
+          (dp_expcfg[sel_exp]) = TEMPORARY(tmp_expcfg)
         END
         'No':
         ELSE:

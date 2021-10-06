@@ -4,7 +4,7 @@ FUNCTION create_ref_calmrs
 ; how many elements the structure will contain. Also, array sizes might be
 ; different for different experiments loaded in the dp_data list.
 
-  ref_calmrs={ $
+  ref_calmrs = { $
               canister:  '', $
               substance:  PTR_NEW(/ALLOCATE_HEAP), $
               mr_ppt:     PTR_NEW(/ALLOCATE_HEAP), $  ; mixing ratio, absolut

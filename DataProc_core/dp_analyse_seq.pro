@@ -25,8 +25,8 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
 
   COMMON DP_DATA
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
-  IF NOT KEYWORD_SET(id_vector) THEN internal_id_flag=1 ELSE internal_id_flag=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
+  IF NOT KEYWORD_SET(id_vector) THEN internal_id_flag = 1 ELSE internal_id_flag=0
 
   FOR n=0, N_ELEMENTS(dp_chrom)-1 DO BEGIN ; BEGIN loop over all loaded experiments
     tmp_strct = (dp_expcfg)[n]
@@ -39,17 +39,17 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
     id_tgt = (WHERE(STRUPCASE(sid_name) EQ 'TARGET'))[0] +1
 
     is_cal = LONARR(N_ELEMENTS(id_vector)) ; vector specifying calibration points; 1=cal, 0=other
-    is_cal[WHERE(id_vector EQ id_cal)]=1
+    is_cal[WHERE(id_vector EQ id_cal)] = 1
     is_sam = LONARR(N_ELEMENTS(id_vector)) ; vector specifying calibration points; 1=cal, 0=other
-    is_sam[WHERE(id_vector EQ id_sam OR id_vector EQ id_tgt)]=1
+    is_sam[WHERE(id_vector EQ id_sam OR id_vector EQ id_tgt)] = 1
 
-    ix_init_cal=(WHERE(is_cal EQ 1))[0]
-    ix_term_cal=(WHERE(is_cal EQ 1))[-1]
-    ix_init_sam=(WHERE(is_sam EQ 1))[0]
-    ix_term_sam=(WHERE(is_sam EQ 1))[-1]
+    ix_init_cal = (WHERE(is_cal EQ 1))[0]
+    ix_term_cal = (WHERE(is_cal EQ 1))[-1]
+    ix_init_sam = (WHERE(is_sam EQ 1))[0]
+    ix_term_sam = (WHERE(is_sam EQ 1))[-1]
 
-    IF ix_init_cal GT ix_init_sam THEN miss_1st_cal=1 ELSE miss_1st_cal=0 ; missing first cal?
-    IF ix_term_cal LT ix_term_sam THEN miss_last_cal=2 ELSE miss_last_cal=0 ; missing last cal?
+    IF ix_init_cal GT ix_init_sam THEN miss_1st_cal = 1 ELSE miss_1st_cal=0 ; missing first cal?
+    IF ix_term_cal LT ix_term_sam THEN miss_last_cal = 2 ELSE miss_last_cal=0 ; missing last cal?
 
     n_cbl = N_ELEMENTS(is_cal[WHERE((is_cal[1:-1]-is_cal[0:-2]) GT 0)])
     n_sbl = N_ELEMENTS(is_sam[WHERE((is_sam[1:-1]-is_sam[0:-2]) GT 0)])
@@ -60,24 +60,24 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
                  IF is_cal[0] EQ 1 THEN n_cbl=n_cbl+1 ; correct index shifting method error (cals)
            END
        1:  BEGIN ; fist cal missing
-             IF is_sam[0] EQ 1 THEN n_sbl=n_sbl+1 ; correct index shifting method error (samples)
+             IF is_sam[0] EQ 1 THEN n_sbl = n_sbl+1 ; correct index shifting method error (samples)
            END
       -2:  BEGIN ; last cal missing
-             IF is_cal[0] EQ 1 THEN n_cbl=n_cbl+1 ; correct index shifting method error (cals)
-             miss_last_cal=miss_last_cal-1
+             IF is_cal[0] EQ 1 THEN n_cbl = n_cbl+1 ; correct index shifting method error (cals)
+             miss_last_cal = miss_last_cal-1
            END
       -1:  BEGIN ; initiating and terminating cal missing
-             IF is_cal[0] EQ 1 THEN n_cbl=n_cbl+1 ; correct index shifting method error (cals)
-             miss_last_cal=miss_last_cal-1
+             IF is_cal[0] EQ 1 THEN n_cbl = n_cbl+1 ; correct index shifting method error (cals)
+             miss_last_cal = miss_last_cal-1
            END
     ENDCASE
 
-    ix_vector=LINDGEN(N_ELEMENTS(id_vector))
-    ix_cal=ix_vector[WHERE(is_cal EQ 1)]
-    ix_sam=ix_vector[WHERE(is_sam EQ 1)]
+    ix_vector = LINDGEN(N_ELEMENTS(id_vector))
+    ix_cal = ix_vector[WHERE(is_cal EQ 1)]
+    ix_sam = ix_vector[WHERE(is_sam EQ 1)]
 
-    ix_cbl_start=[]
-    ix_cbl_end=[]
+    ix_cbl_start = []
+    ix_cbl_end = []
     FOR i=0, N_ELEMENTS(is_cal)-2 DO BEGIN
       IF i EQ 0 AND is_cal[i] EQ 1 THEN ix_cbl_start=[ix_cbl_start,ix_vector[i]]
       IF is_cal[i] EQ 0 AND is_cal[i+1] EQ 1 THEN ix_cbl_start=[ix_cbl_start,ix_vector[i+1]]
@@ -85,8 +85,8 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
       IF i EQ N_ELEMENTS(is_cal)-2 AND is_cal[i+1] EQ 1 THEN ix_cbl_end=[ix_cbl_end,ix_vector[i+1]]
     ENDFOR
 
-    ix_sbl_start=[]
-    ix_sbl_end=[]
+    ix_sbl_start = []
+    ix_sbl_end = []
     FOR i=0, N_ELEMENTS(is_sam)-2 DO BEGIN
       IF i EQ 0 AND is_sam[i] EQ 1 THEN ix_sbl_start=[ix_sbl_start,ix_vector[i]]
       IF is_sam[i] EQ 0 AND is_sam[i+1] EQ 1 THEN ix_sbl_start=[ix_sbl_start,ix_vector[i+1]]
@@ -95,7 +95,7 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
     ENDFOR
 
 
-    IF MAX(ix_sbl_end-ix_sbl_start+1)-5 GT -1 THEN ix_max=-1 ELSE ix_max=MAX(ix_sbl_end-ix_sbl_start+1)-6
+    IF MAX(ix_sbl_end-ix_sbl_start+1)-5 GT -1 THEN ix_max = -1 ELSE ix_max=MAX(ix_sbl_end-ix_sbl_start+1)-6
     sam_treat = sam_treat_mthd[0:ix_max]; sam_treat_mthd is common variable, see def_common
 
     tmp_strct.sequence.ID = id_vector ; write information to dp_expcfg structure
@@ -117,9 +117,9 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
     (dp_expcfg)[n] = tmp_strct ; put back into LIST
 
     IF NOT KEYWORD_SET(quiet) THEN BEGIN
-      name_vector=tmp_strct.expinfo.s_name
-      smpls=name_vector[WHERE(is_sam EQ 1)]
-      count=1 ; there is at least one sample...
+      name_vector = tmp_strct.expinfo.s_name
+      smpls = name_vector[WHERE(is_sam EQ 1)]
+      count = 1 ; there is at least one sample...
       FOR s=0, N_ELEMENTS(smpls)-2 DO IF smpls[s+1] NE smpls[s] THEN count=count+1
       IF count GT n_sbl THEN $
         msg=DIALOG_MESSAGE('Found multiple individual samples in one sample block. ' + $

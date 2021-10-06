@@ -11,12 +11,12 @@ PRO dp_show_treatcfgtable, sel_exp
   COMMON DP_DATA
 
   IF NOT PTR_VALID((dp_expcfg[sel_exp]).treatcfg.substance) THEN BEGIN
-    msg=DIALOG_MESSAGE('No loaded treatment config found.')
+    msg = DIALOG_MESSAGE('No loaded treatment config found.')
     RETURN
   ENDIF
 
   IF (*(dp_expcfg[sel_exp]).treatcfg.substance) EQ !NULL THEN BEGIN
-    msg=DIALOG_MESSAGE('No loaded treatment config found.')
+    msg = DIALOG_MESSAGE('No loaded treatment config found.')
     RETURN
   ENDIF
 
@@ -36,7 +36,7 @@ PRO dp_show_treatcfgtable, sel_exp
 
   column_width=[150,100,100,100]
 
-  mainbase=WIDGET_BASE(title='Treatment Config Table')
+  mainbase = WIDGET_BASE(title='Treatment Config Table')
   ID=WIDGET_TABLE(mainbase, VALUE=value, COLUMN_WIDTH=column_width, COLUMN_LABELS=hdr, ALIGNMENT=0)
 
   WIDGET_CONTROL, ID, /REALIZE

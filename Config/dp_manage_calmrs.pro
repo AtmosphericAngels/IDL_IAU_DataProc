@@ -79,14 +79,14 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
 
   COMMON dp_data
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
 
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp $
     ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
 
   id_cal = (WHERE(STRUPCASE(sid_name) EQ 'CALIBRATION'))[0] +1
 
-  cal_names=[]
+  cal_names = []
   FOR i=0, N_ELEMENTS(exps)-1 DO $
     cal_names = [cal_names, $
         ((dp_expcfg[exps[i]]).expinfo.s_name)[WHERE((dp_expcfg[exps[i]]).expinfo.s_id EQ id_cal AND $
@@ -100,8 +100,8 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
     RETURN
   ENDIF
 
-  canister=(mrs_strct.canister)[0]
-  quest='Yes'
+  canister = (mrs_strct.canister)[0]
+  quest = 'Yes'
   IF cal_names[0] NE canister THEN $
     quest=DIALOG_MESSAGE('Calibration gas specification found in experiment-info file (' + cal_names[0] + ') ' + $
                          'and specification in MR Table (' + canister + ') do not match. Continue?', /QUESTION, /DEFAULT_NO)
@@ -110,7 +110,7 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
 
   IF quest EQ 'Yes' THEN BEGIN
     FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
-      tmp_expcfg=(dp_expcfg[exps[i]])
+      tmp_expcfg = (dp_expcfg[exps[i]])
       tmp_expcfg.cal_mrs.canister = canister
       *tmp_expcfg.cal_mrs.substance = mrs_strct.substance
       *tmp_expcfg.cal_mrs.mr_ppt = mrs_strct.mr_ppt
@@ -119,21 +119,21 @@ PRO dp_apply_calmrs, sel_exp, mrs_strct, SEL_ONLY=sel_only, PATH=path, $
       *tmp_expcfg.cal_mrs.scale = mrs_strct.scale
       *tmp_expcfg.cal_mrs.comment = mrs_strct.comment
       *tmp_expcfg.cal_mrs.unit = mrs_strct.unit
-      (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
+      (dp_expcfg[exps[i]]) = TEMPORARY(tmp_expcfg)
     ENDFOR
 
     IF verbose THEN BEGIN
       print, '+++'
       print, 'imported cal mixing ratios.'
-      def_subst=substlist[sel_exp]
+      def_subst = substlist[sel_exp]
       w=REPLICATE(-1L, N_ELEMENTS(def_subst))
       FOR i=0L, N_ELEMENTS(def_subst)-1 DO $
         IF (WHERE(substance EQ def_subst[i]))[0] NE -1 $
           THEN w[i]=(WHERE(substance EQ def_subst[i]))[0]
       w1=WHERE(w EQ -1, nvd, NCOMPLEMENT=ncomplement)
       print, 'found n matches: ', ncomplement
-      missing=STRARR(N_ELEMENTS(w1))
-      missing=def_subst[w1]
+      missing = STRARR(N_ELEMENTS(w1))
+      missing = def_subst[w1]
       print, 'missing: '
       print, missing
       print, '+++'
@@ -164,12 +164,12 @@ PRO dp_remv_calmrs, sel_exp, SEL_ONLY=sel_only, LOUD=loud
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
     IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt NE !NULL $
       THEN BEGIN
-        quest='Yes'
+        quest = 'Yes'
         IF loud THEN quest=DIALOG_MESSAGE('Remove Cal MR values: are you sure?', /QUESTION)
         CASE quest OF
           'Yes': $
             BEGIN
-              tmp_expcfg=(dp_expcfg[sel_exp])
+              tmp_expcfg = (dp_expcfg[sel_exp])
               tmp_expcfg.cal_mrs.canister = ''
               *tmp_expcfg.cal_mrs.substance = !NULL
               *tmp_expcfg.cal_mrs.mr_ppt = !NULL
@@ -178,7 +178,7 @@ PRO dp_remv_calmrs, sel_exp, SEL_ONLY=sel_only, LOUD=loud
               *tmp_expcfg.cal_mrs.scale = !NULL
               *tmp_expcfg.cal_mrs.comment = !NULL
               *tmp_expcfg.cal_mrs.unit = !NULL
-              (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
+              (dp_expcfg[sel_exp]) = TEMPORARY(tmp_expcfg)
             END
           'No':
           ELSE:

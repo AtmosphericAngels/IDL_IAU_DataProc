@@ -42,7 +42,7 @@ PRO dp_prcexp_wid_handle, event
 
   uname = WIDGET_INFO(event.id, /UNAME)
 
-;  verbose=1
+;  verbose = 1
 
   CASE uname OF
     ;******************************************************************************************

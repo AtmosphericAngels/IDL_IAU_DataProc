@@ -331,7 +331,7 @@ END
 ;
 ; 2016-10-27 (v1.11)
 ; - code clean-up, added some comments.
-; - added dynamic determination of IDs (e.g. Cal=3) based on indices in common variable sid_name.
+; - added dynamic determination of IDs (e.g. Cal = 3) based on indices in common variable sid_name.
 ; - added suffix 'iaudp' if a reportfile is generated for selected experiment and substance.
 ; - added mean sample block rsd to report file header.
 ; - rearranged main widget.

@@ -17,7 +17,7 @@ FUNCTION dp_calc_carryover, norm_resp, sequence, carryover_strct, subst_name
       id_sam = 1
       id_tgt = 2 ; tgt treated as sample in calulations here!
 
-      corr_norm_resp=norm_resp ; set equal to input so that no additional NaNs are introduced
+      corr_norm_resp = norm_resp ; set equal to input so that no additional NaNs are introduced
       FOR n=1, N_ELEMENTS(norm_resp)-1 DO BEGIN
         sect_id = (sequence.id)[n-1:n]
         sect_rsp = norm_resp[n-1:n]

@@ -12,7 +12,7 @@
 FUNCTION dp_restore_chrom, dp_chrom, current_version, PATH=path_wd, FNAME=fname, VERBOSE=verbose
 
   dp_refr_status, MESSAGE='Restoring IAU_Chrom data...'
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
   IF verbose THEN print, 'beginning to restore experiment(s)...'
 
   IF NOT KEYWORD_SET(fname) THEN $
@@ -29,7 +29,7 @@ FUNCTION dp_restore_chrom, dp_chrom, current_version, PATH=path_wd, FNAME=fname,
   exp_fname = STRARR(N_ELEMENTS(fname))
 
   FOR i=0, N_ELEMENTS(fname)-1 DO BEGIN             ; i-loop: number of selected chrom-files
-    exp_fname(i)=FILE_BASENAME(fname[i])
+    exp_fname(i) = FILE_BASENAME(fname[i])
 
     RESTORE, fname[i] ; gives structure "chrom"...
 
@@ -39,8 +39,8 @@ FUNCTION dp_restore_chrom, dp_chrom, current_version, PATH=path_wd, FNAME=fname,
       RETURN, dp_chrom
     ENDIF
 
-    m_chrom=!NULL ; empty temporary structures; "_m" = modified
-    new_chrom=!NULL
+    m_chrom = !NULL ; empty temporary structures; "_m" = modified
+    new_chrom = !NULL
                                                       ; modify the restored chrom structure...
     FOR j=0, N_ELEMENTS(chrom)-1 DO BEGIN           ; j-loop: elements of chrom, i.e. number of chromatograms
       instr_type=[instr_type, chrom[j].instr_type]
@@ -51,9 +51,9 @@ FUNCTION dp_restore_chrom, dp_chrom, current_version, PATH=path_wd, FNAME=fname,
       tmp0=STRCT_Redefine_Tag(m_chrom[j], TAG_NAME="exp_fname", TAG_DEF=exp_fname(i))
       tmp0=STRCT_Redefine_Tag(tmp0, TAG_NAME="iaudp_vers", TAG_DEF=FIX(current_version, TYPE=4))
 
-      new_subst=!NULL
+      new_subst = !NULL
 
-      ref_rres=create_ref_rres()
+      ref_rres = create_ref_rres()
 
         FOR k=0, N_ELEMENTS(m_chrom[j].subst)-1 DO BEGIN        ; k-loop elements of subst in each chrom
           tmp1=STRCT_Redefine_Tag(tmp0.subst[k], Tag_Name="rres", Tag_Def=ref_rres) ; tmp1: subst level [n_chrom, n_subst]
@@ -75,7 +75,7 @@ FUNCTION dp_restore_chrom, dp_chrom, current_version, PATH=path_wd, FNAME=fname,
 
   IF N_ELEMENTS(instr_type[uniq(instr_type)]) GT 1 THEN BEGIN
     msg=DIALOG_MESSAGE('Instrument types of experiments do not match. Aborted.', /ERROR)
-    chromlist=!NULL
+    chromlist = !NULL
   ENDIF
 
   dp_refr_status, MESSAGE='Data restored.'

@@ -88,17 +88,17 @@ PRO dp_prcexp_res2txt, prc_res, sel_exp, DIR=dir
       res_arr = DBLARR(MAX(n_iter)*3+1, N_ELEMENTS(blszs))
       res_arr[0,*] = blszs
 
-      k=1
+      k = 1
       FOR j=0, MAX(n_iter)-1 DO BEGIN
         res_arr[k,*] = mean_rrsp[j, *]
         res_arr[k+1,*] = intra_prc[j,*]
         res_arr[k+2,*] = inter_prc[j, *]
-        k=k+3
+        k = k+3
       ENDFOR
 
       ; write data
       FOR l=0,N_ELEMENTS(blszs)-1 DO BEGIN
-        str=[]
+        str = []
         FOR m=0, MAX(n_iter)*3 DO BEGIN
           v_str = (STRCOMPRESS(STRING(res_arr[m,l], FORMAT='(D25.7)'), /REMoVE_ALL)).replace('-NaN', 'NaN')
           str = [str, v_str, sep]

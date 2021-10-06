@@ -27,7 +27,7 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
   IF NOT KEYWORD_SET(estimate_cal) THEN estimate_cal = 0
   IF NOT KEYWORD_SET(saveplot) THEN saveplot = 0
   IF NOT KEYWORD_SET(pic_filetype) THEN pic_filetype = '.ps'
-  status=0
+  status = 0
 
   ; check if cal and tgt mrs loaded
   IF PTR_VALID((dp_expcfg[sel_exp]).tgt_mrs.mr_ppt) THEN BEGIN
@@ -43,8 +43,8 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
   IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt EQ !NULL $
     THEN BEGIN
       IF loud THEN msg=DIALOG_MESSAGE('No Cal MRs found, switching to Cal-MR estimation.', /INFORMATION)
-      estimate_cal=1
-    ENDIF ; ELSE estimate_cal=estimate_cal
+      estimate_cal = 1
+    ENDIF ; ELSE estimate_cal = estimate_cal
 
   ; check if sample treatment is 'individual'
   treat_arr = (dp_chrom[sel_exp]).subst.rres.sam_treat
@@ -72,7 +72,7 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
   ENDELSE
 
   tgt_substs = *(dp_expcfg[sel_exp]).tgt_mrs.substance
-  tmp=tgt_substs[SORT(tgt_substs)]
+  tmp = tgt_substs[SORT(tgt_substs)]
   tgt_substs = tmp[uniq(tmp)]
 
   w_s_cal = WHERE(cal_substs EQ subst)
@@ -121,8 +121,8 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
         IF NOT estimate_cal THEN BEGIN
           mrs[*,i]=dp_calc_mrs(match_substs[i], sel_name, sel_exp, dp_chrom, dp_expcfg, eval_mode)
           w_subst=WHERE(*(dp_expcfg[sel_exp]).cal_mrs.substance EQ match_substs[i], n_match_mr)
-          cal_MR_spec=(*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w_subst[0]]
-          cal_MR_err=(*(dp_expcfg[sel_exp]).cal_mrs.unc_ppt)[w_subst[0]]
+          cal_MR_spec = (*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w_subst[0]]
+          cal_MR_err = (*(dp_expcfg[sel_exp]).cal_mrs.unc_ppt)[w_subst[0]]
         ENDIF ELSE BEGIN
           cal_MR_spec = !VALUES.D_NAN
           cal_MR_err = !VALUES.D_NAN
@@ -176,7 +176,7 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
         ENDIF ELSE $
             w_fin = WHERE(FINITE(delta_mrs[*,i]) EQ 1, n_fin)
 
-        IF n_fin LT 2 THEN status=-1
+        IF n_fin LT 2 THEN status = -1
 
         sort_ix = SORT((tgt_mrs[*,i])[w_fin])
         tgt_mr_range = [MIN(((tgt_mrs[*,i])[w_fin])[sort_ix], /NAN),MAX(((tgt_mrs[*,i])[w_fin])[sort_ix], /NAN)]
@@ -194,15 +194,15 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
         measure_errors[WHERE(measure_errors LT 0.0001)] = 0.0001
 
         IF estimate_cal THEN BEGIN
-          XTITLE='relative detector response'
-          YTITLE='target MR'
-          p2_name='est_Cal_MR'
-          x=((samples_rR)[w_fin])[sort_ix]
+          XTITLE = 'relative detector response'
+          YTITLE = 'target MR'
+          p2_name = 'est_Cal_MR'
+          x = ((samples_rR)[w_fin])[sort_ix]
           y=((tgt_mrs[*,i])[w_fin])[sort_ix]
         ENDIF ELSE BEGIN
-          XTITLE='linear MR'
-          YTITLE='delta MR'
-          p2_name='corr. values'
+          XTITLE = 'linear MR'
+          YTITLE = 'delta MR'
+          p2_name = 'corr. values'
           x=((mrs[*,i])[w_fin])[sort_ix]
           y=((delta_mrs[*,i])[w_fin])[sort_ix]
         ENDELSE
@@ -210,11 +210,11 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
         ; derive mean values, different number of measurements per target are accounted for
         ; through the error of the mean SD/SQRT(n)
         snames=((s_names_arr[*,i])[w_fin])[sort_ix]
-        x_means=DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
-        y_means=DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
-        tgt_mrs_means=DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
-        e_means=DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
-        e_plot=DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
+        x_means = DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
+        y_means = DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
+        tgt_mrs_means = DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
+        e_means = DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
+        e_plot = DBLARR(N_ELEMENTS(u_tgt))*!VALUES.D_NAN
         FOR k=0, N_ELEMENTS(u_tgt)-1 DO BEGIN
           w_tgt = WHERE(snames EQ u_tgt[k], nw)
           IF nw GT 0 THEN BEGIN
@@ -226,14 +226,14 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
         ENDFOR
 
   ; +++ MOD
-  ;      IF match_substs[0] EQ 'SF6' THEN force_zero=1
-  ;      measure_errors[*]=0.01D
+  ;      IF match_substs[0] EQ 'SF6' THEN force_zero = 1
+  ;      measure_errors[*] = 0.01D
         w_fin_x=WHERE(FINITE(x_means) EQ 1, n_fin_x)
         IF n_fin_x GT 0 THEN BEGIN
-          x=x_means[w_fin_x]
-          y=y_means[w_fin_x]
-          measure_errors=e_means[w_fin_x]
-          e_plot=e_plot[w_fin_x]
+          x = x_means[w_fin_x]
+          y = y_means[w_fin_x]
+          measure_errors = e_means[w_fin_x]
+          e_plot = e_plot[w_fin_x]
         ENDIF
   ; +++
 
@@ -263,7 +263,7 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
             fit_x = interpol([MIN(x, /NAN),MAX(x, /NAN)], 200)
             fit_smooth = polyfit_get_ydata(fct_dgr, fit_x, parms)
             dev_to_fit = polyfit_get_ydata(fct_dgr, x, parms) - y
-            n_fold_sd=1D
+            n_fold_sd = 1D
 
   ; +++ MOD
   ;        ; derive ascension angle alpha from polyfit parms
@@ -298,8 +298,8 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
   ;                         [mean(y-fit_delta)+n_fold_sd*stddev(y-fit_delta,/NAN),mean(y-fit_delta)-n_fold_sd*stddev(y-fit_delta,/NAN)], 1)
   ;        p_lower=poly_fit([MIN(x,ix_min),MAX(x,ix_max)], $
   ;                         [mean(y-fit_delta)-n_fold_sd*stddev(y-fit_delta,/NAN),mean(y-fit_delta)+n_fold_sd*stddev(y-fit_delta,/NAN)], 1)
-  ;        x_bound_0=x
-  ;        x_bound_1=x
+  ;        x_bound_0 = x
+  ;        x_bound_1 = x
   ;        y_upper=polyfit_get_ydata(1, [280D,x_bound_0], p_upper)
   ;        y_lower=polyfit_get_ydata(1, [280D,x_bound_1], p_lower)
   ; +++
@@ -384,7 +384,7 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
                 l = legend(TARGET=[p0,p1,p2], /DATA, /AUTO_TEXT_COLOR)
                 l.position = [0.99,0.99]
 
-                textfontsize=14
+                textfontsize = 14
                 t0 = text(0.02,0.95, match_substs[i], TARGET=p0, FONT_SIZE=textfontsize, FONT_STYLE='bf')
                 t1 = text(0.26,0.95, exp_fname, TARGET=p0, FONT_SIZE=textfontsize, FONT_STYLE='bf')
                 t2 = text(0.52,0.95, 'Cal: '+cal_name, TARGET=p0, FONT_SIZE=textfontsize, FONT_STYLE='bf')
@@ -396,20 +396,20 @@ FUNCTION dp_nlexp_analyse, fct_dgr, sel_exp, sel_subst, FORCE_ZERO=force_zero, $
                                         TARGET=p0, FONT_SIZE=textfontsize, FONT_STYLE='bf')
                   t5 = text(0.52,0.915, 'avg_dev_2_fit: '+STRCOMPRESS(STRING(mean(ABS(dev_to_fit)), FORMAT='(D25.4)'), /REMOVE_ALL), $
                                         TARGET=p0, FONT_SIZE=textfontsize, FONT_STYLE='bf')
-                  t3.FONT_COLOR='b'
-                  t4.FONT_COLOR='b'
-                  t5.FONT_COLOR='r'
+                  t3.FONT_COLOR = 'b'
+                  t4.FONT_COLOR = 'b'
+                  t5.FONT_COLOR = 'r'
                 ENDIF ELSE BEGIN
                   t3 = text(0.02,0.915, 'corrected max dev-2-zero: '+STRCOMPRESS(STRING(MAX(ABS(y_corr), ix_max), FORMAT='(D25.4)'), /REMOVE_ALL), $
                                         TARGET=p0, FONT_SIZE=textfontsize, FONT_STYLE='bf')
                   t4 = text(0.26,0.915, '('+STRCOMPRESS(STRING(MAX(ABS(y_corr))/x[ix_max]*100D, FORMAT='(D25.4)'), /REMOVE_ALL)+' % of MR)', $
                                         TARGET=p0, FONT_SIZE=textfontsize, FONT_STYLE='bf')
-                  t3.FONT_COLOR='b'
-                  t4.FONT_COLOR='b'
+                  t3.FONT_COLOR = 'b'
+                  t4.FONT_COLOR = 'b'
                 ENDELSE
 
                 IF KEYWORD_SET(saveplot) THEN BEGIN
-                  IF estimate_cal THEN suffix='_'+match_substs[i]+'_cal_MR'+pic_filetype $
+                  IF estimate_cal THEN suffix = '_'+match_substs[i]+'_cal_MR'+pic_filetype $
                     ELSE suffix='_'+match_substs[i]+'_NL'+pic_filetype
                   p0.save, saveplot+suffix, resolution=300
                   p0.close

@@ -1,6 +1,6 @@
 FUNCTION  create_ref_expinfo
 
-  ref_expinfo=$
+  ref_expinfo = $
     { $
     expinfo_fname:  "" ,$               ; Dateinamen des Expinfo-Files
     opr:            "" ,$               ; Operator-Name

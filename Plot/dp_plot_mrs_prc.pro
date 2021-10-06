@@ -10,10 +10,10 @@ PRO dp_plot_mrs_prc, sel_exp, sel_subst, SHOW_PRC=show_prc, SHOW_CAL_PRC=show_ca
 
  COMMON dp_data
 
-  IF NOT KEYWORD_SET(show_prc) THEN show_prc=0
-  IF NOT KEYWORD_SET(show_cal_prc) THEN show_cal_prc=0
-  IF NOT KEYWORD_SET(show_mrs) THEN show_mrs=0
-  IF NOT KEYWORD_SET(eval_mode) THEN eval_mode=0 ; default: area
+  IF NOT KEYWORD_SET(show_prc) THEN show_prc = 0
+  IF NOT KEYWORD_SET(show_cal_prc) THEN show_cal_prc = 0
+  IF NOT KEYWORD_SET(show_mrs) THEN show_mrs = 0
+  IF NOT KEYWORD_SET(eval_mode) THEN eval_mode = 0 ; default: area
 
   IF KEYWORD_SET(show_prc) AND KEYWORD_SET(show_mrs) THEN RETURN
 
@@ -111,9 +111,9 @@ PRO dp_plot_mrs_prc, sel_exp, sel_subst, SHOW_PRC=show_prc, SHOW_CAL_PRC=show_ca
         sel_MRs = prelim_MRs[w_sam_end]
         w_fin=WHERE(FINITE(sel_MRs) EQ 1, n_fin)
         IF n_fin GT 0 THEN BEGIN
-          x=x[w_fin]
-          sel_MRs=sel_MRs[w_fin]
-          sam_names=sam_names[w_fin]
+          x = x[w_fin]
+          sel_MRs = sel_MRs[w_fin]
+          sam_names = sam_names[w_fin]
           yrange=[MIN(sel_MRs)-(MAX(sel_MRs)-MIN(sel_MRs))*0.05, MAX(sel_MRs)+(MAX(sel_MRs)-MIN(sel_MRs))*0.05]
 
           p_mr = plot($

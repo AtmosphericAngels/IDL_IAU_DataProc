@@ -3,14 +3,14 @@
 ;
 ; AUTHOR: F. Obersteiner, Sep-2016. Modified Aug-2017 to use WIDGET_CONTROL -> bad_id
 ;
-; PURPOSE: closes widget(s) if identifier returns bad_id=0 (=not bad)
+; PURPOSE: closes widget(s) if identifier returns bad_id = 0 (=not bad)
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
 PRO dp_destroy_wids, ALL=all, ID=id
 
   COMMON DP_WIDID
 
-  IF NOT KEYWORD_SET(ID) THEN ID=0
+  IF NOT KEYWORD_SET(ID) THEN ID = 0
 
   IF ID EQ -1 THEN RETURN
   IF NOT KEYWORD_SET(ALL) AND NOT KEYWORD_SET(ID) THEN RETURN

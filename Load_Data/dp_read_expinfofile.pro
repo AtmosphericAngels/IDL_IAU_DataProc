@@ -56,11 +56,11 @@ FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME
     ENDIF
 
 
-    ref_expinfo=create_ref_expinfo() ; generate the empty structure for experiment info
+    ref_expinfo = create_ref_expinfo() ; generate the empty structure for experiment info
     import=REPLICATE(ref_expinfo, nl-(def_offset+1))
 
     OPENR, lun, file, /GET_LUN ; reopen file for second run to import data
-      line=''
+      line = ''
         FOR i=0, def_offset-1 DO READF, lun, line ; skip file header this time
 
     READF, lun, line ; read col header
@@ -73,18 +73,18 @@ FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME
       import_tags=strreplace_iter(import_tags, remove_strings[i], '_', n_iter=MAX(STRLEN(import_tags)))
     ENDFOR
 
-    col_ix=LONARR(N_ELEMENTS(search_tags))-1 ; get indices of respective columns...
+    col_ix = LONARR(N_ELEMENTS(search_tags))-1 ; get indices of respective columns...
     FOR i=0, N_ELEMENTS(search_tags)-1 DO BEGIN
       ix_vd=WHERE(STRMATCH(import_tags, search_tags[i], /FOLD_CASE) EQ 1)
-      IF ix_vd[0] EQ -1 THEN col_ix[i]=-1 ELSE col_ix[i]=ix_vd[0]
+      IF ix_vd[0] EQ -1 THEN col_ix[i] = -1 ELSE col_ix[i]=ix_vd[0]
     ENDFOR
 
     w_ess=[3, 5, 10, 12, 13, 16] ; fname, sample_name, sample_id, p0, p1, mfc_vol
-    found_ess_ix=col_ix[w_ess]
+    found_ess_ix = col_ix[w_ess]
 
     IF found_ess_ix[-1] EQ -1 AND (found_ess_ix[-3]*found_ess_ix[-2]) GT 0 THEN BEGIN
-      found_ess_ix[-1]=999
-      s_vol_select=0 ; coerce dp as s_vol because no MFC value found
+      found_ess_ix[-1] = 999
+      s_vol_select = 0 ; coerce dp as s_vol because no MFC value found
     ENDIF
 
     IF (found_ess_ix[-1] NE -1) AND (found_ess_ix[-3] EQ -1) AND (found_ess_ix[-2] EQ -1) THEN BEGIN
@@ -94,9 +94,9 @@ FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME
     ENDIF
 
     IF (WHERE(found_ess_ix EQ -1))[0] NE -1 THEN BEGIN
-      errormsg=STRARR(N_ELEMENTS(w_ess)+1)
-      errormsg[0]='Essential tag not found. Please make sure that the following parameters are specified:'
-      errormsg[1:-1]=search_tags[w_ess]
+      errormsg = STRARR(N_ELEMENTS(w_ess)+1)
+      errormsg[0] = 'Essential tag not found. Please make sure that the following parameters are specified:'
+      errormsg[1:-1] = search_tags[w_ess]
       !NULL=DIALOG_MESSAGE(errormsg, /ERROR)
       CLOSE, lun
       FREE_LUN, lun
@@ -148,9 +148,9 @@ FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME
       IF col_ix[17] NE -1 THEN import[i].Ts_cldhd = tmp[col_ix[17]]
       IF col_ix[18] NE -1 THEN import[i].Te_cldhd = tmp[col_ix[18]]
 
-      IF col_ix[19] NE -1 THEN import[i].ts = time2jultime(TIME=tmp[col_ix[19]])
-      IF col_ix[20] NE -1 THEN import[i].te = time2jultime(TIME=tmp[col_ix[20]])
-      IF col_ix[21] NE -1 THEN import[i].dt = time2jultime(TIME=tmp[col_ix[21]]) $
+      IF col_ix[19] NE -1 THEN import[i].ts = time2jultime(TIME = tmp[col_ix[19]])
+      IF col_ix[20] NE -1 THEN import[i].te = time2jultime(TIME = tmp[col_ix[20]])
+      IF col_ix[21] NE -1 THEN import[i].dt = time2jultime(TIME = tmp[col_ix[21]]) $
         ELSE IF import[i].ts NE !VALUES.D_NAN AND import[i].te NE !VALUES.D_NAN THEN $
                   import[i].dt = import[i].te - import[i].ts
 

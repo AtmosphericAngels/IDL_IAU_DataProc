@@ -10,14 +10,14 @@ PRO dp_read_treatcfg, sel_exp, SEL_ONLY=sel_only, FILE=file, VERBOSE=verbose
 
   COMMON DP_DATA
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
 
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
 
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
-    finvals=FINITE((dp_chrom[exps[i]]).subst[*].rres.rsp_area.normalised)
+    finvals = FINITE((dp_chrom[exps[i]]).subst[*].rres.rsp_area.normalised)
     finvals=REFORM(finvals, N_ELEMENTS(finvals))
-    w=WHERE(finvals NE 0)
+    w = WHERE(finvals NE 0)
     IF w[0] NE -1 THEN BEGIN
       quest=DIALOG_MESSAGE('Results found. These will be overwritten. Continue?', /QUESTION)
       IF quest EQ 'No' THEN RETURN
@@ -30,11 +30,11 @@ PRO dp_read_treatcfg, sel_exp, SEL_ONLY=sel_only, FILE=file, VERBOSE=verbose
   IF file EQ '' THEN RETURN
   IF FILE_TEST(file) EQ 0 THEN RETURN
 
-  sep=STRING(9B)
-  nl=FILE_LINES(file)
-  data=STRARR(nl)
-  nl_hdr=5
-  n_subst=nl-nl_hdr
+  sep = STRING(9B)
+  nl = FILE_LINES(file)
+  data = STRARR(nl)
+  nl_hdr = 5
+  n_subst = nl-nl_hdr
 
   OPENR, LUN, file, /GET_LUN
   READF, LUN, data
@@ -63,13 +63,13 @@ PRO dp_read_treatcfg, sel_exp, SEL_ONLY=sel_only, FILE=file, VERBOSE=verbose
   ENDFOR
 
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
-    tmp_expcfg=(dp_expcfg[exps[i]])
+    tmp_expcfg = (dp_expcfg[exps[i]])
     *tmp_expcfg.treatcfg.substance = substance
     *tmp_expcfg.treatcfg.cal_treat = treat_cal
     *tmp_expcfg.treatcfg.sam_treat = treat_sam
     *tmp_expcfg.treatcfg.cal_ip = ip_cal
     *tmp_expcfg.treatcfg.eval_mode = eval_mode
-    (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
+    (dp_expcfg[exps[i]]) = TEMPORARY(tmp_expcfg)
   ENDFOR
 
   dp_refr_status, MESSAGE='Imported treatment config.'
@@ -89,13 +89,13 @@ PRO dp_remv_treatcfg, sel_exp, SEL_ONLY=sel_only, LOUD=loud
   COMMON DP_DATA
 
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
-  IF NOT KEYWORD_SET(loud) THEN loud=0
+  IF NOT KEYWORD_SET(loud) THEN loud = 0
 
   IF loud THEN BEGIN
     FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
-      finvals=FINITE((dp_chrom[exps[i]]).subst[*].rres.rsp_area.normalised)
+      finvals = FINITE((dp_chrom[exps[i]]).subst[*].rres.rsp_area.normalised)
       finvals=REFORM(finvals, N_ELEMENTS(finvals))
-      w=WHERE(finvals NE 0)
+      w = WHERE(finvals NE 0)
       IF w[0] NE -1 THEN BEGIN
         quest=DIALOG_MESSAGE('Results found. These will be overwritten. Continue?', /QUESTION)
         IF quest EQ 'No' THEN RETURN
@@ -104,13 +104,13 @@ PRO dp_remv_treatcfg, sel_exp, SEL_ONLY=sel_only, LOUD=loud
   ENDIF
 
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
-    tmp_expcfg=(dp_expcfg[exps[i]])
+    tmp_expcfg = (dp_expcfg[exps[i]])
     *tmp_expcfg.treatcfg.substance = !NULL
     *tmp_expcfg.treatcfg.cal_treat = !NULL
     *tmp_expcfg.treatcfg.sam_treat = !NULL
     *tmp_expcfg.treatcfg.cal_ip = !NULL
     *tmp_expcfg.treatcfg.eval_mode = !NULL
-    (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
+    (dp_expcfg[exps[i]]) = TEMPORARY(tmp_expcfg)
   ENDFOR
 
 END
@@ -137,7 +137,7 @@ PRO dp_export_treatconfig, sel_exp, PATH=path
   fname = DIALOG_PICKFILE(PATH=path, /WRITE, /OVERWRITE_PROMPT, FILE=datestr+'_dp_treatmthd.info')
   IF STRLEN(fname) EQ 0 THEN RETURN
 
-  sep=STRING(9B)
+  sep = STRING(9B)
 
   OPENW, lun, fname, /GET_LUN
   PRINTF,lun, 'Configuration of cal and sample treatment within IAU_DataProc', FORMAT='(A)'
