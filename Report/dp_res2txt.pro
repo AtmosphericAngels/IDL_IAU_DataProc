@@ -113,7 +113,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
           unit = 'NA'
           cal_scale = 'NA'
         ENDELSE
-        
+
         cal_prc = 'NaN'
         IF *(dp_expcfg[sel_exp]).instr_prc.mp_rel NE !NULL THEN BEGIN
           w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
@@ -172,13 +172,13 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
 
         subst_name=(substlist[sel_exp])[sel_name]
-        IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, EVAL_MODE=eval_mode) $
+        IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, eval_mode) $
           ELSE prelim_MRs = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
 
         OPENW, lun, fname, /GET_LUN
 
           PRINTF, lun, '*** IAU_DP_v'+dp_vers+' REPORT ***', FORMAT='(A)'
-          
+
           ; FO 2020-03-03 add chrom date:
           PRINTF, lun, 'Experiment/Date:', sep, FILE_BASENAME((dp_chrom[sel_exp])[0].exp_fname[0]), sep, $
                        jultime2timestring(mean(dp_chrom[sel_exp].jdate)), FORMAT='(A,A,A,A,A)'
@@ -284,7 +284,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         unit = 'NA'
         cal_scale = 'NA'
       ENDELSE
-      
+
       cal_prc = 'NaN'
       IF *(dp_expcfg[sel_exp]).instr_prc.mp_rel NE !NULL THEN BEGIN
         w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
@@ -343,8 +343,8 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
 
       subst_name=(substlist[sel_exp])[sel_name]
-      IF call_mr_calc THEN prelim_MRs=dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg, EVAL_MODE=eval_mode) $
-        ELSE prelim_MRs=MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
+      IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg, eval_mode) $
+        ELSE prelim_MRs = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
 
 
       OPENW, lun, fname, /GET_LUN
