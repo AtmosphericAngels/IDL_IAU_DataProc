@@ -7,16 +7,11 @@
 ;
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
-FUNCTION dp_calc_mrs, subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, $
-                      EVAL_MODE=eval_mode
+FUNCTION dp_calc_mrs, subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, eval_mode
 
   n_chrom = N_ELEMENTS((dp_chrom[sel_exp]))
 
   sam_treat = (dp_chrom[0].subst[0].rres.sam_treat)[0]
-
-  IF NOT KEYWORD_SET(eval_mode) THEN $
-    eval_mode = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_select)[0] $
-      ELSE eval_mode = 0 ; default area
 
   mrs_array = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
   mrs = mrs_array
@@ -26,6 +21,7 @@ FUNCTION dp_calc_mrs, subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, $
     IF w_subst[0] EQ -1 THEN RETURN, mrs_array
   ENDIF ELSE RETURN, mrs_array
 
+  ;print, "dp_calc_mrs eval mode:", eval_mode
 
   CASE eval_mode OF ; 0 area / 1 height // bl stands for "block" here...
     0: $
