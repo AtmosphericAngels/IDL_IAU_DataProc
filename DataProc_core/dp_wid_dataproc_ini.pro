@@ -107,7 +107,7 @@ PRO dp_wid_dataproc_handle, event
     'calc_all' : $
       BEGIN
         quest=DIALOG_MESSAGE('Use loaded cal/sample treatment config if available?', /QUESTION)
-        IF quest EQ 'Yes' THEN current = 0 ELSE current=1
+        IF quest EQ 'Yes' THEN current = 0 ELSE current = 1
         dp_call_relresp_calc, sel_caltreat, sel_samtreat, sel_calip, OVERWRITE=ovwr, $
                               CURRENT=current, EVAL_MODE=eval_mode, VERBOSE=verbose
         dp_wid_dataproc_upd, event
@@ -119,7 +119,7 @@ PRO dp_wid_dataproc_handle, event
       BEGIN
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Precision: Load for selected experiment only?', /QUESTION, /CANCEL)
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
           IF quest EQ 'Cancel' THEN RETURN
         ENDIF
         prc_strct=dp_read_instrprc(sel_exp, chromlist[sel_exp], substlist, $
@@ -132,7 +132,7 @@ PRO dp_wid_dataproc_handle, event
       BEGIN
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Cal MRs: Load for selected experiment only?', /QUESTION, /CANCEL)
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
           IF quest EQ 'Cancel' THEN RETURN
         ENDIF
         mrs_strct=dp_read_calmrs(PATH=path_wd, VERBOSE=verbose)
@@ -144,7 +144,7 @@ PRO dp_wid_dataproc_handle, event
       BEGIN
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Target MRs: Load for selected experiment only?', /QUESTION, /CANCEL)
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
           IF quest EQ 'Cancel' THEN RETURN
         ENDIF
         tgt_strct=dp_read_tgtmrs(PATH=path_wd, VERBOSE=verbose)
@@ -157,7 +157,7 @@ PRO dp_wid_dataproc_handle, event
         sel_only = 1
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Load for selected experiment only?', /QUESTION, /CANCEL)
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
           IF quest EQ 'Cancel' THEN RETURN
         ENDIF
         dp_read_treatcfg, sel_exp, SEL_ONLY=sel_only, VERBOSE=verbose
@@ -171,7 +171,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Load for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_read_cocorrparms, sel_exp, SEL_ONLY=sel_only, PATH=path_wd, $
                             DEF_FILE=def_file, VERBOSE=verbose
@@ -184,7 +184,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_instrprc, sel_exp, SEL_ONLY=sel_only, /LOUD
       END
@@ -194,7 +194,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_calmrs, sel_exp, SEL_ONLY=sel_only, /LOUD
       END
@@ -204,7 +204,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_tgtmrs, sel_exp, SEL_ONLY=sel_only, /LOUD
       END
@@ -214,7 +214,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_treatcfg, sel_exp, SEL_ONLY=sel_only, /LOUD
         dp_call_relresp_calc, 0, 0, 0, VERBOSE=verbose
@@ -226,7 +226,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_cocorr, sel_exp, SEL_ONLY=sel_only, /LOUD
         dp_call_relresp_calc, sel_caltreat, sel_samtreat, sel_calip, VERBOSE=verbose

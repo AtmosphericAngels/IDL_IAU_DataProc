@@ -265,7 +265,7 @@ FUNCTION dp_create_plotobj2_multi, ytitle1=ytitle1, ytitle2=ytitle2, ytitle3=yti
   dimensions=[(0.35*screensize[0]),0.6*screensize[1]]
   ticklen = 0.01
 
-  date = label_date(DATE_FORMAT='%H:%I')
+  date = label_date(DATE_FORMAT = '%H:%I')
   xtickformat = 'LABEL_DATE'
 
   tickfont_size = 14

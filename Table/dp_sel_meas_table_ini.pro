@@ -60,7 +60,7 @@ PRO dp_sel_meas_table_ini, sel_exp, sel_subst
                 2.0 $;     USE_FLAG
                 ]
 
-  tbl_base = WIDGET_BASE(TITLE=((dp_chrom[sel_exp]).subst[sel_subst].name)[0]+' : select measurements...')
+  tbl_base = WIDGET_BASE(TITLE = ((dp_chrom[sel_exp]).subst[sel_subst].name)[0]+' : select measurements...')
 
   tbl_id=WIDGET_TABLE(tbl_base, VALUE=tblval, COLUMN_LABELS=TAG_NAMES(ref_seltable), SCR_XSIZE=18, SCR_YSIZE=26, $
                       XSIZE=N_ELEMENTS(column_width), COLUMN_WIDTH=column_width, units=2, /ROW_MAJOR, /SCROLL, $

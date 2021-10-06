@@ -3,7 +3,7 @@
 ;
 ; AUTHOR: F. Obersteiner, Sep-2016. Modified Aug-2017 to use WIDGET_CONTROL -> bad_id
 ;
-; PURPOSE: closes widget(s) if identifier returns bad_id = 0 (=not bad)
+; PURPOSE: closes widget(s) if identifier returns bad_id = 0 ( = not bad)
 ;-
 ;------------------------------------------------------------------------------------------------------------------------
 PRO dp_destroy_wids, ALL=all, ID=id

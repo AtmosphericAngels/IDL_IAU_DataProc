@@ -26,7 +26,7 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
   COMMON DP_DATA
 
   IF NOT KEYWORD_SET(verbose) THEN verbose = 0
-  IF NOT KEYWORD_SET(id_vector) THEN internal_id_flag = 1 ELSE internal_id_flag=0
+  IF NOT KEYWORD_SET(id_vector) THEN internal_id_flag = 1 ELSE internal_id_flag = 0
 
   FOR n=0, N_ELEMENTS(dp_chrom)-1 DO BEGIN ; BEGIN loop over all loaded experiments
     tmp_strct = (dp_expcfg)[n]
@@ -48,8 +48,8 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
     ix_init_sam = (WHERE(is_sam EQ 1))[0]
     ix_term_sam = (WHERE(is_sam EQ 1))[-1]
 
-    IF ix_init_cal GT ix_init_sam THEN miss_1st_cal = 1 ELSE miss_1st_cal=0 ; missing first cal?
-    IF ix_term_cal LT ix_term_sam THEN miss_last_cal = 2 ELSE miss_last_cal=0 ; missing last cal?
+    IF ix_init_cal GT ix_init_sam THEN miss_1st_cal = 1 ELSE miss_1st_cal = 0 ; missing first cal?
+    IF ix_term_cal LT ix_term_sam THEN miss_last_cal = 2 ELSE miss_last_cal = 0 ; missing last cal?
 
     n_cbl = N_ELEMENTS(is_cal[WHERE((is_cal[1:-1]-is_cal[0:-2]) GT 0)])
     n_sbl = N_ELEMENTS(is_sam[WHERE((is_sam[1:-1]-is_sam[0:-2]) GT 0)])
@@ -95,7 +95,7 @@ PRO dp_analyse_seq, ID_VECTOR=id_vector, QUIET=quiet, VERBOSE=verbose
     ENDFOR
 
 
-    IF MAX(ix_sbl_end-ix_sbl_start+1)-5 GT -1 THEN ix_max = -1 ELSE ix_max=MAX(ix_sbl_end-ix_sbl_start+1)-6
+    IF MAX(ix_sbl_end-ix_sbl_start+1)-5 GT -1 THEN ix_max = -1 ELSE ix_max = MAX(ix_sbl_end-ix_sbl_start+1)-6
     sam_treat = sam_treat_mthd[0:ix_max]; sam_treat_mthd is common variable, see def_common
 
     tmp_strct.sequence.ID = id_vector ; write information to dp_expcfg structure

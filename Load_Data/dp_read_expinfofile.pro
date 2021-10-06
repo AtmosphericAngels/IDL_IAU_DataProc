@@ -76,7 +76,7 @@ FUNCTION dp_read_expinfofile, file, exp_no, SEP=sep, DEF_OFFSET=def_offset, NAME
     col_ix = LONARR(N_ELEMENTS(search_tags))-1 ; get indices of respective columns...
     FOR i=0, N_ELEMENTS(search_tags)-1 DO BEGIN
       ix_vd=WHERE(STRMATCH(import_tags, search_tags[i], /FOLD_CASE) EQ 1)
-      IF ix_vd[0] EQ -1 THEN col_ix[i] = -1 ELSE col_ix[i]=ix_vd[0]
+      IF ix_vd[0] EQ -1 THEN col_ix[i] = -1 ELSE col_ix[i] = ix_vd[0]
     ENDFOR
 
     w_ess=[3, 5, 10, 12, 13, 16] ; fname, sample_name, sample_id, p0, p1, mfc_vol

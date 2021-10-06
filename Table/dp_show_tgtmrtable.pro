@@ -46,7 +46,7 @@ PRO dp_show_tgtmrtable, sel_exp
 
     column_width=[150,100,100,100,100,150,150]
 
-    mainbase = WIDGET_BASE(title='Tgt MR Table')
+    mainbase = WIDGET_BASE(title = 'Tgt MR Table')
     ID=WIDGET_TABLE(mainbase, VALUE=value, COLUMN_WIDTH=column_width, ALIGNMENT=0, $
                     COLUMN_LABELS=column_labels, ROW_LABELS=row_labels)
 
