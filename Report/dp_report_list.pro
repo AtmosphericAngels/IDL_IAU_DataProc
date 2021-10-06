@@ -52,7 +52,7 @@ PRO dp_report_list, sel_exp, PATH=path, VERBOSE=verbose
     ENDFOR
 
 
-    exp_ts=jultime2timestring(((dp_chrom[sel_exp]).subst.rres.dp_timestamp)[0])
+    exp_ts = jultime2timestring(((dp_chrom[sel_exp]).subst.rres.dp_timestamp)[0])
 
     id_cal = (WHERE(STRUPCASE(sid_name) EQ 'CALIBRATION'))[0] +1 ; configure IDs
     cal=((dp_expcfg[sel_exp]).expinfo.s_name)[(WHERE((dp_expcfg[sel_exp]).expinfo.s_id EQ id_cal))[0]]
@@ -65,7 +65,7 @@ PRO dp_report_list, sel_exp, PATH=path, VERBOSE=verbose
     nofsamples = n_elements(samples)
 
 
-    m_date=jultime2timestring(((dp_chrom[sel_exp]).jdate)[0], /ONLYDATE)
+    m_date = jultime2timestring(((dp_chrom[sel_exp]).jdate)[0], /ONLYDATE)
 
     IF verbose THEN  print, (dp_expcfg[sel_exp]).cal_mrs.canister
 
