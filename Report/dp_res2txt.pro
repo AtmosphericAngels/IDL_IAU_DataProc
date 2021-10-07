@@ -20,11 +20,11 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
   COMMON DP_DATA
 
-  fname=''
-  fpath=''
-  prefix='nd_'
-  suffix='_iaudp'
-  sep=STRING(9B)
+  fname = ''
+  fpath = ''
+  prefix = 'nd_'
+  suffix = '_iaudp'
+  sep = STRING(9B)
   sel_eval_mode = ((dp_chrom[sel_exp]).subst[sel_subst].rres.rsp_select)[0]
 
   block_mode = ''
@@ -55,11 +55,11 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
   id_sam = (WHERE(STRUPCASE(sid_name) EQ 'AIR'))[0] +1
   id_tgt = (WHERE(STRUPCASE(sid_name) EQ 'TARGET'))[0] +1
 
-  cal=((dp_expcfg[sel_exp]).expinfo.s_name)[(WHERE((dp_expcfg[sel_exp]).expinfo.s_id EQ id_cal))[0]]
+  cal = ((dp_expcfg[sel_exp]).expinfo.s_name)[(WHERE((dp_expcfg[sel_exp]).expinfo.s_id EQ id_cal))[0]]
 
-  IF ((dp_expcfg[sel_exp]).cal_mrs.canister) EQ '' THEN call_mr_calc=0 ELSE call_mr_calc=1
+  IF ((dp_expcfg[sel_exp]).cal_mrs.canister) EQ '' THEN call_mr_calc = 0 ELSE call_mr_calc = 1
 
-  nvd=1
+  nvd = 1
   IF brief THEN sel_chroms = $
     WHERE(((dp_expcfg[sel_exp]).expinfo.s_id) EQ id_sam OR ((dp_expcfg[sel_exp]).expinfo.s_id) EQ id_tgt, nvd) $
       ELSE sel_chroms = LINDGEN(n_chrom)
@@ -91,16 +91,16 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         IF verbose THEN print, 'exporting results for: ', name
 
         fname=fpath+STRTRIM(prefix+name+(['_a', '_h'])[eval_mode]+block_mode+suffix+'.txt')
-        exp_ts=jultime2timestring(((dp_chrom[sel_exp]).subst[sel_name].rres.dp_timestamp)[0])
+        exp_ts = jultime2timestring(((dp_chrom[sel_exp]).subst[sel_name].rres.dp_timestamp)[0])
 
         IF instr NE 'GhOST_ECD' THEN $
           mass=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].mass[(dp_chrom[sel_exp]).subst[sel_name].quant])[0], $
                            FORMAT='(D25.3)'), /REMOVE_ALL) ELSE mass='NaN'
 
         IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt NE !NULL THEN BEGIN
-          cal_mr=!VALUES.D_NAN
+          cal_mr = !VALUES.D_NAN
           cal_scale= 'NA'
-          w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).cal_mrs.substance) EQ STRUPCASE(name))
+          w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).cal_mrs.substance) EQ STRUPCASE(name))
           IF w[0] NE -1 THEN BEGIN
             cal_mr = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w[0]], FORMAT='(D25.6)'), /REMOVE_ALL)
             IF (*((dp_expcfg[sel_exp]).cal_mrs.unit)) NE !NULL THEN $
@@ -113,7 +113,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
           unit = 'NA'
           cal_scale = 'NA'
         ENDELSE
-        
+
         cal_prc = 'NaN'
         IF *(dp_expcfg[sel_exp]).instr_prc.mp_rel NE !NULL THEN BEGIN
           w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
@@ -133,14 +133,14 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
                                  FORMAT='(D25.6)'), /REMOVE_ALL)
               cal_block_rsd = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.cal_block_rsd)
               w_finite = WHERE(FINITE(cal_block_rsd) EQ 1, n_finite)
-              IF n_finite EQ 0 THEN cal_block_rsd='NaN' $
+              IF n_finite EQ 0 THEN cal_block_rsd = 'NaN' $
                 ELSE cal_block_rsd = STRCOMPRESS(STRING(mean($
                                      ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.cal_block_rsd), $
                                      /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
 
               sam_blocks_rsd = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rsd)
               w_finite = WHERE(FINITE(sam_blocks_rsd) EQ 1, n_finite)
-              IF n_finite EQ 0 THEN sam_blocks_rsd='NaN' $
+              IF n_finite EQ 0 THEN sam_blocks_rsd = 'NaN' $
                 ELSE sam_blocks_rsd = STRCOMPRESS(STRING(mean($
                                      ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rsd), $
                                      /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
@@ -155,14 +155,14 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
                                  FORMAT='(D25.6)'), /REMOVE_ALL)
               cal_block_rsd = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.cal_block_rsd)
               w_finite = WHERE(FINITE(cal_block_rsd) EQ 1, n_finite)
-              IF n_finite EQ 0 THEN cal_block_rsd='NaN' $
+              IF n_finite EQ 0 THEN cal_block_rsd = 'NaN' $
                 ELSE cal_block_rsd = STRCOMPRESS(STRING(mean($
                                      ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.cal_block_rsd), $
                                      /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
 
               sam_blocks_rsd = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rsd)
               w_finite = WHERE(FINITE(sam_blocks_rsd) EQ 1, n_finite)
-              IF n_finite EQ 0 THEN sam_blocks_rsd='NaN' $
+              IF n_finite EQ 0 THEN sam_blocks_rsd = 'NaN' $
                 ELSE sam_blocks_rsd = STRCOMPRESS(STRING(mean($
                                      ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rsd), $
                                      /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
@@ -171,14 +171,14 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
 
 
-        subst_name=(substlist[sel_exp])[sel_name]
-        IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg, EVAL_MODE=eval_mode) $
+        subst_name = (substlist[sel_exp])[sel_name]
+        IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_name, sel_exp, dp_chrom, dp_expcfg) $
           ELSE prelim_MRs = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
 
         OPENW, lun, fname, /GET_LUN
 
           PRINTF, lun, '*** IAU_DP_v'+dp_vers+' REPORT ***', FORMAT='(A)'
-          
+
           ; FO 2020-03-03 add chrom date:
           PRINTF, lun, 'Experiment/Date:', sep, FILE_BASENAME((dp_chrom[sel_exp])[0].exp_fname[0]), sep, $
                        jultime2timestring(mean(dp_chrom[sel_exp].jdate)), FORMAT='(A,A,A,A,A)'
@@ -207,30 +207,30 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
           FOR i=0, N_ELEMENTS(sel_chroms)-1 DO BEGIN
 
-              Chromatogram=FILE_BASENAME(((dp_chrom[sel_exp]).fname)[sel_chroms[i]])
+              Chromatogram = FILE_BASENAME(((dp_chrom[sel_exp]).fname)[sel_chroms[i]])
               Date=jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /ONLYDATE)
               Time=jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /HMSONLY)
-              Sample_Name=((dp_expcfg[sel_exp]).expinfo.s_name)[sel_chroms[i]]
+              Sample_Name = ((dp_expcfg[sel_exp]).expinfo.s_name)[sel_chroms[i]]
 
               CASE eval_mode OF
                 0: $
                   BEGIN
                     rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                    IF rR EQ '-NaN' THEN rR='NaN'
+                    IF rR EQ '-NaN' THEN rR = 'NaN'
                     Block_rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                    IF Block_rR EQ '-NaN' THEN Block_rR='NaN'
+                    IF Block_rR EQ '-NaN' THEN Block_rR = 'NaN'
                     Block_RSD=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                    IF Block_RSD EQ '-NaN' THEN Block_RSD='NaN'
+                    IF Block_RSD EQ '-NaN' THEN Block_RSD = 'NaN'
                     prc_flag=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
                   END
                 1: $
                   BEGIN
                     rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                    IF rR EQ '-NaN' THEN rR='NaN'
+                    IF rR EQ '-NaN' THEN rR = 'NaN'
                     Block_rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                    IF Block_rR EQ '-NaN' THEN Block_rR='NaN'
+                    IF Block_rR EQ '-NaN' THEN Block_rR = 'NaN'
                     Block_RSD=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                    IF Block_RSD EQ '-NaN' THEN Block_RSD='NaN'
+                    IF Block_RSD EQ '-NaN' THEN Block_RSD = 'NaN'
                     prc_flag=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
                   END
               ENDCASE
@@ -250,7 +250,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
 ;--------------------------------------------------*** single substance to individual txt file
   ENDIF ELSE BEGIN
-    sel_name=sel_subst
+    sel_name = sel_subst
 
       eval_mode = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_select)[0]
       mode_string = (['signal_area', 'signal_height'])[eval_mode]
@@ -261,17 +261,17 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
       name=STRCOMPRESS((dp_chrom[sel_exp])[ix].subst[sel_name].name, /REMOVE_ALL)
       IF verbose THEN print, 'exporting results for: ', name
 
-      exp_ts=jultime2timestring(((dp_chrom[sel_exp]).subst[sel_name].rres.dp_timestamp)[0])
+      exp_ts = jultime2timestring(((dp_chrom[sel_exp]).subst[sel_name].rres.dp_timestamp)[0])
 
       IF instr NE 'GhOST_ECD' THEN $
         mass=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].mass[(dp_chrom[sel_exp]).subst[sel_name].quant])[0], $
                                 FORMAT='(D25.3)'), /REMOVE_ALL) ELSE mass='NaN'
 
       IF *(dp_expcfg[sel_exp]).cal_mrs.mr_ppt NE !NULL THEN BEGIN
-        cal_mr=!VALUES.D_NAN
+        cal_mr = !VALUES.D_NAN
         unit = 'NA'
         cal_scale= 'NA'
-        w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).cal_mrs.substance) EQ STRUPCASE(name))
+        w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).cal_mrs.substance) EQ STRUPCASE(name))
         IF w[0] NE -1 THEN BEGIN
           cal_mr = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).cal_mrs.mr_ppt)[w[0]], FORMAT='(D25.6)'), /REMOVE_ALL)
           IF (*((dp_expcfg[sel_exp]).cal_mrs.unit)) NE !NULL THEN $
@@ -284,7 +284,7 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
         unit = 'NA'
         cal_scale = 'NA'
       ENDELSE
-      
+
       cal_prc = 'NaN'
       IF *(dp_expcfg[sel_exp]).instr_prc.mp_rel NE !NULL THEN BEGIN
         w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
@@ -304,14 +304,14 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
                            FORMAT='(D25.6)'), /REMOVE_ALL)
             cal_block_rsd = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.cal_block_rsd)
             w_finite = WHERE(FINITE(cal_block_rsd) EQ 1, n_finite)
-            IF n_finite EQ 0 THEN cal_block_rsd='NaN' $
+            IF n_finite EQ 0 THEN cal_block_rsd = 'NaN' $
               ELSE cal_block_rsd = STRCOMPRESS(STRING(mean($
                                    ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.cal_block_rsd), $
                                    /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
 
             sam_blocks_rsd = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rsd)
             w_finite = WHERE(FINITE(sam_blocks_rsd) EQ 1, n_finite)
-            IF n_finite EQ 0 THEN sam_blocks_rsd='NaN' $
+            IF n_finite EQ 0 THEN sam_blocks_rsd = 'NaN' $
               ELSE sam_blocks_rsd = STRCOMPRESS(STRING(mean($
                                    ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rsd), $
                                    /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
@@ -327,14 +327,14 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
                            FORMAT='(D25.6)'), /REMOVE_ALL)
             cal_block_rsd = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.cal_block_rsd)
             w_finite = WHERE(FINITE(cal_block_rsd) EQ 1, n_finite)
-            IF n_finite EQ 0 THEN cal_block_rsd='NaN' $
+            IF n_finite EQ 0 THEN cal_block_rsd = 'NaN' $
               ELSE cal_block_rsd = STRCOMPRESS(STRING(mean($
                                    ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.cal_block_rsd), $
                                    /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
 
             sam_blocks_rsd = ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rsd)
             w_finite = WHERE(FINITE(sam_blocks_rsd) EQ 1, n_finite)
-            IF n_finite EQ 0 THEN sam_blocks_rsd='NaN' $
+            IF n_finite EQ 0 THEN sam_blocks_rsd = 'NaN' $
               ELSE sam_blocks_rsd = STRCOMPRESS(STRING(mean($
                                    ((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rsd), $
                                    /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
@@ -342,9 +342,9 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
       ENDCASE
 
 
-      subst_name=(substlist[sel_exp])[sel_name]
-      IF call_mr_calc THEN prelim_MRs=dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg, EVAL_MODE=eval_mode) $
-        ELSE prelim_MRs=MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
+      subst_name = (substlist[sel_exp])[sel_name]
+      IF call_mr_calc THEN prelim_MRs = dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg) $
+        ELSE prelim_MRs = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
 
 
       OPENW, lun, fname, /GET_LUN
@@ -377,35 +377,35 @@ PRO dp_res2txt, sel_exp, sel_subst, PATH=path, DEF_PATH=def_path, ALL=all, BRIEF
 
         FOR i=0, N_ELEMENTS(sel_chroms)-1 DO BEGIN
 
-            Chromatogram=FILE_BASENAME(((dp_chrom[sel_exp]).fname)[sel_chroms[i]])
-            Date=jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /ONLYDATE)
-            Time=jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /HMSONLY)
-            Sample_Name=((dp_expcfg[sel_exp]).expinfo.s_name)[sel_chroms[i]]
+            Chromatogram = FILE_BASENAME(((dp_chrom[sel_exp]).fname)[sel_chroms[i]])
+            Date = jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /ONLYDATE)
+            Time = jultime2timestring(((dp_chrom[sel_exp]).jdate)[sel_chroms[i]], /HMSONLY)
+            Sample_Name = ((dp_expcfg[sel_exp]).expinfo.s_name)[sel_chroms[i]]
 
             CASE eval_mode OF
               0: $
                 BEGIN
-                  rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                  IF rR EQ '-NaN' THEN rR='NaN'
-                  Block_rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                  IF Block_rR EQ '-NaN' THEN Block_rR='NaN'
-                  Block_RSD=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                  IF Block_RSD EQ '-NaN' THEN Block_RSD='NaN'
-                  prc_flag=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
+                  rR = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  IF rR EQ '-NaN' THEN rR = 'NaN'
+                  Block_rR = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  IF Block_rR EQ '-NaN' THEN Block_rR = 'NaN'
+                  Block_RSD = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  IF Block_RSD EQ '-NaN' THEN Block_RSD = 'NaN'
+                  prc_flag = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_area.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
                 END
               1: $
                 BEGIN
-                  rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                  IF rR EQ '-NaN' THEN rR='NaN'
-                  Block_rR=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                  IF Block_rR EQ '-NaN' THEN Block_rR='NaN'
-                  Block_RSD=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
-                  IF Block_RSD EQ '-NaN' THEN Block_RSD='NaN'
-                  prc_flag=STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
+                  rR = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.sam_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  IF rR EQ '-NaN' THEN rR = 'NaN'
+                  Block_rR = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rrsp)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  IF Block_rR EQ '-NaN' THEN Block_rR = 'NaN'
+                  Block_RSD = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.block_rsd)[sel_chroms[i]], FORMAT='(D25.6)'), /REMOVE_ALL)
+                  IF Block_RSD EQ '-NaN' THEN Block_RSD = 'NaN'
+                  prc_flag = STRCOMPRESS(STRING(((dp_chrom[sel_exp]).subst[sel_name].rres.rsp_height.prc_flag)[sel_chroms[i]]), /REMOVE_ALL)
                 END
             ENDCASE
 
-            prelim_MR=STRCOMPRESS(STRING(prelim_MRs[sel_chroms[i]]), /REMOVE_ALL)
+            prelim_MR = STRCOMPRESS(STRING(prelim_MRs[sel_chroms[i]]), /REMOVE_ALL)
 
             PRINTF, lun, Chromatogram, sep, Date, sep, Time, sep, Sample_Name, sep, rR, sep, $
                          Block_rR, sep, Block_RSD, sep, prc_flag, sep, prelim_MR, FORMAT='(A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)'

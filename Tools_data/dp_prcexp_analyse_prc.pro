@@ -30,7 +30,7 @@ FUNCTION dp_prcexp_analyse_prc, sel_exp, min_blsz, max_blsz, cal_blsz, $
   COMMON DP_DATA
   COMMON DP_WIDID
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
 
   strct = !NULL
   mpexp_cfg = dp_prcexp_analyse_seq(sel_exp, dp_expcfg, sid_name, VERBOSE=verbose)

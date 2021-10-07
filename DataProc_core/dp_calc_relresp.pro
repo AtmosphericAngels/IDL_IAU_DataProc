@@ -40,7 +40,7 @@ FUNCTION dp_calc_relresp, xdata, ydata, vd_sam, cal_interpol, sel_samtreat, sequ
       BREAK
     ENDIF
   ENDFOR
-  
+
   ; discard samples not bracketed by cals for PRC analyser
   ix_cal = sequence.ix_cal[WHERE(sequence.ix_cal NE -1)]
   ix_init = ix_init[WHERE(ix_init GT ix_cal[0] AND ix_init LT ix_cal[-1])]
@@ -62,14 +62,14 @@ FUNCTION dp_calc_relresp, xdata, ydata, vd_sam, cal_interpol, sel_samtreat, sequ
 
     'block_last_1':$
       BEGIN
-        blockmean_rR[ix_end]=samples_rR[ix_end]
+        blockmean_rR[ix_end] = samples_rR[ix_end]
       END
 
     'block_last_2':$
       BEGIN
         FOR i=0, n_blocks-1 DO BEGIN
-          s_ix=ix_end[i]-1 ; block of 2: start
-          e_ix=ix_end[i]   ; block of 2: end
+          s_ix = ix_end[i]-1 ; block of 2: start
+          e_ix = ix_end[i]   ; block of 2: end
           blockmean_rR[e_ix] = $
             mean(samples_rR[s_ix:e_ix], /DOUBLE, /NAN)
           block_RSD[e_ix] = $
@@ -80,8 +80,8 @@ FUNCTION dp_calc_relresp, xdata, ydata, vd_sam, cal_interpol, sel_samtreat, sequ
     'block_last_3':$
       BEGIN
         FOR i=0, n_blocks-1 DO BEGIN
-          s_ix=ix_end[i]-2 ; block of 3: start
-          e_ix=ix_end[i]   ; block of 3: end
+          s_ix = ix_end[i]-2 ; block of 3: start
+          e_ix = ix_end[i]   ; block of 3: end
           blockmean_rR[e_ix] = $
             mean(samples_rR[s_ix:e_ix], /DOUBLE, /NAN)
           block_RSD[e_ix] = $
@@ -92,8 +92,8 @@ FUNCTION dp_calc_relresp, xdata, ydata, vd_sam, cal_interpol, sel_samtreat, sequ
     'block_last_4':$
       BEGIN
         FOR i=0, n_blocks-1 DO BEGIN
-          s_ix=ix_end[i]-4 ; block of 4: start
-          e_ix=ix_end[i]   ; block of 4: end
+          s_ix = ix_end[i]-4 ; block of 4: start
+          e_ix = ix_end[i]   ; block of 4: end
           blockmean_rR[e_ix] = $
             mean(samples_rR[s_ix:e_ix], /DOUBLE, /NAN)
           block_RSD[e_ix] = $
@@ -104,8 +104,8 @@ FUNCTION dp_calc_relresp, xdata, ydata, vd_sam, cal_interpol, sel_samtreat, sequ
     ELSE: $ ; default: block mean (also applies if 'individual' is selected)
       BEGIN
         FOR i=0, n_blocks-1 DO BEGIN
-          s_ix=ix_init[i] ; block start
-          e_ix=ix_end[i]  ; block end
+          s_ix = ix_init[i] ; block start
+          e_ix = ix_end[i]  ; block end
           blockmean_rR[e_ix] = $
             mean(samples_rR[s_ix:e_ix], /DOUBLE, /NAN)
           block_RSD[e_ix] = $
@@ -115,7 +115,7 @@ FUNCTION dp_calc_relresp, xdata, ydata, vd_sam, cal_interpol, sel_samtreat, sequ
   ENDCASE
 
 
-  strct={ $
+  strct = { $
           sam_rrsp: samples_rR, $
           block_rrsp: blockmean_rR, $
           block_rsd: block_RSD $

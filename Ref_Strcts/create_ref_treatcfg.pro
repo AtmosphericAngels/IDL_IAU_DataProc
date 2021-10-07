@@ -1,6 +1,6 @@
 FUNCTION create_ref_treatcfg
 
-  ref_treatcfg={ $
+  ref_treatcfg = { $
                 substance:  PTR_NEW(/ALLOCATE_HEAP), $
                 cal_treat:     PTR_NEW(/ALLOCATE_HEAP), $
                 sam_treat:    PTR_NEW(/ALLOCATE_HEAP), $

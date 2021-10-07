@@ -4,8 +4,8 @@
 ;
 ; 2017 04 - added keyword FORCE_MONO_INC to enforce a monotonically increasing, equidistant timestamp
 ;           based on the median of all found timestamps.
-;           
-; 2020 06 - revised and simplified.          
+;
+; 2020 06 - revised and simplified.
 ;
 FUNCTION dp_correct_time, dp_chrom, FORCE_MONO_INC=force_mono_inc, VERBOSE=verbose, LOUD=loud
 
@@ -27,7 +27,7 @@ FUNCTION dp_correct_time, dp_chrom, FORCE_MONO_INC=force_mono_inc, VERBOSE=verbo
             w = WHERE(exp_jdate[1:-1]-exp_jdate[0:-2] LT 0., n_jumps)
 
             ; if a jump was found, trigger re-calculation of the timestamps
-            IF n_jumps GT 0 THEN force_mono_inc = 1 
+            IF n_jumps GT 0 THEN force_mono_inc = 1
 
             IF force_mono_inc THEN BEGIN
                 IF loud THEN $

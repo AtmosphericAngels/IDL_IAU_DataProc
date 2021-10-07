@@ -11,23 +11,23 @@ PRO dp_show_tgtmrtable, sel_exp
 
   IF PTR_VALID((dp_expcfg[sel_exp]).tgt_mrs.tgt_name) THEN BEGIN
     IF *((dp_expcfg[sel_exp]).tgt_mrs.tgt_name) NE !NULL THEN BEGIN
-      TGT_NAME=*((dp_expcfg[sel_exp]).tgt_mrs.tgt_name)
-      SUBSTANCE=*((dp_expcfg[sel_exp]).tgt_mrs.SUBSTANCE)
-      MR=*((dp_expcfg[sel_exp]).tgt_mrs.MR_PPT)
-      UNC_abs=*((dp_expcfg[sel_exp]).tgt_mrs.UNC_PPT)
-      UNC_REL=*((dp_expcfg[sel_exp]).tgt_mrs.UNC_REL)
-      SCALE=*((dp_expcfg[sel_exp]).tgt_mrs.SCALE)
-      COMMENT=*((dp_expcfg[sel_exp]).tgt_mrs.COMMENT)
+      TGT_NAME = *((dp_expcfg[sel_exp]).tgt_mrs.tgt_name)
+      SUBSTANCE = *((dp_expcfg[sel_exp]).tgt_mrs.SUBSTANCE)
+      MR = *((dp_expcfg[sel_exp]).tgt_mrs.MR_PPT)
+      UNC_abs = *((dp_expcfg[sel_exp]).tgt_mrs.UNC_PPT)
+      UNC_REL = *((dp_expcfg[sel_exp]).tgt_mrs.UNC_REL)
+      SCALE = *((dp_expcfg[sel_exp]).tgt_mrs.SCALE)
+      COMMENT = *((dp_expcfg[sel_exp]).tgt_mrs.COMMENT)
       IF (*((dp_expcfg[sel_exp]).tgt_mrs.UNIT)) NE !NULL THEN $
         UNIT=*((dp_expcfg[sel_exp]).tgt_mrs.UNIT) $
       ELSE UNIT=STRARR(N_ELEMENTS(COMMENT))
     ENDIF ELSE BEGIN
-      msg=DIALOG_MESSAGE('No Tgt MR data found.')
+      msg = DIALOG_MESSAGE('No Tgt MR data found.')
       RETURN
     ENDELSE
 
     column_labels=['Substance','MR','UNC_abs','UNC_rel','Unit','Scale','Comment']
-    row_labels=TGT_NAME
+    row_labels = TGT_NAME
 
     nl_hdr  = 0
     width   = 7
@@ -46,7 +46,7 @@ PRO dp_show_tgtmrtable, sel_exp
 
     column_width=[150,100,100,100,100,150,150]
 
-    mainbase=WIDGET_BASE(title='Tgt MR Table')
+    mainbase = WIDGET_BASE(title = 'Tgt MR Table')
     ID=WIDGET_TABLE(mainbase, VALUE=value, COLUMN_WIDTH=column_width, ALIGNMENT=0, $
                     COLUMN_LABELS=column_labels, ROW_LABELS=row_labels)
 

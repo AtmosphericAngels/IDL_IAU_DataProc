@@ -64,12 +64,12 @@ PRO dp_wid_main_handle, event
     ;******************************************************************************************
     'load_expinfo' : $
       BEGIN
-        del_results=0
+        del_results = 0
         IF SIZE(dp_expcfg, /TYPE) EQ 11 THEN BEGIN ; dp_expcfg is already a LIST, i.e. data was loaded before
           quest=DIALOG_MESSAGE('Loaded ExpInfo found. Replace? Previous Results will be deleted...', $
                                 /QUESTION, /DEFAULT_NO, DIALOG_PARENT=dp_widid.dp_mainwid)
           IF quest EQ 'Yes' THEN BEGIN
-            del_results=1
+            del_results = 1
             dp_destroy_wids, ID=dp_widid.dp_dataproc
           ENDIF ELSE RETURN
         ENDIF
@@ -165,7 +165,7 @@ PRO dp_wid_main_handle, event
                spec_val=['Samples'];, 'Intercalibration', 'Non-Linearity Exp.', 'Precision Exp.']
              END
           1: BEGIN
-               spec_val='Samples'
+               spec_val = 'Samples'
              END
           ELSE:
         ENDCASE
@@ -177,7 +177,7 @@ PRO dp_wid_main_handle, event
     'expspec_dl' : $
       BEGIN
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
-          msg=DIALOG_MESSAGE('Selection prohibited; please load only one experiment.')
+          msg = DIALOG_MESSAGE('Selection prohibited; please load only one experiment.')
           ID_espec=WIDGET_INFO(event.top, find_by_uname='expspec_dl')
           WIDGET_CONTROL, ID_espec, SET_DROPLIST_SELECT=0
         ENDIF
@@ -254,12 +254,15 @@ END
 
 PRO dp_wid_main_ini
 
-COMMON DP_DATA
-COMMON DP_WIDID
+  COMMON DP_DATA
+  COMMON DP_WIDID
+
+  title = 'IAU_DataProc_v' + dp_vers
+  cred = '(c) 2021 Univ. Frankfurt / IAU / Group A. Engel'
 
 ;++++++++++++ WIDGET BASE
-  mainbase=WIDGET_BASE(title='IAU_DP_v'+dp_vers, mbar=dp_mainmen, column=1,$
-                       XOFFSET= + 5, YOFFSET= + 5) ;rects[0, sel_mon] rects[1, sel_mon]
+  mainbase=WIDGET_BASE(TITLE=title, MBAR=dp_mainmen, COLUMN=1,$
+                       XOFFSET= + 5, YOFFSET= + 5)
 
 ;++++++++++++ MENUS
   fileID=WIDGET_BUTTON(dp_mainmen, VALUE='File', /MENU)
@@ -313,7 +316,7 @@ COMMON DP_WIDID
 ;++++++++++++ (c)
     dp_credits = WIDGET_BASE(dp_subbase1, uname='dp_credits', column=1)
       SEP = WIDGET_LABEL(dp_credits, VALUE='--', /ALIGN_LEFT)
-      TXT = WIDGET_LABEL(dp_credits, VALUE='(c) 2020 Univ. Frankfurt / IAU / Group A. Engel', /ALIGN_LEFT)
+      TXT = WIDGET_LABEL(dp_credits, VALUE=cred, /ALIGN_LEFT)
 
 ;++++++++++++ REALIZE!
   dp_widid.dp_mainwid = mainbase

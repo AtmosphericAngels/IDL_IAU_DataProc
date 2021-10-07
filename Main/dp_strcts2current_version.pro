@@ -41,10 +41,10 @@ FUNCTION dp_gen_empty_rres, old_dp_chrom_strct, vcheck, current_version
   n_subst = N_ELEMENTS(old_dp_chrom_strct[0].subst)
 
   ; the sub-structure thats actually redefined empty...
-  ref_rres=create_ref_rres()
-  new_subst=!NULL
+  ref_rres = create_ref_rres()
+  new_subst = !NULL
 
-  tmp1=[]
+  tmp1 = []
 
   IF vcheck EQ -1 THEN BEGIN
     FOR i=0, n_chroms-1 DO BEGIN
@@ -57,7 +57,7 @@ FUNCTION dp_gen_empty_rres, old_dp_chrom_strct, vcheck, current_version
 
   FOR i=0, n_chroms-1 DO BEGIN ; for each chromatogram...
 
-    new_subst=[]
+    new_subst = []
 
     FOR j=0, n_subst-1 DO BEGIN ; for each species...
       tmp2=STRCT_Redefine_Tag(tmp1[i].subst[j], Tag_Name="rres", Tag_Def=ref_rres)

@@ -8,7 +8,7 @@
 ;------------------------------------------------------------------------------------------------------------------------
 PRO dp_read_cocorrparms, sel_exp, SEL_ONLY=sel_only, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
 
   COMMON dp_data
 
@@ -54,22 +54,22 @@ PRO dp_read_cocorrparms, sel_exp, SEL_ONLY=sel_only, PATH=path, DEF_FILE=def_fil
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
 
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
-    tmp_expcfg=(dp_expcfg[exps[i]])
+    tmp_expcfg = (dp_expcfg[exps[i]])
     *tmp_expcfg.carryover.substance = substance
     tmp_expcfg.carryover.comment = header[0:-2]
     *tmp_expcfg.carryover.cal_to_sam = cal_to_sam
     *tmp_expcfg.carryover.sam_to_sam = sam_to_sam
     *tmp_expcfg.carryover.sam_to_cal = sam_to_cal
-    (dp_expcfg[exps[i]])=TEMPORARY(tmp_expcfg)
+    (dp_expcfg[exps[i]]) = TEMPORARY(tmp_expcfg)
 
-    tmp_chrom=(dp_chrom[exps[i]])
+    tmp_chrom = (dp_chrom[exps[i]])
     ; check for which species carry over correction is defined
       exp_subst = tmp_chrom[0].subst.name[0]
       def_subst = substance
       match_ix = arr1D_get_matchIX(exp_subst, def_subst)
       IF match_ix[0] NE -1 THEN $
         tmp_chrom.subst[match_ix].rres.active_corr[0] = !TRUE
-    (dp_chrom[exps[i]])=TEMPORARY(tmp_chrom)
+    (dp_chrom[exps[i]]) = TEMPORARY(tmp_chrom)
   ENDFOR
 
 END

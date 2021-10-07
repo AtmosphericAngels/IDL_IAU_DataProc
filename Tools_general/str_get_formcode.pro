@@ -4,8 +4,8 @@ FUNCTION str_get_formcode, typestr, n
   IF STRLEN(typestr) GT 6 THEN RETURN, !NULL
   IF SIZE(n, /TYPE) GT 3 THEN RETURN, !NULL
 
-  prefix='('
-  suffix=')'
+  prefix = '('
+  suffix = ')'
 
   str=typestr+','
 

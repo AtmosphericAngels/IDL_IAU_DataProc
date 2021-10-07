@@ -16,17 +16,18 @@ PRO IAU_DataProc
 
   COMMON dp_data
 
-  dp_def_common, '1.30' ; string == version
+  dp_def_common, '1.31' ; string == version
 
   path_wd = 'D:\'
+;  path_wd = 'D:\PROGRAMMING\IDL\dev_debugging\IAU_DataProc\'
 
-  error_handler_IO = 0
+  error_handler_IO = 1
 
   dp_wid_main_ini
 
-;  Outdir = 'D:\PROGRAMMING\debugging\iau_dataproc\rt'
-;  sfile = 'D:\PROGRAMMING\IDL_WD\IAU_DataProc_1X\IAU_DataProc_v130.sav'
-;  MAKE_RT, 'IAU_DataProc_v130', Outdir, SAVEFILE=sfile, /OVERWRITE
+;  Outdir = 'D:\PROGRAMMING\IDL\VM\_tmp'
+;  sfile = 'D:\PROGRAMMING\IDL\VM\_tmp\IAU_DataProc_v1X\IAU_DataProc.sav'
+;  MAKE_RT, 'IAU_DataProc', Outdir, SAVEFILE=sfile, /OVERWRITE
 
 END
 ;------------------------------------------------------------------------------------------------------------------------
@@ -331,7 +332,7 @@ END
 ;
 ; 2016-10-27 (v1.11)
 ; - code clean-up, added some comments.
-; - added dynamic determination of IDs (e.g. Cal=3) based on indices in common variable sid_name.
+; - added dynamic determination of IDs (e.g. Cal = 3) based on indices in common variable sid_name.
 ; - added suffix 'iaudp' if a reportfile is generated for selected experiment and substance.
 ; - added mean sample block rsd to report file header.
 ; - rearranged main widget.

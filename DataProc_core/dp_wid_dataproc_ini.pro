@@ -66,8 +66,8 @@ PRO dp_wid_dataproc_handle, event
       BEGIN
         WIDGET_CONTROL, ID_caltreat, GET_VALUE=dl_val
         IF dl_val[sel_caltreat] EQ '' THEN BEGIN
-          !NULL=DIALOG_MESSAGE('Please select a valid option.')
-          sel_caltreat=0
+          !NULL = DIALOG_MESSAGE('Please select a valid option.')
+          sel_caltreat = 0
           WIDGET_CONTROL, ID_caltreat, SET_DROPLIST_SELECT=sel_caltreat
         ENDIF
       END
@@ -76,8 +76,8 @@ PRO dp_wid_dataproc_handle, event
         BEGIN
         WIDGET_CONTROL, ID_samtreat, GET_VALUE=dl_val
         IF dl_val[sel_samtreat] EQ '' THEN BEGIN
-          !NULL=DIALOG_MESSAGE('Please select a valid option.')
-          sel_samtreat=0
+          !NULL = DIALOG_MESSAGE('Please select a valid option.')
+          sel_samtreat = 0
           WIDGET_CONTROL, ID_samtreat, SET_DROPLIST_SELECT=sel_caltreat
         ENDIF
       END
@@ -107,7 +107,7 @@ PRO dp_wid_dataproc_handle, event
     'calc_all' : $
       BEGIN
         quest=DIALOG_MESSAGE('Use loaded cal/sample treatment config if available?', /QUESTION)
-        IF quest EQ 'Yes' THEN current=0 ELSE current=1
+        IF quest EQ 'Yes' THEN current = 0 ELSE current = 1
         dp_call_relresp_calc, sel_caltreat, sel_samtreat, sel_calip, OVERWRITE=ovwr, $
                               CURRENT=current, EVAL_MODE=eval_mode, VERBOSE=verbose
         dp_wid_dataproc_upd, event
@@ -119,7 +119,7 @@ PRO dp_wid_dataproc_handle, event
       BEGIN
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Precision: Load for selected experiment only?', /QUESTION, /CANCEL)
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
           IF quest EQ 'Cancel' THEN RETURN
         ENDIF
         prc_strct=dp_read_instrprc(sel_exp, chromlist[sel_exp], substlist, $
@@ -132,7 +132,7 @@ PRO dp_wid_dataproc_handle, event
       BEGIN
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Cal MRs: Load for selected experiment only?', /QUESTION, /CANCEL)
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
           IF quest EQ 'Cancel' THEN RETURN
         ENDIF
         mrs_strct=dp_read_calmrs(PATH=path_wd, VERBOSE=verbose)
@@ -144,7 +144,7 @@ PRO dp_wid_dataproc_handle, event
       BEGIN
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Target MRs: Load for selected experiment only?', /QUESTION, /CANCEL)
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
           IF quest EQ 'Cancel' THEN RETURN
         ENDIF
         tgt_strct=dp_read_tgtmrs(PATH=path_wd, VERBOSE=verbose)
@@ -154,10 +154,10 @@ PRO dp_wid_dataproc_handle, event
     ;*****************************
     'load_treatcfg' : $
       BEGIN
-        sel_only=1
+        sel_only = 1
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Load for selected experiment only?', /QUESTION, /CANCEL)
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
           IF quest EQ 'Cancel' THEN RETURN
         ENDIF
         dp_read_treatcfg, sel_exp, SEL_ONLY=sel_only, VERBOSE=verbose
@@ -167,11 +167,11 @@ PRO dp_wid_dataproc_handle, event
     ;*****************************
     'load_co_corr' : $
       BEGIN
-        sel_only=1
+        sel_only = 1
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Load for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_read_cocorrparms, sel_exp, SEL_ONLY=sel_only, PATH=path_wd, $
                             DEF_FILE=def_file, VERBOSE=verbose
@@ -184,7 +184,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_instrprc, sel_exp, SEL_ONLY=sel_only, /LOUD
       END
@@ -194,7 +194,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_calmrs, sel_exp, SEL_ONLY=sel_only, /LOUD
       END
@@ -204,7 +204,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_tgtmrs, sel_exp, SEL_ONLY=sel_only, /LOUD
       END
@@ -214,7 +214,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_treatcfg, sel_exp, SEL_ONLY=sel_only, /LOUD
         dp_call_relresp_calc, 0, 0, 0, VERBOSE=verbose
@@ -226,7 +226,7 @@ PRO dp_wid_dataproc_handle, event
         IF N_ELEMENTS(dp_chrom) GT 1 THEN BEGIN
           quest=DIALOG_MESSAGE('Remove for selected experiment only?', /QUESTION, /CANCEL)
           IF quest EQ 'Cancel' THEN RETURN
-          IF quest EQ 'No' THEN sel_only=0 ELSE sel_only=1
+          IF quest EQ 'No' THEN sel_only = 0 ELSE sel_only = 1
         ENDIF
         dp_remv_cocorr, sel_exp, SEL_ONLY=sel_only, /LOUD
         dp_call_relresp_calc, sel_caltreat, sel_samtreat, sel_calip, VERBOSE=verbose
@@ -261,9 +261,9 @@ PRO dp_wid_dataproc_handle, event
     ;*****************************
     'show_svolselect' : $
       BEGIN
-        s_vol_select=((dp_expcfg[sel_exp]).expinfo.s_vol_select)[0]
+        s_vol_select = ((dp_expcfg[sel_exp]).expinfo.s_vol_select)[0]
         s_vol_origins=['Pressure Difference', 'Mass Flow Controller']
-        info='Sample volume determined by: '+s_vol_origins[s_vol_select]
+        info = 'Sample volume determined by: '+s_vol_origins[s_vol_select]
         !NULL=DIALOG_MESSAGE(info, /INFORMATION)
       END
     ;*****************************
@@ -364,20 +364,20 @@ PRO dp_wid_dataproc_ini
     EDL=WIDGET_DROPLIST(subbase3, VALUE=substlist[0], UNAME='subst_dl', /DYNAMIC_RESIZE, /ALIGN_LEFT)
     SEP=WIDGET_LABEL(subbase3, VALUE='   ')
 
-  edit_tab=WIDGET_TAB(dpbase)
+  edit_tab = WIDGET_TAB(dpbase)
     subbase1=WIDGET_BASE(edit_tab, col=3, TITLE='Selected Data: Edit...')
       TXT=WIDGET_LABEL(subbase1, VALUE='CAL Treat Mthd:       ', /ALIGN_LEFT)
-      caltreatvals=((dp_expcfg)[0]).sequence.cal_treat
+      caltreatvals = ((dp_expcfg)[0]).sequence.cal_treat
       ID_caltreat=WIDGET_DROPLIST(subbase1, VALUE=caltreatvals, UNAME='caltreat_dl', /DYNAMIC_RESIZE, /ALIGN_LEFT)
       SEP=WIDGET_LABEL(subbase1, VALUE='   ')
       TXT=WIDGET_LABEL(subbase1, VALUE='SAM Treat Mthd:       ', /ALIGN_LEFT)
-      samtreatvals=((dp_expcfg)[0]).sequence.sam_treat
+      samtreatvals = ((dp_expcfg)[0]).sequence.sam_treat
       ID_samtreat=WIDGET_DROPLIST(subbase1, VALUE=samtreatvals, UNAME='samtreat_dl', /DYNAMIC_RESIZE, /ALIGN_LEFT)
       ID_mw_etype=WIDGET_INFO(dp_widid.dp_mainwid, FIND_BY_UNAME='exptype_dl')
       IF WIDGET_INFO(ID_mw_etype, /DROPLIST_SELECT) EQ 1 THEN $ ; if continous, select individual sample treatment
         WIDGET_CONTROL, ID_samtreat, SET_DROPLIST_SELECT=(WHERE(sam_treat_mthd EQ 'individual'))[0]
       TXT=WIDGET_LABEL(subbase1, VALUE='CAL Interpol Mthd:    ', /ALIGN_LEFT)
-      interpolvals=cal_ip_mthd
+      interpolvals = cal_ip_mthd
       ID_calip=WIDGET_DROPLIST(subbase1, VALUE=interpolvals, UNAME='calip_dl', /DYNAMIC_RESIZE, /ALIGN_LEFT)
       SEP=WIDGET_LABEL(subbase1, VALUE='   ')
       SEP=WIDGET_LABEL(subbase1, VALUE='   ')
@@ -415,14 +415,14 @@ PRO dp_wid_dataproc_ini
   dp_widid.dp_dataproc = dpbase
   WIDGET_CONTROL, dpbase, /REALIZE
 
-  sel_exp=0       ; update droplist settings in case an experiment is restored
-  sel_subst=0     ; and settings are not default.
-  cal_ip=(dp_chrom[sel_exp]).subst[sel_subst].rres.cal_ip_mthd
-  caltreat=(dp_chrom[sel_exp]).subst[sel_subst].rres.cal_treat
-  samtreat=(dp_chrom[sel_exp]).subst[sel_subst].rres.sam_treat
-  new_sel_calip=(WHERE(cal_ip_mthd EQ cal_ip))[0]
-  new_sel_caltreat=(WHERE(cal_treat_mthd EQ caltreat))[0]
-  new_sel_samtreat=(WHERE(sam_treat_mthd EQ samtreat))[0]
+  sel_exp = 0       ; update droplist settings in case an experiment is restored
+  sel_subst = 0     ; and settings are not default.
+  cal_ip = (dp_chrom[sel_exp]).subst[sel_subst].rres.cal_ip_mthd
+  caltreat = (dp_chrom[sel_exp]).subst[sel_subst].rres.cal_treat
+  samtreat = (dp_chrom[sel_exp]).subst[sel_subst].rres.sam_treat
+  new_sel_calip = (WHERE(cal_ip_mthd EQ cal_ip))[0]
+  new_sel_caltreat = (WHERE(cal_treat_mthd EQ caltreat))[0]
+  new_sel_samtreat = (WHERE(sam_treat_mthd EQ samtreat))[0]
   WIDGET_CONTROL, ID_calip, SET_DROPLIST_SELECT=new_sel_calip
   WIDGET_CONTROL, ID_caltreat, SET_DROPLIST_SELECT=new_sel_caltreat
   WIDGET_CONTROL, ID_samtreat, SET_DROPLIST_SELECT=new_sel_samtreat

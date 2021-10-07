@@ -10,11 +10,11 @@
 ;--------------------------------------------------------------------------------------------------------------------
 FUNCTION strreplace_iter, Strings, Find1, Replacement1, N_ITER=n_iter, NO_CASE=no_case
 
-  IF NOT KEYWORD_SET(n_iter) THEN n_iter=1
-  IF n_iter LT 1 THEN n_iter=1
+  IF NOT KEYWORD_SET(n_iter) THEN n_iter = 1
+  IF n_iter LT 1 THEN n_iter = 1
 
   NP        = N_PARAMS()  ;   Check integrity of input parameter
-  IF (NP NE 3) THEN msg=DIALOG_MESSAGE('Must be called with 3 parameters: '+$
+  IF (NP NE 3) THEN msg = DIALOG_MESSAGE('Must be called with 3 parameters: '+$
                                        'Strings, Find, Replacement.', /ERROR)
 
   sz        = SIZE(Strings)

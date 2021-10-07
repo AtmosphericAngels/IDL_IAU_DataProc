@@ -13,7 +13,6 @@ PRO dp_mean2txt, sel_exp,  PATH=path
 
   COMMON DP_DATA
 
-
   tmp_data = (dp_chrom[sel_exp])
   n_chrom = N_ELEMENTS(tmp_data)
   sel_chrom = FLOOR(n_chrom/2.)
@@ -42,7 +41,7 @@ PRO dp_mean2txt, sel_exp,  PATH=path
   ENDELSE
 
   datestr = jultime2timestring(SYSTIME(/JULIAN), /YMD_CLEAN)
-  
+
   instr = instr.replace('/', '_')
   fname = DIALOG_PICKFILE(PATH=path, /WRITE, FILE=instr+'_dp_subst_mean.txt')
   IF STRLEN(fname) EQ 0 THEN RETURN
@@ -77,7 +76,7 @@ PRO dp_mean2txt, sel_exp,  PATH=path
     sam_treat = tmp_data[sel_chrom].subst[i].rres.sam_treat
 
     IF *(dp_expcfg[sel_exp]).instr_prc.mp_rel NE !NULL THEN BEGIN
-      w=WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
+      w = WHERE(STRUPCASE(*(dp_expcfg[sel_exp]).instr_prc.substance) EQ STRUPCASE(name))
       IF w[0] NE -1 THEN $
         cal_prc = STRCOMPRESS(STRING((*(dp_expcfg[sel_exp]).instr_prc.mp_rel)[w[0]], FORMAT='(D25.6)'), /REMOVE_ALL)
     ENDIF ELSE cal_prc= 'NaN'
@@ -90,17 +89,17 @@ PRO dp_mean2txt, sel_exp,  PATH=path
             FORMAT='(D25.6)'), /REMOVE_ALL)
           cal_devtofit = STRCOMPRESS(STRING((tmp_data[sel_chrom].subst[i].rres.rsp_area.cal_devtofit)[0], $
             FORMAT='(D25.6)'), /REMOVE_ALL)
-  
+
           cal_block_rsd = (dp_chrom[sel_exp].subst[i].rres.rsp_area.cal_block_rsd)
           w_finite = WHERE(FINITE(cal_block_rsd) EQ 1, n_finite)
-          IF n_finite EQ 0 THEN cal_block_rsd='NaN' $
+          IF n_finite EQ 0 THEN cal_block_rsd = 'NaN' $
           ELSE cal_block_rsd = STRCOMPRESS(STRING(mean($
             ((dp_chrom[sel_exp]).subst[i].rres.rsp_area.cal_block_rsd), $
             /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
-  
+
           sam_blocks_rsd = ((dp_chrom[sel_exp]).subst[i].rres.rsp_area.block_rsd)
           w_finite = WHERE(FINITE(sam_blocks_rsd) EQ 1, n_finite)
-          IF n_finite EQ 0 THEN sam_blocks_rsd='NaN' $
+          IF n_finite EQ 0 THEN sam_blocks_rsd = 'NaN' $
           ELSE sam_blocks_rsd = STRCOMPRESS(STRING(mean($
             ((dp_chrom[sel_exp]).subst[i].rres.rsp_area.block_rsd), $
             /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
@@ -112,17 +111,17 @@ PRO dp_mean2txt, sel_exp,  PATH=path
             FORMAT='(D25.6)'), /REMOVE_ALL)
           cal_devtofit = STRCOMPRESS(STRING((tmp_data[sel_chrom].subst[i].rres.rsp_height.cal_devtofit)[0], $
             FORMAT='(D25.6)'), /REMOVE_ALL)
-  
+
           cal_block_rsd = (dp_chrom[sel_exp].subst[i].rres.rsp_height.cal_block_rsd)
           w_finite = WHERE(FINITE(cal_block_rsd) EQ 1, n_finite)
-          IF n_finite EQ 0 THEN cal_block_rsd='NaN' $
+          IF n_finite EQ 0 THEN cal_block_rsd = 'NaN' $
           ELSE cal_block_rsd = STRCOMPRESS(STRING(mean($
             ((dp_chrom[sel_exp]).subst[i].rres.rsp_height.cal_block_rsd), $
             /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
-  
+
           sam_blocks_rsd = ((dp_chrom[sel_exp]).subst[i].rres.rsp_height.block_rsd)
           w_finite = WHERE(FINITE(sam_blocks_rsd) EQ 1, n_finite)
-          IF n_finite EQ 0 THEN sam_blocks_rsd='NaN' $
+          IF n_finite EQ 0 THEN sam_blocks_rsd = 'NaN' $
           ELSE sam_blocks_rsd = STRCOMPRESS(STRING(mean($
             ((dp_chrom[sel_exp]).subst[i].rres.rsp_height.block_rsd), $
             /NAN, /DOUBLE), FORMAT='(D25.6)'), /REMOVE_ALL)
@@ -132,10 +131,10 @@ PRO dp_mean2txt, sel_exp,  PATH=path
     n_sam_blocks = STRCOMPRESS(STRING(n_finite, FORMAT='(I3)'), /REMOVE_ALL)
 
 
-    IF ((dp_expcfg[sel_exp]).cal_mrs.canister) EQ '' THEN call_mr_calc=0 $
+    IF ((dp_expcfg[sel_exp]).cal_mrs.canister) EQ '' THEN call_mr_calc = 0 $
       ELSE call_mr_calc=1
 
-    subst_name=(substlist[sel_exp])[i]
+    subst_name = (substlist[sel_exp])[i]
 
     IF call_mr_calc THEN prelim_MRs=dp_calc_mrs(name, i, sel_exp, dp_chrom, dp_expcfg) $
       ELSE prelim_MRs=MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)

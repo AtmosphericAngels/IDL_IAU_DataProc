@@ -46,7 +46,7 @@ PRO dp_show_mrtable, sel_exp
 
   column_width = [150,100,100,100,100,150,150]
 
-  mainbase = WIDGET_BASE(title='Cal MR Table')
+  mainbase = WIDGET_BASE(title = 'Cal MR Table')
   ID = WIDGET_TABLE(mainbase, VALUE=value, COLUMN_WIDTH=column_width, ALIGNMENT=0)
 
   WIDGET_CONTROL, ID, /REALIZE

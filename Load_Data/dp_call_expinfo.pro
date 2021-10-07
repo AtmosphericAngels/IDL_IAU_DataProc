@@ -55,8 +55,8 @@
 PRO dp_call_expinfo, FNAME=fname, OVERWRITE=overwrite, VERBOSE=verbose
 
   dp_refr_status, MESSAGE='loading exp-info...'
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
-  IF NOT KEYWORD_SET(overwrite) THEN overwrite=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
+  IF NOT KEYWORD_SET(overwrite) THEN overwrite = 0
   IF verbose THEN print, 'beginning to load experiment-info(s)...'
 
   COMMON DP_DATA
@@ -75,7 +75,7 @@ PRO dp_call_expinfo, FNAME=fname, OVERWRITE=overwrite, VERBOSE=verbose
     RETURN
   ENDIF
 
-  n_files=N_ELEMENTS(fname)
+  n_files = N_ELEMENTS(fname)
   IF N_ELEMENTS(dp_chrom) NE n_files THEN BEGIN
     msg=DIALOG_MESSAGE('Please select the correct number of ExpInfo-files.', /ERROR)
     dp_refr_status, /CLEAR
@@ -89,9 +89,9 @@ PRO dp_call_expinfo, FNAME=fname, OVERWRITE=overwrite, VERBOSE=verbose
     CASE 1 OF
       (instr EQ 'Lab_BenchTOF' OR instr EQ 'Lab_QP/SFMS'): $
         BEGIN
-          def_offset=2 ; old header size up to 2016-11; use header_size tag in header for newer files
-          sep=';'
-          name='ChromInfo'
+          def_offset = 2 ; old header size up to 2016-11; use header_size tag in header for newer files
+          sep = ';'
+          name = 'ChromInfo'
           search_tags=['opr','Comment','rv_vol','Fname','Run_No','Sample_Name','s_date','PosLat','PosLon','PosAlt', $
                        'Sample_ID','s_vol','Vol0','Vol1','rv_dp','MFC.flow.set','MFC.cts','Ts_cldhd','Te_cldhd', $
                        'enrich_start','enrich_stop','dt','use']
@@ -101,9 +101,9 @@ PRO dp_call_expinfo, FNAME=fname, OVERWRITE=overwrite, VERBOSE=verbose
 
       (instr EQ 'FASTOF'): $
         BEGIN
-          def_offset=5
-          sep=STRING(9b)
-          name=''
+          def_offset = 5
+          sep = STRING(9b)
+          name = ''
           search_tags=['Operator','com','rv_vol','fname','Run_No','Sample_Name','s_date','s_lat','s_lon','s_alt',$
                        'Sample_ID','s_vol','p0[hPa]', 'p1[hPa]','dp[hPa]','F.Set[mL]','Counter[mL]','TCH_p0', $
                        'TCH_p1','t_p0','t_p1','dt','use']
@@ -113,9 +113,9 @@ PRO dp_call_expinfo, FNAME=fname, OVERWRITE=overwrite, VERBOSE=verbose
 
       (instr EQ 'GhOST_MS' OR instr EQ 'GhOST_ECD'): $
         BEGIN
-          def_offset=0
-          sep=STRING(9b)
-          name='Chrom'
+          def_offset = 0
+          sep = STRING(9b)
+          name = 'Chrom'
           search_tags=['opr','com','rv_vol','fname','nr','s_name','s_date','s_lat','s_lon','s_alt','s_id','s_vol','p0', $
                        'p1','dp','mfc_flow','mfc_vol','Ts_cldhd','Te_cldhd','ts','te','dt','use']
           import = dp_read_expinfofile(fname[n], n, SEP=sep, DEF_OFFSET=def_offset, NAME=name, $
@@ -124,9 +124,9 @@ PRO dp_call_expinfo, FNAME=fname, OVERWRITE=overwrite, VERBOSE=verbose
 
       (instr EQ 'AED'): $
         BEGIN
-          def_offset=9
-          sep=';'
-          name='expinfo'
+          def_offset = 9
+          sep = ';'
+          name = 'expinfo'
           search_tags=['opr','Comment','rv_vol','Fname','Run_No','Sample_Name','s_date','PosLat','PosLon','PosAlt','Sample_ID','s_vol','rv_ps', $
                        'rv_pe','rv_dp','mfc_flow','SVol.ml','Ts_cldhd','Te_cldhd','ts','te','dt','Use']
           import = dp_read_expinfofile(fname[n], n, SEP=sep, DEF_OFFSET=def_offset, NAME=name, $
@@ -136,9 +136,9 @@ PRO dp_call_expinfo, FNAME=fname, OVERWRITE=overwrite, VERBOSE=verbose
       (instr EQ 'GHGGC_ECD/FID'): $
         BEGIN
           import = !NULL
-          def_offset=7
-          sep=';'
-          name='expinfo'
+          def_offset = 7
+          sep = ';'
+          name = 'expinfo'
           search_tags=['OPERATOR','SAMPLER','FLIGHT','FNAME','NR','S_NAME','CHEMSTATION_START','LAT_dgr_mean',$
                        'LON_dgr_mean','ALT_pstatic_hPa','S_ID','s_vol','P0','P1','dp','mfc_flow','mfc_vol','Ts_cldhd',$
                        'Te_cldhd','t0_collection','t1_collection','dt','USE']
@@ -204,24 +204,24 @@ PRO dp_call_expinfo, FNAME=fname, OVERWRITE=overwrite, VERBOSE=verbose
     ENDIF ELSE dp_expcfg.add, tmp_strct ; add elements to the list
 
     use_def = import.use
-    tmp_chrom=(dp_chrom[n])
-    n_subst=N_ELEMENTS(tmp_chrom[0].subst.name)
+    tmp_chrom = (dp_chrom[n])
+    n_subst = N_ELEMENTS(tmp_chrom[0].subst.name)
     FOR k=0, n_subst-1 DO tmp_chrom.subst[k].rres.use_flag = use_def  ; overwrite use_flag in rres strct
-    (dp_chrom[n])=tmp_chrom
+    (dp_chrom[n]) = tmp_chrom
 
   ENDFOR ; loop over selected files
 
 
   IF overwrite THEN BEGIN ; delete results if previous expinfo is overwritten by the current operation
-    ref_rres=create_ref_rres()
+    ref_rres = create_ref_rres()
     FOR i=0, N_ELEMENTS(dp_chrom)-1 DO BEGIN ; overwrite eval_flag
-      tmp_chrom=(dp_chrom[i])
-      n_chrom=N_ELEMENTS(dp_chrom[i])
-      n_subst=N_ELEMENTS(tmp_chrom[i].subst.name)
+      tmp_chrom = (dp_chrom[i])
+      n_chrom = N_ELEMENTS(dp_chrom[i])
+      n_subst = N_ELEMENTS(tmp_chrom[i].subst.name)
       FOR j=0, n_chrom-1 DO BEGIN
         FOR k=0, n_subst-1 DO tmp_chrom[j].subst[k].rres=ref_rres
       ENDFOR
-      (dp_chrom[i])=tmp_chrom
+      (dp_chrom[i]) = tmp_chrom
     ENDFOR
   ENDIF
 

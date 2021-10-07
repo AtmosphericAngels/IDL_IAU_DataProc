@@ -1,6 +1,6 @@
 FUNCTION create_ref_cocorr
 
-  ref_cocorr={ $
+  ref_cocorr = { $
               substance:  PTR_NEW(/ALLOCATE_HEAP), $
               comment:    STRARR(6), $
               cal_to_sam: PTR_NEW(/ALLOCATE_HEAP), $ ; [up, down]

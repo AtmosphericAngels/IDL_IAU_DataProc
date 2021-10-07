@@ -9,7 +9,7 @@
 ;------------------------------------------------------------------------------------------------------------------------
 FUNCTION dp_read_instrprc, sel_exp, exp_name, substlist, PATH=path, DEF_FILE=def_file, VERBOSE=verbose
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
 
   IF NOT KEYWORD_SET(def_file) THEN $
     file=DIALOG_PICKFILE(TITLE='Please select a Precision Table.', PATH=path, FILTER='*.csv', /READ) $
@@ -19,7 +19,7 @@ FUNCTION dp_read_instrprc, sel_exp, exp_name, substlist, PATH=path, DEF_FILE=def
   IF FILE_TEST(file) EQ 0 THEN RETURN, !NULL
 
   sep = ';'
-  n_table_header=7
+  n_table_header = 7
   nl = FILE_LINES(file)
   count = nl-n_table_header
   data = STRARR(nl)
@@ -59,15 +59,15 @@ FUNCTION dp_read_instrprc, sel_exp, exp_name, substlist, PATH=path, DEF_FILE=def
   IF verbose THEN BEGIN
     print, '+++'
     print, 'imported instrument precision values for: '+exp_name
-    def_subst=substlist[sel_exp]
+    def_subst = substlist[sel_exp]
     w=REPLICATE(-1L, N_ELEMENTS(def_subst))
     FOR i=0L, N_ELEMENTS(def_subst)-1 DO $
       IF (WHERE(substance EQ def_subst[i]))[0] NE -1 THEN w[i]=(WHERE(substance EQ def_subst[i]))[0]
 
     w1=WHERE(w EQ -1, nvd, NCOMPLEMENT=ncomplement)
     print, 'found n matches: ', ncomplement
-    missing=STRARR(N_ELEMENTS(w1))
-    missing=def_subst[w1]
+    missing = STRARR(N_ELEMENTS(w1))
+    missing = def_subst[w1]
     print, 'missing: '
     print, missing
     print, '+++'
@@ -96,17 +96,17 @@ PRO dp_apply_instrprc, PRC_STRCT=prc_strct, sel_exp, SEL_ONLY=sel_only, QUIET=qu
   ok = prc_limits[0]; range definition
   bad = prc_limits[1]
 
-  IF NOT KEYWORD_SET(verbose) THEN verbose=0
+  IF NOT KEYWORD_SET(verbose) THEN verbose = 0
 
   IF KEYWORD_SET(sel_only) THEN exps = sel_exp ELSE exps = LINDGEN(N_ELEMENTS(dp_chrom))
 
   FOR n=0, N_ELEMENTS(exps)-1 DO BEGIN
-    tmp_chrom=(dp_chrom[exps[n]]) ; move data out of list...
-    tmp_expcfg=(dp_expcfg[exps[n]])
+    tmp_chrom = (dp_chrom[exps[n]]) ; move data out of list...
+    tmp_expcfg = (dp_expcfg[exps[n]])
 
     IF KEYWORD_SET(prc_strct) THEN BEGIN ; if variable supplied, update values in expcfg struct
 
-      quest='Yes'
+      quest = 'Yes'
 
       IF NOT KEYWORD_SET(quiet) THEN BEGIN
         IF STRUPCASE(instr) NE STRUPCASE(prc_strct.instrument) THEN $
@@ -128,14 +128,14 @@ PRO dp_apply_instrprc, PRC_STRCT=prc_strct, sel_exp, SEL_ONLY=sel_only, QUIET=qu
 
     ENDIF
 
-    def_subst=tmp_chrom[0].subst.name ; begin to apply...
-    n_subst=N_ELEMENTS(def_subst)
-    n_chrom=N_ELEMENTS(tmp_chrom.subst[0].rres.rsp_area.block_rsd)
-    tmp_prc_flag=LONARR(n_chrom)
+    def_subst = tmp_chrom[0].subst.name ; begin to apply...
+    n_subst = N_ELEMENTS(def_subst)
+    n_chrom = N_ELEMENTS(tmp_chrom.subst[0].rres.rsp_area.block_rsd)
+    tmp_prc_flag = LONARR(n_chrom)
 
     FOR i=0, n_subst-1 DO BEGIN ; check values for each substance
       eval_mode = (tmp_chrom.subst[i].rres.rsp_select)[0]
-      w=(WHERE(*tmp_expcfg.instr_prc.substance EQ def_subst[i]))[0]
+      w = (WHERE(*tmp_expcfg.instr_prc.substance EQ def_subst[i]))[0]
       IF w NE -1 THEN BEGIN
         CASE eval_mode OF
           0:  BEGIN
@@ -169,8 +169,8 @@ PRO dp_apply_instrprc, PRC_STRCT=prc_strct, sel_exp, SEL_ONLY=sel_only, QUIET=qu
       ENDIF
     ENDFOR
 
-    (dp_expcfg[exps[n]])=TEMPORARY(tmp_expcfg)
-    (dp_chrom[exps[n]])=TEMPORARY(tmp_chrom) ; ...move data back into list.
+    (dp_expcfg[exps[n]]) = TEMPORARY(tmp_expcfg)
+    (dp_chrom[exps[n]]) = TEMPORARY(tmp_chrom) ; ...move data back into list.
   ENDFOR
 
   IF verbose THEN print, 'Instrument precision values: applied.'
@@ -195,17 +195,17 @@ PRO dp_remv_instrprc, sel_exp, SEL_ONLY=sel_only, LOUD=loud
   FOR i=0, N_ELEMENTS(exps)-1 DO BEGIN
     IF *(dp_expcfg[sel_exp]).instr_prc.mp_ppt NE !NULL $
       THEN BEGIN
-      quest='Yes'
+      quest = 'Yes'
       IF loud THEN quest=DIALOG_MESSAGE('Remove instrument prc values: are you sure?', /QUESTION)
       CASE quest OF
         'Yes': $
           BEGIN
-          n_subst=N_ELEMENTS((dp_chrom[sel_exp])[0].subst.name)
+          n_subst = N_ELEMENTS((dp_chrom[sel_exp])[0].subst.name)
 
-          tmp_chrom=(dp_chrom[sel_exp])
-          n_chrom=N_ELEMENTS(tmp_chrom.subst[0].rres.rsp_area.block_rsd)
+          tmp_chrom = (dp_chrom[sel_exp])
+          n_chrom = N_ELEMENTS(tmp_chrom.subst[0].rres.rsp_area.block_rsd)
 
-          tmp_expcfg=(dp_expcfg[sel_exp])
+          tmp_expcfg = (dp_expcfg[sel_exp])
           tmp_expcfg.instr_prc.instrument = ''
           *tmp_expcfg.instr_prc.substance = !NULL
           *tmp_expcfg.instr_prc.mp_ppt = !NULL
@@ -221,8 +221,8 @@ PRO dp_remv_instrprc, sel_exp, SEL_ONLY=sel_only, LOUD=loud
             tmp_chrom.subst[n].rres.rsp_height.prc_flag = INTARR(n_chrom)
           ENDFOR
 
-          (dp_expcfg[sel_exp])=TEMPORARY(tmp_expcfg)
-          (dp_chrom[sel_exp])=TEMPORARY(tmp_chrom) ; ...move data back into list.
+          (dp_expcfg[sel_exp]) = TEMPORARY(tmp_expcfg)
+          (dp_chrom[sel_exp]) = TEMPORARY(tmp_chrom) ; ...move data back into list.
         END
         'No':
         ELSE:

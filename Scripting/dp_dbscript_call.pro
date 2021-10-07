@@ -27,7 +27,7 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
 
   COMMON dp_data
 
-  IF NOT KEYWORD_SET(load_1st_only) THEN load_1st_only=0
+  IF NOT KEYWORD_SET(load_1st_only) THEN load_1st_only = 0
 
   ; load database table
   db_info = dp_dbscript_read(FILE=db_file, PATH=path_wd)
@@ -43,8 +43,8 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
     IF n_exp EQ 0 THEN RETURN
 
     IF load_1st_only THEN BEGIN
-      n_exp=1
-      vd_exp=vd_exp[0]
+      n_exp = 1
+      vd_exp = vd_exp[0]
     ENDIF
 
     FOR n=0, n_exp-1 DO BEGIN ; begin loop: N EXPERIMENTS
@@ -60,27 +60,27 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
       dp_refr_status, message='db script: loading...'+current_exp
 
       ; restore the chrom file
-      dp_chrom=dp_restore_chrom(dp_chrom, dp_vers, FNAME=db_info.data[vd_exp[n]].chromdata_path, VERBOSE=verbose)
-      dp_chrom=dp_correct_time(dp_chrom, VERBOSE=verbose)
-      chromlist=((dp_chrom[0]).exp_fname)
-      substlist=LIST(((dp_chrom[0]).subst.name)[*,0])
+      dp_chrom = dp_restore_chrom(dp_chrom, dp_vers, FNAME=db_info.data[vd_exp[n]].chromdata_path, VERBOSE=verbose)
+      dp_chrom = dp_correct_time(dp_chrom, VERBOSE=verbose)
+      chromlist = ((dp_chrom[0]).exp_fname)
+      substlist = LIST(((dp_chrom[0]).subst.name)[*,0])
 
       ; load expinfo
-      instr=db_info.data[vd_exp[n]].EXPINFO_IMPORT_FCT
+      instr = db_info.data[vd_exp[n]].EXPINFO_IMPORT_FCT
       dp_call_expinfo, FNAME=db_info.data[vd_exp[n]].expinfo_path, /OVERWRITE, VERBOSE=verbose
 
       ; update setup info structure
       ITS = {instrument: instr, type: 'undef', spec: 'undef'}
-      tmp_strct=(dp_expcfg)[0]  ; move structure out of list
-      tmp_strct.setup=ITS
-      (dp_expcfg)[0]=TEMPORARY(tmp_strct)  ; put strct with loaded values back into list
+      tmp_strct = (dp_expcfg)[0]  ; move structure out of list
+      tmp_strct.setup = ITS
+      (dp_expcfg)[0] = TEMPORARY(tmp_strct)  ; put strct with loaded values back into list
 
       ; analyse the sequence
       dp_analyse_seq, /QUIET, VERBOSE=verbose
-      samtreats=((dp_expcfg)[0]).sequence.sam_treat
-      samtreats=samtreats[WHERE(STRLEN(samtreats) NE 0)]
-      caltreats=((dp_expcfg)[0]).sequence.cal_treat
-      caltreats=caltreats[WHERE(STRLEN(caltreats) NE 0)]
+      samtreats = ((dp_expcfg)[0]).sequence.sam_treat
+      samtreats = samtreats[WHERE(STRLEN(samtreats) NE 0)]
+      caltreats = ((dp_expcfg)[0]).sequence.cal_treat
+      caltreats = caltreats[WHERE(STRLEN(caltreats) NE 0)]
 
       ; apply default substance names if specified
       IF STRLEN(db_info.data[vd_exp[n]].subst_namedef_path) NE 0 THEN $
@@ -92,20 +92,20 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
 
       ; load dp_calmrs if specified
       IF STRLEN(db_info.data[vd_exp[n]].dp_calmrs_path) NE 0 THEN BEGIN
-        mrs_strct=dp_read_calmrs(DEF_FILE=db_info.data[vd_exp[n]].dp_calmrs_path, VERBOSE=verbose)
+        mrs_strct = dp_read_calmrs(DEF_FILE=db_info.data[vd_exp[n]].dp_calmrs_path, VERBOSE=verbose)
         dp_apply_calmrs, 0, mrs_strct, PATH=path_wd, VERBOSE=verbose
       ENDIF
 
       ; load dp_tgtmrs if specified
       IF STRLEN(db_info.data[vd_exp[n]].dp_tgtmrs_path) NE 0 THEN BEGIN
-        tgt_strct=dp_read_tgtmrs(DEF_FILE=db_info.data[vd_exp[n]].dp_tgtmrs_path, VERBOSE=verbose)
+        tgt_strct = dp_read_tgtmrs(DEF_FILE=db_info.data[vd_exp[n]].dp_tgtmrs_path, VERBOSE=verbose)
         dp_apply_tgtmrs, 0, tgt_strct, PATH=path_wd, VERBOSE=verbose
       ENDIF
 
       ; load dp_instr_prc if specified
       IF STRLEN(db_info.data[vd_exp[n]].dp_instr_prc_path) NE 0 THEN BEGIN
-        prc_strct=dp_read_instrprc(0, chromlist[0], substlist, $
-                                   DEF_FILE=db_info.data[vd_exp[n]].dp_instr_prc_path, VERBOSE=verbose)
+        prc_strct = dp_read_instrprc(0, chromlist[0], substlist, $
+                                     DEF_FILE=db_info.data[vd_exp[n]].dp_instr_prc_path, VERBOSE=verbose)
         dp_apply_instrprc, 0, PRC_STRCT=prc_strct, /QUIET, VERBOSE=verbose
       ENDIF
 
@@ -129,20 +129,20 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
               +STRING(hh,format='(I02)')+STRING(mn,format='(I02)')
         cdate = cdate1+'_'+cdate2
 
-        spec_filename=0
-        folder=FILE_DIRNAME(FILE_DIRNAME(db_info.data[vd_exp[n]].chromdata_path))
+        spec_filename = 0
+        folder = FILE_DIRNAME(FILE_DIRNAME(db_info.data[vd_exp[n]].chromdata_path))
         IF KEYWORD_SET(db_info.data[vd_exp[n]].dp_savefile_path) THEN BEGIN
           savepath = db_info.data[vd_exp[n]].dp_savefile_path
           IF STRMATCH(savepath, '*dp_data.dat') EQ 1 THEN BEGIN
-            fname_dp_chrom=savepath
-            spec_filename=1
+            fname_dp_chrom = savepath
+            spec_filename = 1
           ENDIF ELSE BEGIN
             fname_dp_chrom = savepath+'\'+cdate+'_dp_data.dat'
           ENDELSE
         ENDIF ELSE BEGIN
-          savepath = folder+'\__IAU_DATAPROC_save'
+          savepath = folder + '\__IAU_DATAPROC_save'
           db_info.data[vd_exp[n]].dp_savefile_path = savepath
-          fname_dp_chrom = savepath+'\'+cdate+'_dp_data.dat'
+          fname_dp_chrom = savepath + '\' + cdate + '_dp_data.dat'
         ENDELSE
 
         FILE_MKDIR, FILE_DIRNAME(fname_dp_chrom)
@@ -151,9 +151,9 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
         save, dp_expcfg, FILENAME=fname_dp_expcfg
 
         ; save txt reports if desired
-        IF spec_filename THEN savepath=FILE_DIRNAME(savepath)
+        IF spec_filename THEN savepath = FILE_DIRNAME(savepath)
         IF KEYWORD_SET(db_info.data[vd_exp[n]].save_txtreport) THEN BEGIN
-          txt_path = savepath+'\dp_txt_report\'
+          txt_path = savepath + '\dp_txt_report\'
           FILE_MKDIR, txt_path
           dp_res2txt, 0, 0, DEF_PATH=txt_path, /ALL, /BRIEF, VERBOSE=verbose
         ENDIF
@@ -174,10 +174,10 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
           pltSaveDst = "K:\KIT_DATA\GHGGC_ReEval\IDL_processing\non_linearity\NL_plots\IDL\"
           saveplot = pltSaveDst + db_info.data[vd_exp[n]].exp_id
           pic_filetype = '.png'
-          
+
           show_plots = 0
-          saveplot = 0 ; remove if plots should be saved to pltSaveDst 
-          
+          saveplot = 0 ; remove if plots should be saved to pltSaveDst
+
           FOR subst=0, N_ELEMENTS((dp_chrom[0].subst)[*,0])-1 DO BEGIN
             fct_dgr = db_info.data[vd_exp[n]].analyse_NL
             nl_strct = dp_nlexp_analyse(fct_dgr, 0, subst, $

@@ -34,7 +34,7 @@ COMMON DP_WIDID
   IF NOT KEYWORD_SET(caltreats) THEN BEGIN
     ID_caltreat = WIDGET_INFO(dp_widid.dp_dataproc, FIND_BY_UNAME='caltreat_dl'); get valid treat options from droplists
     WIDGET_CONTROL, ID_caltreat, GET_VALUE = vd_caltreat
-    w_ne0=WHERE(STRLEN(vd_caltreat) NE 0)
+    w_ne0 = WHERE(STRLEN(vd_caltreat) NE 0)
     IF w_ne0[0] NE -1 THEN vd_caltreat = vd_caltreat[w_ne0]
   ENDIF ELSE vd_caltreat = caltreats
 

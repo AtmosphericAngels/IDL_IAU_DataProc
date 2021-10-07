@@ -10,7 +10,7 @@ PRO dp_show_restable, sel_exp, sel_subst, BRIEF=brief
 
   COMMON DP_DATA
 
-  IF NOT KEYWORD_SET(brief) THEN brief=0
+  IF NOT KEYWORD_SET(brief) THEN brief = 0
 
   n_chrom = N_ELEMENTS((dp_chrom[sel_exp]))
   subst_name = (substlist[sel_exp])[sel_subst]
@@ -18,8 +18,8 @@ PRO dp_show_restable, sel_exp, sel_subst, BRIEF=brief
   mode_string = (['AREA', 'HEIGHT'])[eval_mode]
 
   IF ((dp_expcfg[sel_exp]).cal_mrs.canister) NE '' THEN $
-    prelim_MRs=dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg) $
-      ELSE prelim_MRs=MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
+    prelim_MRs = dp_calc_mrs(subst_name, sel_subst, sel_exp, dp_chrom, dp_expcfg) $
+      ELSE prelim_MRs = MAKE_ARRAY(n_chrom, /DOUBLE, VALUE=!Values.D_NAN)
 
   IF brief THEN BEGIN ;++++++++++++++++++++++++++++++++++++++++BRIEF+++
 
@@ -56,7 +56,7 @@ PRO dp_show_restable, sel_exp, sel_subst, BRIEF=brief
                       PRC_FLAG     : 0L, $
                       PRELIM_MR    : ''       }
 
-    tblval=!NULL
+    tblval = !NULL
     tblval=REPLICATE(ref_restable, n_sam)
 
     tblval.NUMBER       = (1+INDGEN(N_ELEMENTS(dp_chrom[sel_exp])))[w]
@@ -137,12 +137,12 @@ PRO dp_show_restable, sel_exp, sel_subst, BRIEF=brief
                   2.4     ]; PRELIM_MR
 
 
-    scr_xsize=24
-    scr_ysize=20
+    scr_xsize = 24
+    scr_ysize = 20
 
-    col_labels=TAG_NAMES(ref_restable)
-    col_labels[6]=col_labels[6]+'[%]'
-    col_labels[7]=col_labels[7]+'[%]'
+    col_labels = TAG_NAMES(ref_restable)
+    col_labels[6] = col_labels[6]+'[%]'
+    col_labels[7] = col_labels[7]+'[%]'
 
   ENDIF ELSE BEGIN ;++++++++++++++++++++++++++++++++++++++++DETAILED+++
 
@@ -172,7 +172,7 @@ PRO dp_show_restable, sel_exp, sel_subst, BRIEF=brief
                       PRC_FLAG     : 0L, $
                       PRELIM_MR    : ''       }
 
-    tblval=!NULL
+    tblval = !NULL
     tblval=REPLICATE(ref_restable, N_ELEMENTS(dp_chrom[sel_exp]))
 
     tblval.NUMBER       = 1+INDGEN(N_ELEMENTS(dp_chrom[sel_exp]))
@@ -228,7 +228,7 @@ PRO dp_show_restable, sel_exp, sel_subst, BRIEF=brief
 
 
 
-    t_precon=STRARR(n_chrom)
+    t_precon = STRARR(n_chrom)
     FOR i=0, n_chrom-1 DO BEGIN
       caldat, SYSTIME(/JULIAN), mm, dd, yyyy, hh0, mn0, ss0
       caldat, SYSTIME(/JULIAN)+(tblval.DT_PRECON)[i], mm, dd, yyyy, hh1, mn1, ss1
@@ -269,18 +269,18 @@ PRO dp_show_restable, sel_exp, sel_subst, BRIEF=brief
                   2.4     ]; PRELIM_MR
 
 
-    scr_xsize=39
-    scr_ysize=20
+    scr_xsize = 39
+    scr_ysize = 20
 
-    col_labels=TAG_NAMES(ref_restable)
-    col_labels[12]=col_labels[12]+'[%]'
-    col_labels[13]=col_labels[13]+'[%]'
-    col_labels[14]=col_labels[14]+'[%]'
+    col_labels = TAG_NAMES(ref_restable)
+    col_labels[12] = col_labels[12]+'[%]'
+    col_labels[13] = col_labels[13]+'[%]'
+    col_labels[14] = col_labels[14]+'[%]'
 
   ENDELSE
 
 
-  mainbase=WIDGET_BASE(title='Results for: '+((dp_chrom[sel_exp]).subst[sel_subst].name)[0])
+  mainbase = WIDGET_BASE(title = 'Results for: '+((dp_chrom[sel_exp]).subst[sel_subst].name)[0])
 
   ID=WIDGET_TABLE(mainbase, VALUE=tblval, COLUMN_LABELS=col_labels, SCR_XSIZE=scr_xsize, SCR_YSIZE=scr_ysize, $
                   XSIZE=N_ELEMENTS(column_width), COLUMN_WIDTH=column_width, units=2, /ROW_MAJOR, /SCROLL, $
