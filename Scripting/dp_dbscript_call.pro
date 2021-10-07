@@ -60,10 +60,10 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
       dp_refr_status, message='db script: loading...'+current_exp
 
       ; restore the chrom file
-      dp_chrom=dp_restore_chrom(dp_chrom, dp_vers, FNAME=db_info.data[vd_exp[n]].chromdata_path, VERBOSE=verbose)
-      dp_chrom=dp_correct_time(dp_chrom, VERBOSE=verbose)
+      dp_chrom = dp_restore_chrom(dp_chrom, dp_vers, FNAME=db_info.data[vd_exp[n]].chromdata_path, VERBOSE=verbose)
+      dp_chrom = dp_correct_time(dp_chrom, VERBOSE=verbose)
       chromlist = ((dp_chrom[0]).exp_fname)
-      substlist=LIST(((dp_chrom[0]).subst.name)[*,0])
+      substlist = LIST(((dp_chrom[0]).subst.name)[*,0])
 
       ; load expinfo
       instr = db_info.data[vd_exp[n]].EXPINFO_IMPORT_FCT
@@ -92,20 +92,20 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
 
       ; load dp_calmrs if specified
       IF STRLEN(db_info.data[vd_exp[n]].dp_calmrs_path) NE 0 THEN BEGIN
-        mrs_strct=dp_read_calmrs(DEF_FILE=db_info.data[vd_exp[n]].dp_calmrs_path, VERBOSE=verbose)
+        mrs_strct = dp_read_calmrs(DEF_FILE=db_info.data[vd_exp[n]].dp_calmrs_path, VERBOSE=verbose)
         dp_apply_calmrs, 0, mrs_strct, PATH=path_wd, VERBOSE=verbose
       ENDIF
 
       ; load dp_tgtmrs if specified
       IF STRLEN(db_info.data[vd_exp[n]].dp_tgtmrs_path) NE 0 THEN BEGIN
-        tgt_strct=dp_read_tgtmrs(DEF_FILE=db_info.data[vd_exp[n]].dp_tgtmrs_path, VERBOSE=verbose)
+        tgt_strct = dp_read_tgtmrs(DEF_FILE=db_info.data[vd_exp[n]].dp_tgtmrs_path, VERBOSE=verbose)
         dp_apply_tgtmrs, 0, tgt_strct, PATH=path_wd, VERBOSE=verbose
       ENDIF
 
       ; load dp_instr_prc if specified
       IF STRLEN(db_info.data[vd_exp[n]].dp_instr_prc_path) NE 0 THEN BEGIN
-        prc_strct=dp_read_instrprc(0, chromlist[0], substlist, $
-                                   DEF_FILE=db_info.data[vd_exp[n]].dp_instr_prc_path, VERBOSE=verbose)
+        prc_strct = dp_read_instrprc(0, chromlist[0], substlist, $
+                                     DEF_FILE=db_info.data[vd_exp[n]].dp_instr_prc_path, VERBOSE=verbose)
         dp_apply_instrprc, 0, PRC_STRCT=prc_strct, /QUIET, VERBOSE=verbose
       ENDIF
 
@@ -140,9 +140,9 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
             fname_dp_chrom = savepath+'\'+cdate+'_dp_data.dat'
           ENDELSE
         ENDIF ELSE BEGIN
-          savepath = folder+'\__IAU_DATAPROC_save'
+          savepath = folder + '\__IAU_DATAPROC_save'
           db_info.data[vd_exp[n]].dp_savefile_path = savepath
-          fname_dp_chrom = savepath+'\'+cdate+'_dp_data.dat'
+          fname_dp_chrom = savepath + '\' + cdate + '_dp_data.dat'
         ENDELSE
 
         FILE_MKDIR, FILE_DIRNAME(fname_dp_chrom)
@@ -153,7 +153,7 @@ PRO dp_dbscript_call, event, LOAD_1ST_ONLY=load_1st_only, VERBOSE=verbose
         ; save txt reports if desired
         IF spec_filename THEN savepath = FILE_DIRNAME(savepath)
         IF KEYWORD_SET(db_info.data[vd_exp[n]].save_txtreport) THEN BEGIN
-          txt_path = savepath+'\dp_txt_report\'
+          txt_path = savepath + '\dp_txt_report\'
           FILE_MKDIR, txt_path
           dp_res2txt, 0, 0, DEF_PATH=txt_path, /ALL, /BRIEF, VERBOSE=verbose
         ENDIF

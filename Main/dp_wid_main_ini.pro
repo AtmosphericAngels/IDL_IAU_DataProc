@@ -254,12 +254,15 @@ END
 
 PRO dp_wid_main_ini
 
-COMMON DP_DATA
-COMMON DP_WIDID
+  COMMON DP_DATA
+  COMMON DP_WIDID
+
+  title = 'IAU_DataProc_v' + dp_vers
+  cred = '(c) 2021 Univ. Frankfurt / IAU / Group A. Engel'
 
 ;++++++++++++ WIDGET BASE
-  mainbase=WIDGET_BASE(title='IAU_DP_v'+dp_vers, mbar=dp_mainmen, column=1,$
-                       XOFFSET= + 5, YOFFSET= + 5) ;rects[0, sel_mon] rects[1, sel_mon]
+  mainbase=WIDGET_BASE(TITLE=title, MBAR=dp_mainmen, COLUMN=1,$
+                       XOFFSET= + 5, YOFFSET= + 5)
 
 ;++++++++++++ MENUS
   fileID=WIDGET_BUTTON(dp_mainmen, VALUE='File', /MENU)
@@ -313,7 +316,7 @@ COMMON DP_WIDID
 ;++++++++++++ (c)
     dp_credits = WIDGET_BASE(dp_subbase1, uname='dp_credits', column=1)
       SEP = WIDGET_LABEL(dp_credits, VALUE='--', /ALIGN_LEFT)
-      TXT = WIDGET_LABEL(dp_credits, VALUE='(c) 2020 Univ. Frankfurt / IAU / Group A. Engel', /ALIGN_LEFT)
+      TXT = WIDGET_LABEL(dp_credits, VALUE=cred, /ALIGN_LEFT)
 
 ;++++++++++++ REALIZE!
   dp_widid.dp_mainwid = mainbase
